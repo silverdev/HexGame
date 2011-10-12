@@ -1,6 +1,6 @@
 package com.sam.hex;
-import java.awt.Color;
 
+import java.awt.Color;
 import sl.shapes.RegularPolygon;
 
 public class RegularPolygonGameObject extends RegularPolygon {
