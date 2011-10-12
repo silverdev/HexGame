@@ -33,6 +33,7 @@ public class HexGameWindow extends JFrame {
     }*/
 
     protected void initRegular() {
+
     	double radius;
     	Shape[][] hexes=Global.hexes;
         //radius =BoardTools.radiusCalculator(Canvas.HEIGHT,Canvas.WIDTH, 7);
@@ -40,7 +41,7 @@ public class HexGameWindow extends JFrame {
         double hrad= radius*Math.sqrt(3)/2; //Horizontal radius
         for(int xc =0; xc<Global.hexes.length;xc++){
         	for(int yc =0; yc<hexes[0].length;yc++)
-        	hexes[xc][yc] = new RegularPolygon( (int) (hrad+yc*hrad+2*hrad*xc), (int) (1.5*radius*yc+radius), (int) radius, 6, Math.PI / 2);
+        	hexes[xc][yc] = new RegularPolygonGameObject( (int) (hrad+yc*hrad+2*hrad*xc), (int) (1.5*radius*yc+radius), (int) radius, 6, Math.PI / 2);
         }
         cPolygons.setShapes(hexes, Color.blue);
     }
