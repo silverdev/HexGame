@@ -10,7 +10,7 @@ import sl.shapes.*;
 
 
 public class HexGameWindow extends JFrame {
-    Canvas cPolygons = new Canvas();
+   public static Canvas cPolygons = new Canvas();
     
     public HexGameWindow() {
         super("Hexgrid");
@@ -18,25 +18,27 @@ public class HexGameWindow extends JFrame {
         getContentPane().setLayout(new GridBagLayout());
         
        
-        getContentPane().add(cPolygons, new GridBagConstraints(1, 1, 1, 1, 1, 1, GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 5, 5));
-        setSize(800, 100);
+        getContentPane().add(cPolygons, new GridBagConstraints(1, 1, 1, 1, 1, 1, GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 5, 5));
+        setSize(Global.windowWidth,Global.windowHeight);
        initRegular();
 
        
         setLocationRelativeTo(null);
     }
-
+/*
     public static void main(String[] args) {
     	HexGameWindow fr = new HexGameWindow();
         fr.setVisible(true);
-    }
+        
+    }*/
 
     protected void initRegular() {
     	double radius;
-    	Shape[][] hexes = new Shape[7][7];
-        radius =BoardTools.radiusCalculator(100,800, 7);
+    	Shape[][] hexes=Global.hexes;
+        //radius =BoardTools.radiusCalculator(Canvas.HEIGHT,Canvas.WIDTH, 7);
+    	radius =BoardTools.radiusCalculator(Global.windowWidth,Global.windowHeight,7);
         double hrad= radius*Math.sqrt(3)/2; //Horizontal radius
-        for(int xc =0; xc<hexes.length;xc++){
+        for(int xc =0; xc<Global.hexes.length;xc++){
         	for(int yc =0; yc<hexes[0].length;yc++)
         	hexes[xc][yc] = new RegularPolygon( (int) (hrad+yc*hrad+2*hrad*xc), (int) (1.5*radius*yc+radius), (int) radius, 6, Math.PI / 2);
         }
@@ -52,7 +54,7 @@ public class HexGameWindow extends JFrame {
             this.hexes = shapes;
             this.color = color;
         }
-
+        @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.setColor(Color.white);
