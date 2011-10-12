@@ -1,8 +1,11 @@
 package com.sam.hex;
+import java.awt.Color;
+
 import sl.shapes.RegularPolygon;
 
 public class RegularPolygonGameObject extends RegularPolygon {
- byte teamNumber;
+ private byte teamNumber;
+ private Color objectColor;
  
 	public RegularPolygonGameObject(int x, int y, int r, int vertexCount) {
 		super(x, y, r, vertexCount);
@@ -17,4 +20,10 @@ public class RegularPolygonGameObject extends RegularPolygon {
 	public static boolean checkWin(int x, int y){
 		return false;
 	} 
+	public void setColor(Color c){
+		objectColor=c;
+	}
+	public Color gitColor(Color c){
+		return objectColor;
+	}
 }

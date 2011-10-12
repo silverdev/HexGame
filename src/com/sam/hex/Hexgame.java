@@ -5,6 +5,7 @@ public class Hexgame {
 	public static void main(String[] args){
 		 HexGameWindow fr = new HexGameWindow();
           fr.setVisible(true);
+       while(true){
           try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
@@ -12,6 +13,6 @@ public class Hexgame {
 			e.printStackTrace();
 		}
           GameAction.updateBoard();
-		
+       }
 	}
 }
