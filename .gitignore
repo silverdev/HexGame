@@ -15,3 +15,5 @@ bin/*
 #eclips stuff
 .project
 .classpath
+ 
+.~lock.designDoc.odt#
