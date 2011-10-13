@@ -41,7 +41,7 @@ public class HexGameWindow extends JFrame {
         double hrad= radius*Math.sqrt(3)/2; //Horizontal radius
         for(int xc =0; xc<Global.hexes.length;xc++){
         	for(int yc =0; yc<hexes[0].length;yc++)
-        	hexes[xc][yc] = new RegularPolygonGameObject( (int) (hrad+yc*hrad+2*hrad*xc), (int) (1.5*radius*yc+radius), (int) radius, 6, Math.PI / 2);
+        	hexes[xc][yc] =  new RegularPolygonGameObject( (int) (hrad+yc*hrad+2*hrad*xc), (int) (1.5*radius*yc+radius), (int) radius, 6, Math.PI / 2);
         }
         cPolygons.setShapes(hexes, Color.blue);
     }
@@ -61,11 +61,16 @@ public class HexGameWindow extends JFrame {
             g.setColor(Color.white);
             g.fillRect(0, 0, getWidth(), getHeight());
             g.setColor(Color.black);
-            g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
-            g.setColor(color);
+            g.drawRect(0, 0, getWidth()-1 , getHeight()-1 );
+            g.setColor(Color.black);
             for (int i = 0; i < hexes.length; i++) {
-            	for(int q=0; q<hexes[i].length; q++)
-                ( (Graphics2D) g).draw(hexes[i][q]);
+            	for(int q=0; q<hexes[i].length; q++){
+            		 g.setColor(((RegularPolygonGameObject)hexes[i][q]).getColor());
+                     ( (Graphics2D) g).fill(hexes[i][q]);
+                     g.setColor(Color.black);
+            		( (Graphics2D) g).draw(hexes[i][q]);
+               
+            	}
 
             }
  
