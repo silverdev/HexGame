@@ -21,7 +21,6 @@ public class HexGameWindow extends JFrame {
         getContentPane().add(cPolygons, new GridBagConstraints(1, 1, 1, 1, 1, 1, GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 5, 5));
         setSize(Global.windowWidth,Global.windowHeight);
        initRegular();
-
        
         setLocationRelativeTo(null);
     }
@@ -34,15 +33,16 @@ public class HexGameWindow extends JFrame {
 
     protected void initRegular() {
 
-    	double radius;
+    	double radius=BoardTools.radiusCalculator(Global.windowWidth,Global.windowHeight,7);;
     	Shape[][] hexes=Global.hexes;
-    	
+    	double hrad= radius*Math.sqrt(3)/2; //Horizontal radius
         //radius =BoardTools.radiusCalculator(Canvas.HEIGHT,Canvas.WIDTH, 7);
-    	radius =BoardTools.radiusCalculator(Global.windowWidth,Global.windowHeight,7);
-        double hrad= radius*Math.sqrt(3)/2; //Horizontal radius
+    	int yOffset=(int)((Global.windowHeight-((3*radius/2)*(hexes[0].length-1)+2*radius))/2);
+    	int xOffset=(int)((Global.windowWidth-(hrad*hexes.length))/2);
+        
         for(int xc =0; xc<Global.hexes.length;xc++){
         	for(int yc =0; yc<hexes[0].length;yc++)
-        	hexes[xc][yc] =  new RegularPolygonGameObject( (int) (hrad+yc*hrad+2*hrad*xc), (int) (1.5*radius*yc+radius), (int) radius, 6, Math.PI / 2);
+        	hexes[xc][yc] =  new RegularPolygonGameObject( (int) (hrad+yc*hrad+2*hrad*xc)+xOffset, (int) (1.5*radius*yc+radius)+yOffset, (int) radius, 6, Math.PI / 2);
         }
         cPolygons.setShapes(hexes, Color.blue);
     }
@@ -63,8 +63,8 @@ public class HexGameWindow extends JFrame {
             g.fillRect(0, 0, getWidth(), getHeight());
             g.setColor(Color.black);
             g.drawRect(0, 0, getWidth()-1 , getHeight()-1 );
-            ((Graphics2D) g).drawImage(Global.backround,null, 0, 0);
-            		//Global.backround.createGraphics());
+            ((Graphics2D) g).drawImage(Global.background,null, 0, 0);
+            		//Global.background.createGraphics());
             g.setColor(Color.black);
             for (int i = 0; i < hexes.length; i++) {
             	for(int q=0; q<hexes[i].length; q++){

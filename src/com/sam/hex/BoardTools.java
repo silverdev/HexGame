@@ -17,10 +17,10 @@ static double spaceV; //Vertical
 		return spaceH;
 		  
 	}
-	public static void setBackround(int w, int h){
+	public static void setBackground(int w, int h){
 		for(double x=0;x<w;x++){
 			for(double y=0;y<h;y++){
-				if((y+x)/(((double)h+(double)w))<.5==((double)h/(double)w>y/x)){Global.backround.setRGB((int)x,(int)y,Color.blue.getRGB());}else{Global.backround.setRGB((int)x,(int)y,Color.red.getRGB());}
+				if((y+x)/(((double)h+(double)w))<.5==((double)h/(double)w>y/x)){Global.background.setRGB((int)x,(int)y,Color.blue.getRGB());}else{Global.background.setRGB((int)x,(int)y,Color.red.getRGB());}
 				//(((h*w)-h)>y/x)
 			}
 		}
