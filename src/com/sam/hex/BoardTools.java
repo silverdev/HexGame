@@ -1,7 +1,9 @@
 package com.sam.hex;
 
+import java.awt.Color;
+
 public class BoardTools {
-	static double spaceH; //Horizontal
+static double spaceH; //Horizontal
 static double spaceV; //Vertical
 
 	public static double radiusCalculator(int w, int h,int n){
@@ -15,5 +17,13 @@ static double spaceV; //Vertical
 		return spaceH;
 		  
 	}
-	
+	public static void setBackround(int w, int h){
+		for(double x=0;x<w;x++){
+			for(double y=0;y<h;y++){
+				if((y+x)/(((double)h+(double)w))<.5==((double)h/(double)w>y/x)){Global.backround.setRGB((int)x,(int)y,Color.blue.getRGB());}else{Global.backround.setRGB((int)x,(int)y,Color.red.getRGB());}
+				//(((h*w)-h)>y/x)
+			}
+		}
+		
+	}
 }

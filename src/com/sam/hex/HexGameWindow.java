@@ -63,6 +63,8 @@ public class HexGameWindow extends JFrame {
             g.fillRect(0, 0, getWidth(), getHeight());
             g.setColor(Color.black);
             g.drawRect(0, 0, getWidth()-1 , getHeight()-1 );
+            ((Graphics2D) g).drawImage(Global.backround,null, 0, 0);
+            		//Global.backround.createGraphics());
             g.setColor(Color.black);
             for (int i = 0; i < hexes.length; i++) {
             	for(int q=0; q<hexes[i].length; q++){
