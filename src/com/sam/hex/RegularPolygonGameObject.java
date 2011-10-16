@@ -15,11 +15,14 @@ public class RegularPolygonGameObject implements Shape  {
  RegularPolygon Hex;
  private byte teamNumber;
  private Color objectColor=Color.white;
+ boolean checkedflage=false;
+ 
  
  
  
 	public RegularPolygonGameObject(int x, int y, int r, int vertexCount) {
 		Hex =new RegularPolygon(x, y, r, vertexCount);
+		
 		
 	}
 	public RegularPolygonGameObject(int x, int y, int r, int vertexCount, double startAngle) {
@@ -33,9 +36,22 @@ public class RegularPolygonGameObject implements Shape  {
 	public void setTeam(byte t){
 		teamNumber=t;
 	}
-	public static boolean checkWin(int x, int y){
+	
+	public byte getTeam(){
+		return teamNumber;
+	}
+	
+	public static boolean checkWinTeam1(int x, int y,RegularPolygonGameObject[][] gamePeace){
+		if (gamePeace[x-1][y].getTeam()==1) {}
+		if (1+x<gamePeace.length &&gamePeace[x+1][y].getTeam()==1) {}
+		if (gamePeace[x][y-1].getTeam()==1) {}
+		if (gamePeace[x][y+1].getTeam()==1) {}
+		if (gamePeace[x-1][y+1].getTeam()==1) {}
+		if (x+1<gamePeace.length &&y-1<0 &&gamePeace[x][y-1].getTeam()==1) {}
+			
 		return false;
 	} 
+	
 	public void setColor(Color c){
 		objectColor=c;
 	}
