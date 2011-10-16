@@ -6,7 +6,7 @@ public class BoardTools {
 static double spaceH; //Horizontal
 static double spaceV; //Vertical
 
-	public static double radiusCalculator(int w, int h,int n){
+	public static double radiusCalculator(double w, double h,double n){
 		
 		spaceV=(((n-1)*3/2)+2);
 

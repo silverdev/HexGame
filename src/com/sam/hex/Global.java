@@ -13,7 +13,7 @@ public static RegularPolygonGameObject[][] gamePeace = new RegularPolygonGameObj
 public static Shape[][] hexes = gamePeace;
 //public static Color[][] background;
 public static void set(int gS,int wH,int wW) {
-	if (gS>0&&gS%2==1)  gridSize=gS;
+	if (gS>0)  gridSize=gS;
 	if (wH>10) windowHeight=wH;
 	if (wW>10) windowWidth=wW;
 	gamePeace = new RegularPolygonGameObject[gridSize][gridSize];

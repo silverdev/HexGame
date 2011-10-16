@@ -10,7 +10,7 @@ public class GameAction {
 	public static void updateBoard() {
 		double radius;
 		RegularPolygonGameObject[][] gamePeace = Global.gamePeace;
-		 radius =BoardTools.radiusCalculator(HexGameWindow.cPolygons.getWidth(),HexGameWindow.cPolygons.getHeight(), 7);
+		 radius =BoardTools.radiusCalculator(HexGameWindow.cPolygons.getWidth(),HexGameWindow.cPolygons.getHeight(), Global.gridSize);
 	//	radius = BoardTools.radiusCalculator(400,400, 7);
 		double hrad = radius * Math.sqrt(3) / 2; // Horizontal radius
 		int yOffset=(int)((HexGameWindow.cPolygons.getHeight()-((3*radius/2)*(gamePeace[0].length-1)+2*radius))/2);
