@@ -33,6 +33,9 @@ public class RegularPolygonGameObject implements Shape  {
 	public void setTeam(byte t){
 		teamNumber=t;
 	}
+	public byte getTeam(){
+		return teamNumber;
+	}
 	public static boolean checkWin(int x, int y){
 		return false;
 	} 
