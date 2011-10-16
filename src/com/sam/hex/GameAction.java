@@ -18,9 +18,7 @@ public class GameAction {
 		
 		for (int xc = 0; xc < Global.gamePeace.length; xc++) {
 			for (int yc = 0; yc < gamePeace[0].length; yc++)
-				gamePeace[xc][yc].update( (int)(hrad + yc * hrad + 2
-						* hrad * xc)+xOffset, (int) (1.5 * radius * yc + radius)+yOffset,
-						(int) radius, 6, Math.PI / 2);
+				gamePeace[xc][yc].update( (int)(hrad + yc * hrad + 2* hrad * xc)+xOffset, (int) (1.5 * radius * yc + radius)+yOffset,(int) radius, 6, Math.PI / 2);
 	}
 		
 				BoardTools.setBackground(Global.windowWidth,Global.windowHeight);

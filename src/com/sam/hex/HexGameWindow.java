@@ -33,7 +33,7 @@ public class HexGameWindow extends JFrame {
 
     protected void initRegular() {
 
-    	double radius=BoardTools.radiusCalculator(Global.windowWidth,Global.windowHeight,7);;
+    	double radius=BoardTools.radiusCalculator(Global.windowWidth,Global.windowHeight,Global.gridSize);;
     	Shape[][] hexes=Global.hexes;
     	double hrad= radius*Math.sqrt(3)/2; //Horizontal radius
         //radius =BoardTools.radiusCalculator(Canvas.HEIGHT,Canvas.WIDTH, 7);

@@ -17,3 +17,5 @@ bin/*
 .classpath
  
 .~lock.designDoc.odt#
+
+*.class
