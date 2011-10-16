@@ -36,6 +36,7 @@ public class RegularPolygonGameObject implements Shape  {
 	public void setTeam(byte t){
 		teamNumber=t;
 	}
+<<<<<<< HEAD
 	
 	public byte getTeam(){
 		return teamNumber;
@@ -49,6 +50,12 @@ public class RegularPolygonGameObject implements Shape  {
 		if (gamePeace[x-1][y+1].getTeam()==1) {}
 		if (x+1<gamePeace.length &&y-1<0 &&gamePeace[x][y-1].getTeam()==1) {}
 			
+=======
+	public byte getTeam(){
+		return teamNumber;
+	}
+	public static boolean checkWin(int x, int y){
+>>>>>>> 6d5c02d7b4eff2d1765bdf9429348cba14ac4d58
 		return false;
 	} 
 	

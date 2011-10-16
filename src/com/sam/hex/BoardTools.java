@@ -8,12 +8,11 @@ static double spaceV; //Vertical
 
 	public static double radiusCalculator(double w, double h,double n){
 		
-		
 		spaceV=(((n-1)*3/2)+2);
 
 		spaceH=n+(n-1)/2; //always bigger.
-		spaceH=w/(spaceH*Math.sqrt(3));
-		spaceV=h/spaceV;
+		spaceH=(w/(spaceH*Math.sqrt(3)));
+		spaceV=(h/spaceV);
 		if (spaceV<spaceH){return spaceV;}
 		return spaceH;
 		  
@@ -48,5 +47,13 @@ static double spaceV; //Vertical
 			}
 		}
 		
+	}
+	public static byte[][] peaceGrid(){
+		byte[][] loyalty=new byte[Global.gridSize][Global.gridSize];
+		RegularPolygonGameObject[][] gamePeace = Global.gamePeace;
+		for(int x=0; x<gamePeace.length; x++)
+			for(int y=0; y<gamePeace.length; y++)
+				loyalty[x][y]=gamePeace[x][y].getTeam();
+		return loyalty;
 	}
 }
