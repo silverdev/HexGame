@@ -1,7 +1,7 @@
 package com.sam.hex;
 
 import java.awt.Shape;
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 public class Global {

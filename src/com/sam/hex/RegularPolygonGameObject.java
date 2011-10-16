@@ -36,26 +36,33 @@ public class RegularPolygonGameObject implements Shape  {
 	public void setTeam(byte t){
 		teamNumber=t;
 	}
-<<<<<<< HEAD
+
 	
 	public byte getTeam(){
 		return teamNumber;
 	}
 	
 	public static boolean checkWinTeam1(int x, int y,RegularPolygonGameObject[][] gamePeace){
-		if (gamePeace[x-1][y].getTeam()==1) {}
-		if (1+x<gamePeace.length &&gamePeace[x+1][y].getTeam()==1) {}
-		if (gamePeace[x][y-1].getTeam()==1) {}
-		if (gamePeace[x][y+1].getTeam()==1) {}
-		if (gamePeace[x-1][y+1].getTeam()==1) {}
-		if (x+1<gamePeace.length &&y-1<0 &&gamePeace[x][y-1].getTeam()==1) {}
+		if (gamePeace[x-1][y].getTeam()==1&&gamePeace[x-1][y].checkedflage==false) {gamePeace[x-1][y].checkedflage=true;if (x-1==0){gamePeace[x-1][y].objectColor=Color.green;return true; } if(checkWinTeam1(x-1,y,gamePeace)){gamePeace[x-1][y].objectColor=Color.green;return true; }}
+		if (1+x<gamePeace.length-1 &&gamePeace[x+1][y].getTeam()==1&&gamePeace[x+1][y].checkedflage==false) {gamePeace[x+1][y].checkedflage=true;if (x+1==0){gamePeace[x+1][y].objectColor=Color.green;return true; } if(checkWinTeam1(x+1,y,gamePeace)){gamePeace[x+1][y].objectColor=Color.green;return true; }}
+		if (y<0&&gamePeace[x][y-1].getTeam()==1&&gamePeace[x][y-1].checkedflage==false) {gamePeace[x][y-1].checkedflage=true;if (x-1==0){gamePeace[x][y-1].objectColor=Color.green;return true; } if(checkWinTeam1(x,y-1,gamePeace)){gamePeace[x][y-1].objectColor=Color.green;return true; }}
+		if (x+1<gamePeace.length-1&&gamePeace[x][y+1].getTeam()==1&&gamePeace[x][y+1].checkedflage==false) {gamePeace[x][y+1].checkedflage=true;if (x-1==0){gamePeace[x][y+1].objectColor=Color.green;return true; } if(checkWinTeam1(x,y+1,gamePeace)){gamePeace[x][y+1].objectColor=Color.green;return true; }}
+		if (gamePeace[x-1][y+1].getTeam()==1&&gamePeace[x-1][y+1].checkedflage==false) {gamePeace[x-1][y+1].checkedflage=true;if (x-1==0){gamePeace[x-1][y+1].objectColor=Color.green;return true; } if(checkWinTeam1(x-1,y+1,gamePeace)){gamePeace[x-1][y+1].objectColor=Color.green;return true; }}
+		if (x+1<gamePeace.length-1 &&y-1<0 &&gamePeace[x+1][y-1].getTeam()==1&&gamePeace[x+1][y-1].checkedflage==false) {gamePeace[x+1][y-1].checkedflage=true;if (x-1==0){gamePeace[x+1][y-1].objectColor=Color.green;return true; } if(checkWinTeam1(x+1,y,gamePeace)){gamePeace[x+1][y-1].objectColor=Color.green;return true; }}
 			
-=======
-	public byte getTeam(){
-		return teamNumber;
-	}
-	public static boolean checkWin(int x, int y){
->>>>>>> 6d5c02d7b4eff2d1765bdf9429348cba14ac4d58
+
+		return false;
+	} 
+	
+	public static boolean checkWinTeam2(int y, int x,RegularPolygonGameObject[][] gamePeace){
+		if (gamePeace[x-1][y].getTeam()==2&&gamePeace[x-1][y].checkedflage==false) {gamePeace[x-1][y].checkedflage=true;if (x-1==0){gamePeace[x-1][y].objectColor=Color.green;return true; } if(checkWinTeam1(x-1,y,gamePeace)){gamePeace[x-1][y].objectColor=Color.green;return true; }}
+		if (1+x<gamePeace.length-1 &&gamePeace[x+1][y].getTeam()==2&&gamePeace[x+1][y].checkedflage==false) {gamePeace[x+1][y].checkedflage=true;if (x+1==0){gamePeace[x+1][y].objectColor=Color.green;return true; } if(checkWinTeam1(x+1,y,gamePeace)){gamePeace[x+1][y].objectColor=Color.green;return true; }}
+		if (y<0&&gamePeace[x][y-1].getTeam()==2&&gamePeace[x][y-1].checkedflage==false) {gamePeace[x][y-1].checkedflage=true;if (x-1==0){gamePeace[x][y-1].objectColor=Color.green;return true; } if(checkWinTeam1(x,y-1,gamePeace)){gamePeace[x][y-1].objectColor=Color.green;return true; }}
+		if (x+1<gamePeace.length-1&&gamePeace[x][y+1].getTeam()==2&&gamePeace[x][y+1].checkedflage==false) {gamePeace[x][y+1].checkedflage=true;if (x-1==0){gamePeace[x][y+1].objectColor=Color.green;return true; } if(checkWinTeam1(x,y+1,gamePeace)){gamePeace[x][y+1].objectColor=Color.green;return true; }}
+		if (gamePeace[x-1][y+1].getTeam()==2&&gamePeace[x-1][y+1].checkedflage==false) {gamePeace[x-1][y+1].checkedflage=true;if (x-1==0){gamePeace[x-1][y+1].objectColor=Color.green;return true; } if(checkWinTeam1(x-1,y+1,gamePeace)){gamePeace[x-1][y+1].objectColor=Color.green;return true; }}
+		if (x+1<gamePeace.length-1 &&y-1<0 &&gamePeace[x+1][y-1].getTeam()==2&&gamePeace[x+1][y-1].checkedflage==false) {gamePeace[x+1][y-1].checkedflage=true;if (x-1==0){gamePeace[x+1][y-1].objectColor=Color.green;return true; } if(checkWinTeam1(x+1,y,gamePeace)){gamePeace[x+1][y-1].objectColor=Color.green;return true; }}
+			
+
 		return false;
 	} 
 	

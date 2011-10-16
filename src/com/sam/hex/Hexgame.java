@@ -17,7 +17,9 @@ public class Hexgame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-          GameAction.updateBoard();
+		GameAction.checkWinPlayer1();
+		GameAction.checkWinPlayer2();
+		GameAction.updateBoard();
        }
 	}
 }

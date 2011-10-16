@@ -6,6 +6,15 @@ import java.awt.Shape;
 import sl.shapes.RegularPolygon;
 
 public class GameAction {
+	
+	public static void checkWinPlayer1(){
+		for(int i=0;i<Global.gridSize-1;i++){if(RegularPolygonGameObject.checkWinTeam1(Global.gridSize, i, Global.gamePeace)){System.out.print("Player one wins");}}
+		
+	}
+	public static void checkWinPlayer2(){
+		for(int i=1;i<Global.gridSize-1;i++){if(RegularPolygonGameObject.checkWinTeam2(i, Global.gridSize, Global.gamePeace)){System.out.print("Player Two wins");}}
+		
+	}
 
 	public static void updateBoard() {
 		double radius;
