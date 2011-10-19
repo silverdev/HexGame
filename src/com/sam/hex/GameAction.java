@@ -7,6 +7,8 @@ import sl.shapes.RegularPolygon;
 
 public class GameAction {
 	
+	private static RegularPolygonGameObject hex;
+	
 	public static void checkWinPlayer1(){
 		for(int i=0;i<Global.gridSize-1;i++){if(RegularPolygonGameObject.checkWinTeam1(Global.gridSize, i, Global.gamePeace)){System.out.print("Player one wins");}}
 		
@@ -35,5 +37,26 @@ public class GameAction {
          		HexGameWindow.cPolygons.repaint();
 	
 	
+	}
+	public static void setPiece(RegularPolygonGameObject h){
+		hex=h;
+	}
+	public static void getPlayerTurn(byte team){
+		while(true){
+		while(hex==null){
+			 try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		if(hex.getTeam()==0){
+			hex.setTeam(team);
+			hex=null;
+			break;
+		}
+		hex=null;
+		}
 	}
 }

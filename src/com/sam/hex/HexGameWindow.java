@@ -2,8 +2,11 @@ package com.sam.hex;
 
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.*;
 import javax.swing.*;
+
 
 import sl.shapes.*;
 
@@ -16,7 +19,6 @@ public class HexGameWindow extends JFrame {
         super("Hexgrid");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setLayout(new GridBagLayout());
-        
        
         getContentPane().add(cPolygons, new GridBagConstraints(1, 1, 1, 1, 1, 1, GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 5, 5));
         setSize(Global.windowWidth,Global.windowHeight);
@@ -55,6 +57,7 @@ public class HexGameWindow extends JFrame {
         public void setShapes(Shape[][] shapes, Color color) {
             this.hexes = shapes;
             this.color = color;
+            addMouseListener(new MyListener());
         }
         @Override
         public void paintComponent(Graphics g) {
@@ -77,6 +80,19 @@ public class HexGameWindow extends JFrame {
 
             }
  
-        }
+        } 
+        private class MyListener extends MouseAdapter {
+    	public void mousePressed(MouseEvent e){
+    		int x=e.getX();
+    		int y=e.getY();
+    		for(int xc=0; xc< Global.gamePeace.length; xc++){
+    			for(RegularPolygonGameObject hex : Global.gamePeace[xc])
+    				if(hex.contains(x,y)){
+    					GameAction.setPiece(hex);
+    				}
+    		}
+    		
+    	}
+    }
     }
 }

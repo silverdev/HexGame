@@ -13,7 +13,7 @@ import sl.shapes.RegularPolygon;
 public class RegularPolygonGameObject implements Shape  {
  
  RegularPolygon Hex;
- private byte teamNumber;
+ private byte teamNumber; //1 is left-right, 2 is top-down
  private Color objectColor=Color.white;
  boolean checkedflage=false;
  
@@ -35,6 +35,8 @@ public class RegularPolygonGameObject implements Shape  {
 	
 	public void setTeam(byte t){
 		teamNumber=t;
+		if (teamNumber==1) setColor(Color.blue);
+		else setColor(Color.red);
 	}
 
 	
