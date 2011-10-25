@@ -31,6 +31,7 @@ public class Hexgame {
         	  GameAction.getPlayerTurn(player);
         	  GameAction.checkWinPlayer2();
         	  player=1;
+        	  GameAction.checkedFlageReset();
           }
 		
 		

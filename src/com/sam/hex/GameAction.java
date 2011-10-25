@@ -14,12 +14,13 @@ public class GameAction {
 		
 	}
 	public static void checkWinPlayer2(){
-		for(int i=0;i<Global.gridSize-1;i++){if(RegularPolygonGameObject.checkWinTeam((byte)2, i, Global.gridSize, Global.gamePeace)){System.out.print("Player Two wins");}}
+		for(int i=0;i<Global.gridSize-1;i++){if(RegularPolygonGameObject.checkWinTeam((byte)2, i,
+				Global.gridSize, Global.gamePeace)){System.out.print("Player Two wins");}}
 		
 	}
 	public static void checkedFlageReset(){
-		for(int x=Global.gridSize;x>=0;x--){
-			for(int y=Global.gridSize;y>=0;y--){
+		for(int x=Global.gridSize-1;x>=0;x--){
+			for(int y=Global.gridSize-1;y>=0;y--){
 				Global.gamePeace[x][y].checkedflage=false;	
 			}
 		}
