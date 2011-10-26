@@ -44,7 +44,7 @@ public class HexGameWindow extends JFrame {
         
         for(int xc =0; xc<Global.hexes.length;xc++){
         	for(int yc =0; yc<hexes[0].length;yc++)
-        	hexes[xc][yc] =  new RegularPolygonGameObject( (int) (hrad+yc*hrad+2*hrad*xc)+xOffset, (int) (1.5*radius*yc+radius)+yOffset, (int) radius, 6, Math.PI / 2);
+        	hexes[xc][yc] =  new RegularPolygonGameObject( ( (hrad+yc*hrad+2*hrad*xc)+xOffset),  (1.5*radius*yc+radius)+yOffset, radius, 6, Math.PI / 2);
         }
         cPolygons.setShapes(hexes, Color.blue);
     }

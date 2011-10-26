@@ -1,6 +1,7 @@
 package com.sam.hex;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 
 public class BoardTools {
 static double spaceH; //Horizontal
@@ -18,6 +19,7 @@ static double spaceV; //Vertical
 		  
 	}
 	public static void setBackground(int w, int h){
+		Global.background= new BufferedImage(Global.windowWidth,Global.windowHeight, BufferedImage.TYPE_INT_ARGB );
 		RegularPolygonGameObject[][] gamePeace = Global.gamePeace;
 		double radius =BoardTools.radiusCalculator(HexGameWindow.cPolygons.getWidth(),HexGameWindow.cPolygons.getHeight(), Global.gridSize);
 		double hrad = radius * Math.sqrt(3) / 2; // Horizontal radius

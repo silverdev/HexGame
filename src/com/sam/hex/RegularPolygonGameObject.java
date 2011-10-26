@@ -20,16 +20,16 @@ public class RegularPolygonGameObject implements Shape  {
  
  
  
-	public RegularPolygonGameObject(int x, int y, int r, int vertexCount) {
+	public RegularPolygonGameObject(double x, double y, double r, int vertexCount) {
 		Hex =new RegularPolygon(x, y, r, vertexCount);
 		
 		
 	}
-	public RegularPolygonGameObject(int x, int y, int r, int vertexCount, double startAngle) {
+	public RegularPolygonGameObject(double x, double y, double r, int vertexCount, double startAngle) {
 		Hex =new RegularPolygon(x, y, r, vertexCount,startAngle);
 	}
 	
-	public void update(int x, int y, int r, int vertexCount, double startAngle){
+	public void update(double x, double y, double r, int vertexCount, double startAngle){
 		Hex =new RegularPolygon(x, y, r, vertexCount,startAngle);
 	}
 	
