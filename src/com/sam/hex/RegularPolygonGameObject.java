@@ -44,7 +44,7 @@ public class RegularPolygonGameObject implements Shape  {
 		return teamNumber;
 	}
 	
-	public boolean checkpece(byte team,int x, int y,RegularPolygonGameObject[][] gamePeace){
+	public boolean checkpiece(byte team,int x, int y,RegularPolygonGameObject[][] gamePeace){
 		if (team==teamNumber&&!checkedflage){checkedflage=!checkedflage; if(checkSpot(team,x,y)||checkWinTeam(team,x,y,gamePeace)){objectColor=Color.green; return true;}}
 		return false;
 		
@@ -52,12 +52,12 @@ public class RegularPolygonGameObject implements Shape  {
 	
 	
 	public static boolean checkWinTeam(byte team,int x, int y,RegularPolygonGameObject[][] gamePeace){
-		if (y<gamePeace.length&&x-1>=0&&gamePeace[x-1][y].checkpece(team,x-1,y,gamePeace)){return true;}
-		if (y<gamePeace.length&&x+1<gamePeace.length&&gamePeace[x+1][y].checkpece(team,x+1,y,gamePeace)){return true;}
-		if (x<gamePeace.length&&y-1>=0&&gamePeace[x][y-1].checkpece(team,x,y-1,gamePeace)){return true;}
-		if (x<gamePeace.length&&y+1<gamePeace.length&&gamePeace[x][y+1].checkpece(team,x,y+1,gamePeace)){return true;}
-		if (y+1<gamePeace.length&&x-1>=0&&gamePeace[x-1][y+1].checkpece(team,x-1,y+1,gamePeace)){return true;}
-		if (y-1<gamePeace.length&&x+1<gamePeace.length&&y-1>=0&&gamePeace[x+1][y-1].checkpece(team,x+1,y-1,gamePeace)){return true;}
+		if (y<gamePeace.length&&x-1>=0&&gamePeace[x-1][y].checkpiece(team,x-1,y,gamePeace)){return true;}
+		if (y<gamePeace.length&&x+1<gamePeace.length&&gamePeace[x+1][y].checkpiece(team,x+1,y,gamePeace)){return true;}
+		if (x<gamePeace.length&&y-1>=0&&gamePeace[x][y-1].checkpiece(team,x,y-1,gamePeace)){return true;}
+		if (x<gamePeace.length&&y+1<gamePeace.length&&gamePeace[x][y+1].checkpiece(team,x,y+1,gamePeace)){return true;}
+		if (y+1<gamePeace.length&&x-1>=0&&gamePeace[x-1][y+1].checkpiece(team,x-1,y+1,gamePeace)){return true;}
+		if (y-1<gamePeace.length&&x+1<gamePeace.length&&y-1>=0&&gamePeace[x+1][y-1].checkpiece(team,x+1,y-1,gamePeace)){return true;}
 			
   
 		return false;

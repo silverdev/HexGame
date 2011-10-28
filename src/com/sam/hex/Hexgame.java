@@ -13,7 +13,7 @@ public class Hexgame {
 		 HexGameWindow fr = new HexGameWindow();
 		
           fr.setVisible(true);
-          GameObject RunningGame=new GameObject();
+          GameObject RunningGame=new GameObject(); //GameObject is very much in use, do not delete!
          
          while(true){
         	 GameAction.updateBoard();

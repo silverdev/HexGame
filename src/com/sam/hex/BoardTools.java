@@ -20,7 +20,7 @@ static double spaceV; //Vertical
 	}
 	public static void setBackground(int w, int h){
 		Global.background= new BufferedImage(Global.windowWidth,Global.windowHeight, BufferedImage.TYPE_INT_ARGB );
-		RegularPolygonGameObject[][] gamePeace = Global.gamePeace;
+		RegularPolygonGameObject[][] gamePeace = Global.gamePiece;
 		double radius =BoardTools.radiusCalculator(HexGameWindow.cPolygons.getWidth(),HexGameWindow.cPolygons.getHeight(), Global.gridSize);
 		double hrad = radius * Math.sqrt(3) / 2; // Horizontal radius
 		int yOffset=(int)((HexGameWindow.cPolygons.getHeight()-((3*radius/2)*(gamePeace[0].length-1)+2*radius))/2);
@@ -50,9 +50,9 @@ static double spaceV; //Vertical
 		}
 		
 	}
-	public static byte[][] peaceGrid(){
+	public static byte[][] pieceGrid(){
 		byte[][] loyalty=new byte[Global.gridSize][Global.gridSize];
-		RegularPolygonGameObject[][] gamePeace = Global.gamePeace;
+		RegularPolygonGameObject[][] gamePeace = Global.gamePiece;
 		for(int x=0; x<gamePeace.length; x++)
 			for(int y=0; y<gamePeace.length; y++)
 				loyalty[x][y]=gamePeace[x][y].getTeam();

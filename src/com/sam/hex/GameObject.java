@@ -7,7 +7,7 @@ public class GameObject implements Runnable {
 	Thread theGameRunner;
 	
 	public GameObject() {
-		theGameRunner = new Thread(this, "runningGane"); // (1) Create a new thread.
+		theGameRunner = new Thread(this, "runningGame"); // (1) Create a new thread.
 		System.out.println(theGameRunner.getName());
 		theGameRunner.start(); // (2) Start the thread.
         }
@@ -26,7 +26,7 @@ public class GameObject implements Runnable {
               	  GameAction.getPlayerTurn(player);
               	  GameAction.checkWinPlayer2();
               	  player=1;
-              	  GameAction.checkedFlageReset();
+              	  GameAction.checkedFlagReset();
                 }
       		
       		

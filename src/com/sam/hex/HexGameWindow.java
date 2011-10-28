@@ -10,7 +10,7 @@ import javax.swing.*;
 
 import sl.shapes.*;
 
-
+//DEPRECATED: This class will not be ported to Android, just ignore it for now.
 
 public class HexGameWindow extends JFrame {
    public static Canvas cPolygons = new Canvas();
@@ -85,8 +85,8 @@ public class HexGameWindow extends JFrame {
     	public void mousePressed(MouseEvent e){
     		int x=e.getX();
     		int y=e.getY();
-    		for(int xc=0; xc< Global.gamePeace.length; xc++){
-    			for(RegularPolygonGameObject hex : Global.gamePeace[xc])
+    		for(int xc=0; xc< Global.gamePiece.length; xc++){
+    			for(RegularPolygonGameObject hex : Global.gamePiece[xc])
     				if(hex.contains(x,y)){
     					GameAction.setPiece(hex);
     				}
