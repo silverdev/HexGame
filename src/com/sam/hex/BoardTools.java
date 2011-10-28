@@ -50,7 +50,7 @@ static double spaceV; //Vertical
 		}
 		
 	}
-	public static byte[][] pieceGrid(){
+	public static byte[][] teamGrid(){
 		byte[][] loyalty=new byte[Global.gridSize][Global.gridSize];
 		RegularPolygonGameObject[][] gamePeace = Global.gamePiece;
 		for(int x=0; x<gamePeace.length; x++)
