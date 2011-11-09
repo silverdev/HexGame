@@ -99,13 +99,13 @@ public class GameAction {
 		int moves=1;
 		for(int x=0; x<board.length; x++){
 			for(int y=0; y<board[x].length; y++){
-				if(board[x][y]!=team) moves++;
+				if(board[x][y]==0) moves++;
 			}
 		}
 		moves*=Math.random();
 		for(int x=0; x<board.length; x++){
 			for(int y=0; y<board[x].length; y++){
-				if(board[x][y]!=team) moves--;
+				if(board[x][y]==0) moves--;
 				if(moves==0) Global.gamePiece[x][y].setTeam(team);
 			}
 		}
