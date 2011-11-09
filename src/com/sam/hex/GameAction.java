@@ -1,4 +1,5 @@
 package com.sam.hex;
+import java.util.Random;
 
 public class GameAction {
 
@@ -33,7 +34,6 @@ public class GameAction {
 			}
 		}
 	}
-
 	public static void updateBoard() {
 		if (HexGameWindow.cPolygons.getWidth() != Global.windowWidth
 				|| HexGameWindow.cPolygons.getHeight() != Global.windowHeight) {
@@ -95,7 +95,7 @@ public class GameAction {
 		}
 	}
 
-	public static void getAITurn() {
-
+	public static void getAITurn(byte team) {
+		System.out.println("I win.");
 	}
 }

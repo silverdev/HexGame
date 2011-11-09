@@ -20,12 +20,14 @@ public class GameObject implements Runnable {
 
 			System.out.println("test");
 			if (player == 1) {
-				GameAction.getPlayerTurn(player);
+				if(Global.gameType<2) GameAction.getPlayerTurn(player);
+				else GameAction.getAITurn(player);
 				if (GameAction.checkWinPlayer1())
 					break;
 				player = 2;
 			} else {
-				GameAction.getPlayerTurn(player);
+				if((Global.gameType+1)%2>0) GameAction.getPlayerTurn(player);
+				else GameAction.getAITurn(player);
 				if (GameAction.checkWinPlayer2())
 					break;
 				player = 1;

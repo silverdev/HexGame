@@ -10,6 +10,7 @@ import java.awt.geom.Rectangle2D;
 
 import sl.shapes.RegularPolygon;
 
+
 public class RegularPolygonGameObject implements Shape {
 
 	RegularPolygon Hex;
@@ -89,6 +90,7 @@ public class RegularPolygonGameObject implements Shape {
 						gamePeace)) {
 			return true;
 		}
+
 
 		return false;
 	}

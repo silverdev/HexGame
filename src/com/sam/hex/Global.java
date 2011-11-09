@@ -29,7 +29,10 @@ public class Global {
 				BufferedImage.TYPE_INT_ARGB);
 		// background=new Color[windowWidth][windowHeight];
 	}
-
+	public static void set(int gS, int wH, int wW, byte AI){
+		set(gS, wH, wW);
+		gameType=AI;
+	}
 	// public static int windowHeight=200;
 	// public static int windowWidth=400;
 }
