@@ -11,8 +11,8 @@ public class Global {
 	public static int windowWidth = 800;
 	public static RegularPolygonGameObject[][] gamePiece = new RegularPolygonGameObject[0][0];
 	public static Shape[][] hexes = gamePiece;
-	public static Color playerOne;
-	public static Color playerTwo;
+	public static Color playerOne=Color.blue;
+	public static Color playerTwo=Color.red;
 	public static byte gameType; //0 Human v Human,1 Human v ai, 2 ai v Human, 3 ai v ai;
 
 	// public static Color[][] background;
