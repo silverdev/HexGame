@@ -9,8 +9,8 @@ package com.sam.hex;
  */
 public interface playingEntity {
 
-	public void getPlayerTurn(byte[] gameBoard);
-	
+	public void getPlayerTurn(byte[][] gameBoard);
+	public void getPlayerTurn();
 	
 	
 }

@@ -14,7 +14,7 @@ public class GameObject implements Runnable {
 	}
 
 	public void run() {
-
+ 
 		byte player = 1;
 		while (true) {
 
