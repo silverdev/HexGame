@@ -14,7 +14,8 @@ public class GameObject implements Runnable {
 	}
 
 	public void run() {
- 
+		playingEntity player1=new PlayerObject((byte)1);
+		playingEntity player2=new GameAI((byte)2,(byte)1);
 		byte player = 1;
 		while (true) {
 
