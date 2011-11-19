@@ -14,21 +14,26 @@ public class GameObject implements Runnable {
 	}
 
 	public void run() {
-		playingEntity player1=new PlayerObject((byte)1);
-		playingEntity player2=new GameAI((byte)2,(byte)1);
+		playingEntity player1;
+		playingEntity player2;
+		
+		if(Global.gameType<2) player1=new PlayerObject((byte)1);
+		else player1=new GameAI((byte)1,(byte)1);
+		
+		if((Global.gameType+1)%2>0) player2=new PlayerObject((byte)2);
+		else player2=new GameAI((byte)2,(byte)1);
+		
+		
 		byte player = 1;
 		while (true) {
 
-			System.out.println("test");
 			if (player == 1) {
-				if(Global.gameType<2) GameAction.getPlayerTurn(player);
-				else GameAction.getAITurn(player);
+				player1.getPlayerTurn();
 				if (GameAction.checkWinPlayer1())
 					break;
 				player = 2;
 			} else {
-				if((Global.gameType+1)%2>0) GameAction.getPlayerTurn(player);
-				else GameAction.getAITurn(player);
+				player2.getPlayerTurn();
 				if (GameAction.checkWinPlayer2())
 					break;
 				player = 1;

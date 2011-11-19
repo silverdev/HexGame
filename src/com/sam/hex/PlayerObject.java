@@ -21,7 +21,7 @@ public class PlayerObject implements playingEntity {
 		makeMove();
 	}
 	public void makeMove(){
-		
+		GameAction.getPlayerTurn(team);
 	}
 
 }
