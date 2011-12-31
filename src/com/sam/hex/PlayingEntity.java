@@ -7,10 +7,10 @@ package com.sam.hex;
  * @author Sam Laane
  *
  */
-public interface PlayingEntity {
+public interface playingEntity {
 
 	public void getPlayerTurn(byte[][] gameBoard);
-	
+	public void getPlayerTurn();
 	
 	
 }
