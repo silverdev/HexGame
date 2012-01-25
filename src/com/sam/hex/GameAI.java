@@ -5,7 +5,7 @@ import java.util.List;
 
 
 
-public class GameAI implements playingEntity { 
+public class GameAI implements PlayingEntity { 
 	byte team;
 	byte difficalty;
 	byte[][] gameBoard;
@@ -18,12 +18,9 @@ public class GameAI implements playingEntity {
 		difficalty=difficaltyT;
 		
 	}
-<<<<<<< HEAD
 
 	public void getPlayerTurn(byte[][] gameBoard) { // for net play
-=======
-	public void getPlayerTurn(byte[][] gameBoard) {
->>>>>>> 16cd4a96f5bfb3f12819a9302f8097525e26e952
+
 		 this.gameBoard=gameBoard;
 		 makeMove();
 	}
@@ -33,16 +30,7 @@ public class GameAI implements playingEntity {
 		this.gameBoard=BoardTools.teamGrid();
 		makeMove();
 	}
-<<<<<<< HEAD
-	public void makeMove(){ // lets you make a move
-		  
-		try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();}
-			
-=======
+
 	public void makeMove(){
 		/**
 		 * Will's AI

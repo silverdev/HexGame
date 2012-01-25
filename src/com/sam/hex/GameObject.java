@@ -14,8 +14,8 @@ public class GameObject implements Runnable {
 	}
 
 	public void run() {
-		playingEntity player1;
-		playingEntity player2;
+		PlayingEntity player1;
+		PlayingEntity player2;
 		
 		if(Global.gameType<2) player1=new PlayerObject((byte)1);
 		else player1=new GameAI((byte)1,(byte)1);// sets player vs Ai

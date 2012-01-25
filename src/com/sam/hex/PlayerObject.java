@@ -1,6 +1,6 @@
 package com.sam.hex;
 
-public class PlayerObject implements playingEntity {
+public class PlayerObject implements PlayingEntity {
 	
 	byte[][] gameBoard; 
 	byte team;
