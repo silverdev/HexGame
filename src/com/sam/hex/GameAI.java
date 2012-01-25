@@ -9,7 +9,7 @@ public class GameAI implements PlayingEntity {
 	byte team;
 	byte difficalty;
 	byte[][] gameBoard;
-	int[] n,m = {0,0};//n is the leftmost AI move, m is the rightmost AI move
+	int[] n={0,0},m = {0,0};//n is the leftmost AI move, m is the rightmost AI move
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	ArrayList<List<List<Integer>>> pairs = new ArrayList();//List of pair-pieces
 	
