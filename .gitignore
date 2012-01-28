@@ -19,3 +19,5 @@ bin/*
 .~lock.designDoc.odt#
 
 *.class
+
+scr
