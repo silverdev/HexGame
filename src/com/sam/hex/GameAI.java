@@ -40,7 +40,7 @@ public class GameAI implements PlayingEntity {
 		/**
 		 * Will's AI
 		 * */
-		//Still needs fixing: Not creating pair on wall, unable to detect when pairs are attacked, STILL overwriting player
+		//Still needs fixing: Not creating pair on wall
 		
 		//Play in the middle if possible
 		int mid = (gameBoard.length-1)/2;
@@ -86,7 +86,7 @@ public class GameAI implements PlayingEntity {
 						cord.add(n[0]);
 						cord.add(n[1]-1);
 						pair.add(cord);
-						cord.clear();
+						cord=new ArrayList();
 						
 						cord.add(n[0]+1);
 						cord.add(n[1]-1);
@@ -96,17 +96,34 @@ public class GameAI implements PlayingEntity {
 						n[1] = n[1]-2;
 						n[0] = n[0]+1;
 						
+						if(n[1]-1==0){ //Check if exactly one away from edge
+							pair = new ArrayList();
+							cord = new ArrayList();
+							
+							cord.add(n[0]);
+							cord.add(n[1]-1);
+							pair.add(cord);
+							cord=new ArrayList();
+							
+							cord.add(n[0]+1);
+							cord.add(n[1]-1);
+							pair.add(cord);
+							pairs.add(pair);
+							
+							n[1] = n[1]-2;
+							n[0] = n[0]+1;
+						}
+						
 						return;
 					}
 					else if(gameBoard[n[0]-1][n[1]-1]==0){ //Should check for more spaces!
 						Global.gamePiece[n[0]-1][n[1]-1].setTeam(team);
 						ArrayList<List<Integer>> pair = new ArrayList();
 						ArrayList<Integer> cord = new ArrayList();
-						
 						cord.add(n[0]);
 						cord.add(n[1]-1);
 						pair.add(cord);
-						cord.clear();
+						cord=new ArrayList();
 						
 						cord.add(n[0]-1);
 						cord.add(n[1]);
@@ -116,6 +133,23 @@ public class GameAI implements PlayingEntity {
 						n[1] = n[1]-1;
 						n[0] = n[0]-1;
 						
+						if(n[1]-1==0){
+							pair = new ArrayList();
+							cord = new ArrayList();
+							
+							cord.add(n[0]);
+							cord.add(n[1]-1);
+							pair.add(cord);
+							cord=new ArrayList();
+							
+							cord.add(n[0]+1);
+							cord.add(n[1]-1);
+							pair.add(cord);
+							pairs.add(pair);
+							
+							n[1] = n[1]-2;
+							n[0] = n[0]+1;
+						}
 						return;
 					}
 				}
@@ -126,12 +160,11 @@ public class GameAI implements PlayingEntity {
 						Global.gamePiece[m[0]-1][m[1]+2].setTeam(team);
 						ArrayList<List<Integer>> pair = new ArrayList();
 						ArrayList<Integer> cord = new ArrayList();
-						//TODO Get cords for pair-pieces
 						
 						cord.add(m[0]-1);
 						cord.add(m[1]+1);
 						pair.add(cord);
-						cord.clear();
+						cord=new ArrayList();
 						
 						cord.add(m[0]);
 						cord.add(m[1]+1);
@@ -140,19 +173,34 @@ public class GameAI implements PlayingEntity {
 						
 						m[1] = m[1]+2;
 						m[0] = m[0]-1;
-						
+						if(m[1]+1==gameBoard.length-1){
+							pair = new ArrayList();
+							cord = new ArrayList();
+							
+							cord.add(m[0]-1);
+							cord.add(m[1]+1);
+							pair.add(cord);
+							cord=new ArrayList();
+							
+							cord.add(m[0]);
+							cord.add(m[1]+1);
+							pair.add(cord);
+							pairs.add(pair);
+							
+							m[1] = m[1]+2;
+							m[0] = m[0]-1;
+						}
 						return;
 					}
 					else{ //Also check more than once!
 						Global.gamePiece[m[0]+1][m[1]+1].setTeam(team);
 						ArrayList<List<Integer>> pair = new ArrayList();
 						ArrayList<Integer> cord = new ArrayList();
-						//TODO Get cords for pair-pieces
 						
 						cord.add(m[0]);
 						cord.add(m[1]+1);
 						pair.add(cord);
-						cord.clear();
+						cord=new ArrayList();
 						
 						cord.add(m[0]+1);
 						cord.add(m[1]);
@@ -161,7 +209,23 @@ public class GameAI implements PlayingEntity {
 						
 						m[1] = m[1]+1;
 						m[0] = m[0]+1;
-						
+						if(m[1]+1==gameBoard.length-1){
+							pair = new ArrayList();
+							cord = new ArrayList();
+							
+							cord.add(m[0]-1);
+							cord.add(m[1]+1);
+							pair.add(cord);
+							cord=new ArrayList();
+							
+							cord.add(m[0]);
+							cord.add(m[1]+1);
+							pair.add(cord);
+							pairs.add(pair);
+							
+							m[1] = m[1]+2;
+							m[0] = m[0]-1;
+						}
 						return;
 					}
 				}
