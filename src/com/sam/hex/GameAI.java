@@ -6,12 +6,13 @@ import java.util.List;
 
 
 public class GameAI implements PlayingEntity { 
-	byte team;
+	byte team;// 1 is left-right, 2 is top-down
 	byte difficalty;
 	byte[][] gameBoard;
-	int[] n={0,0},m = {0,0};//n is the leftmost AI move, m is the rightmost AI move
+	int[] n={BoardTools.teamGrid().length-1,BoardTools.teamGrid().length-2},m = {0,0};//n is the leftmost AI move, m is the rightmost AI move
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	ArrayList<List<List<Integer>>> pairs = new ArrayList();//List of pair-pieces
+	//GRAAAGHAGHBAGBLAKSJHLDF
 	
 	public GameAI(byte teamNumberT,byte difficaltyT){
 		team=teamNumberT;
@@ -31,10 +32,15 @@ public class GameAI implements PlayingEntity {
 		makeMove();
 	}
 
-	public int makeMove(){
+
+	public void makeMove(){
+		willMove();
+	}
+	private void willMove(){
 		/**
 		 * Will's AI
 		 * */
+		//Still needs fixing: Not creating pair on wall
 		
 		//Play in the middle if possible
 		int mid = (gameBoard.length-1)/2;
@@ -45,9 +51,19 @@ public class GameAI implements PlayingEntity {
 			m[1] = mid;
 			Global.gamePiece[mid][mid].setTeam(team);
 			
-			return 1;
+			return;
+		}
+		else if(gameBoard[mid][mid]!=0 && gameBoard[mid][mid]!=team && gameBoard[mid+1][mid]==0){
+			n[0] = mid+1;//horizontal
+			n[1] = mid;//vertical
+			m[0] = mid+1;
+			m[1] = mid;
+			Global.gamePiece[mid+1][mid].setTeam(team);
+			
+			return;
 		}
 		
+<<<<<<< HEAD
 		//Check if one of our pairs is being attacked, and fill in the alternate if so
 		for(int x=0; x<pairs.size(); x++){
 			System.out.println("Pair listing: "+pairs);
@@ -70,9 +86,22 @@ public class GameAI implements PlayingEntity {
 				}
 			}
 			else{
+=======
+		//Check if one of our pairs is being attacked, and fill in the alternate if so 
+		for(int x=0; x<pairs.size(); x++){ 
+			if(gameBoard[pairs.get(x).get(0).get(0)][pairs.get(x).get(0).get(1)]!=0 && gameBoard[pairs.get(x).get(0).get(0)][pairs.get(x).get(0).get(1)]!=team && gameBoard[pairs.get(x).get(1).get(0)][pairs.get(x).get(1).get(1)]==0){
+				Global.gamePiece[pairs.get(x).get(1).get(0)][pairs.get(x).get(1).get(1)].setTeam(team);
 				pairs.remove(x);
+				return;
+			}
+			else if(gameBoard[pairs.get(x).get(1).get(0)][pairs.get(x).get(1).get(1)]!=0 && gameBoard[pairs.get(x).get(1).get(0)][pairs.get(x).get(1).get(1)]!=team && gameBoard[pairs.get(x).get(0).get(0)][pairs.get(x).get(0).get(1)]==0){
+				Global.gamePiece[pairs.get(x).get(0).get(0)][pairs.get(x).get(0).get(1)].setTeam(team);
+>>>>>>> c9426f88ebbbe69b1df06c0032cf016a67c3203b
+				pairs.remove(x);
+				return;
 			}
 		}
+<<<<<<< HEAD
 		
 		//Check if they were sneaky and played in front of us
 		if(m[0]+2 <= gameBoard.length-1 && gameBoard[m[0]+1][m[1]]!=0){
@@ -248,11 +277,175 @@ public class GameAI implements PlayingEntity {
 				
 				m[0] = m[0]-1;
 				m[1] = m[1]+1;
+=======
+		//Check if we should extend to the left (up?)
+				if((n[1]-1) > 0){ 
+					if(gameBoard[n[0]+1][n[1]-2]==0){
+						Global.gamePiece[n[0]+1][n[1]-2].setTeam(team);
+						ArrayList<List<Integer>> pair = new ArrayList();
+						ArrayList<Integer> cord = new ArrayList();
+						
+						cord.add(n[0]);
+						cord.add(n[1]-1);
+						pair.add(cord);
+						cord=new ArrayList();
+						
+						cord.add(n[0]+1);
+						cord.add(n[1]-1);
+						pair.add(cord);
+						pairs.add(pair);
+						
+						n[1] = n[1]-2;
+						n[0] = n[0]+1;
+						
+						if(n[1]-1==0){ //Check if exactly one away from edge
+							pair = new ArrayList();
+							cord = new ArrayList();
+							
+							cord.add(n[0]);
+							cord.add(n[1]-1);
+							pair.add(cord);
+							cord=new ArrayList();
+							
+							cord.add(n[0]+1);
+							cord.add(n[1]-1);
+							pair.add(cord);
+							pairs.add(pair);
+							
+							n[1] = n[1]-2;
+							n[0] = n[0]+1;
+						}
+						
+						return;
+					}
+					else if(gameBoard[n[0]-1][n[1]-1]==0){ //Should check for more spaces!
+						Global.gamePiece[n[0]-1][n[1]-1].setTeam(team);
+						ArrayList<List<Integer>> pair = new ArrayList();
+						ArrayList<Integer> cord = new ArrayList();
+						cord.add(n[0]);
+						cord.add(n[1]-1);
+						pair.add(cord);
+						cord=new ArrayList();
+						
+						cord.add(n[0]-1);
+						cord.add(n[1]);
+						pair.add(cord);
+						pairs.add(pair);
+						
+						n[1] = n[1]-1;
+						n[0] = n[0]-1;
+						
+						if(n[1]-1==0){
+							pair = new ArrayList();
+							cord = new ArrayList();
+							
+							cord.add(n[0]);
+							cord.add(n[1]-1);
+							pair.add(cord);
+							cord=new ArrayList();
+							
+							cord.add(n[0]+1);
+							cord.add(n[1]-1);
+							pair.add(cord);
+							pairs.add(pair);
+							
+							n[1] = n[1]-2;
+							n[0] = n[0]+1;
+						}
+						return;
+					}
+				}
 				
-				return 1;
-			}
-		}
+				//Check if we should extend to the right (down?)
+				if((m[1]+1) < gameBoard.length-1){ 
+					if(gameBoard[m[0]-1][m[1]+2]==0){
+						Global.gamePiece[m[0]-1][m[1]+2].setTeam(team);
+						ArrayList<List<Integer>> pair = new ArrayList();
+						ArrayList<Integer> cord = new ArrayList();
+						
+						cord.add(m[0]-1);
+						cord.add(m[1]+1);
+						pair.add(cord);
+						cord=new ArrayList();
+						
+						cord.add(m[0]);
+						cord.add(m[1]+1);
+						pair.add(cord);
+						pairs.add(pair);
+						
+						m[1] = m[1]+2;
+						m[0] = m[0]-1;
+						if(m[1]+1==gameBoard.length-1){
+							pair = new ArrayList();
+							cord = new ArrayList();
+							
+							cord.add(m[0]-1);
+							cord.add(m[1]+1);
+							pair.add(cord);
+							cord=new ArrayList();
+							
+							cord.add(m[0]);
+							cord.add(m[1]+1);
+							pair.add(cord);
+							pairs.add(pair);
+							
+							m[1] = m[1]+2;
+							m[0] = m[0]-1;
+						}
+						return;
+					}
+					else{ //Also check more than once!
+						Global.gamePiece[m[0]+1][m[1]+1].setTeam(team);
+						ArrayList<List<Integer>> pair = new ArrayList();
+						ArrayList<Integer> cord = new ArrayList();
+						
+						cord.add(m[0]);
+						cord.add(m[1]+1);
+						pair.add(cord);
+						cord=new ArrayList();
+						
+						cord.add(m[0]+1);
+						cord.add(m[1]);
+						pair.add(cord);
+						pairs.add(pair);
+						
+						m[1] = m[1]+1;
+						m[0] = m[0]+1;
+						if(m[1]+1==gameBoard.length-1){
+							pair = new ArrayList();
+							cord = new ArrayList();
+							
+							cord.add(m[0]-1);
+							cord.add(m[1]+1);
+							pair.add(cord);
+							cord=new ArrayList();
+							
+							cord.add(m[0]);
+							cord.add(m[1]+1);
+							pair.add(cord);
+							pairs.add(pair);
+							
+							m[1] = m[1]+2;
+							m[0] = m[0]-1;
+						}
+						return;
+					}
+				}
+				
+				//Fill in the pairs after we've reached both sides of the map
+				if( ((n[1]-2) < 0) && ((m[1]+2) > gameBoard.length-1)){
+					//Play a random pair
+					Global.gamePiece[pairs.get(0).get(1).get(0)][pairs.get(0).get(1).get(1)].setTeam(team);
+					pairs.remove(0);
+					
+					return;
+				}
+>>>>>>> c9426f88ebbbe69b1df06c0032cf016a67c3203b
+				
+				//We shouldn't have gotten here. Error.
+				System.out.println("Oops.");
 		
+<<<<<<< HEAD
 		//Fill in the pairs after we've reached both sides of the map
 		if( (n[0]-2) < 0 && (m[0]+2) > gameBoard.length-1 && pairs.size() > 0){
 			//Play a random pair
@@ -266,6 +459,14 @@ public class GameAI implements PlayingEntity {
 		}
 		
 		//Sam's AI
+=======
+		
+	} 
+	
+	private void badMove(){
+
+		
+>>>>>>> c9426f88ebbbe69b1df06c0032cf016a67c3203b
 		int moves=1;
 		for(int x=0; x<gameBoard.length; x++){
 			for(int y=0; y<gameBoard[x].length; y++){
@@ -273,7 +474,7 @@ public class GameAI implements PlayingEntity {
 			}
 		}
 		moves*=Math.random();
-		for(int x=0; x<gameBoard.length; x++){
+		for(int x=0; x<gameBoard.length; x++)
 			for(int y=0; y<gameBoard[x].length; y++){
 				if(gameBoard[x][y]==0) {
 					moves--;
@@ -283,10 +484,66 @@ public class GameAI implements PlayingEntity {
 					moves=-10;
 				}	
 			}
+<<<<<<< HEAD
 		}
 		
 		//We shouldn't have gotten here. Error.
 		return 0;
+=======
+	
+>>>>>>> c9426f88ebbbe69b1df06c0032cf016a67c3203b
 	}	
+	/*  Bah, ignore this for now.
+	private void nickMove(){
+		int[][] moves=new int[gameBoard.length][gameBoard.length];
+		 
+		 for(int x=0; x<gameBoard.length; x++){
+			for(int y=0; y<gameBoard[x].length; y++){
+				if(gameBoard[x][y]!=0){
+					moves[x][y]=-10000;
+				}
+				else{
+					//Actually calculate value
+				}
+				if(gameBoard[x][y]!=0 && gameBoard[x][y]!=team){
+					
+				}
+				if(gameBoard[x][y]==team){
+					//Look through all pieces and find distance from my piece
+					for(int i=0; i<gameBoard.length; i++)
+						for(int j=0; j<gameBoard[i].length; j++){
+							if(gameBoard[i][j]==0){
+								//TODO: calculate distance
+								if(team==1){
+									
+								}
+								if(team==2){
+									
+								}
+							}
+							
+						}
+				}
+			}
+		}
+		 
+		 int max=moves[0][0];
+		 ArrayList<RegularPolygonGameObject> possible=new ArrayList<RegularPolygonGameObject>();
+		 possible.add(Global.gamePiece[0][0]);
+		 for(int x=0; x<gameBoard.length; x++){
+				for(int y=0; y<gameBoard[x].length; y++){
+					if (moves[x][y]==max){
+						possible.add(Global.gamePiece[x][y]);
+					}
+					else if(moves[x][y]>max){
+						 max=moves[x][y];
+						 possible=new ArrayList<RegularPolygonGameObject>();
+						 possible.add(Global.gamePiece[x][y]);
+					}
+				}
+			}
+		 int move=(int)(possible.size()*Math.random());
+		 possible.get(move).setTeam(team);
+	} */ 
 }
 
