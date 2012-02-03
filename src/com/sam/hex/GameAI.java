@@ -29,6 +29,12 @@ public class GameAI implements PlayingEntity {
 	@Override
 	public void getPlayerTurn() { // with out net play
 		this.gameBoard=BoardTools.teamGrid();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		makeMove();
 	}
 
@@ -44,7 +50,7 @@ public class GameAI implements PlayingEntity {
 		 * Will's AI
 		 * */
 		//Still needs fixing: Not creating pair on wall
-
+		
 		//Play in the middle if possible
 		int mid = (gameBoard.length-1)/2;
 		if(gameBoard[mid][mid]==0){
