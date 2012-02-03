@@ -247,10 +247,26 @@ public class GameAI implements PlayingEntity {
 
 
 	} 
-	private int willHorizMove(){
+	private void willHorizMove(){
 		/**
 		 * Will's AI
 		 * */
+		
+		int x = 0;
+		int y = 0;
+		if(team==2){
+			x++;
+		}
+		else if(team==1){
+			y++;
+		}
+		
+		//Sleep to stop instantaneous playing
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		
 		//Play in the middle if possible
 		int mid = (gameBoard.length-1)/2;
@@ -261,136 +277,130 @@ public class GameAI implements PlayingEntity {
 			m[1] = mid;
 			Global.gamePiece[mid][mid].setTeam(team);
 			
-			return 1;
+			return;
+		}
+		else if(gameBoard[mid][mid]!=team && gameBoard[mid+1][mid]==0){
+			n[0] = mid+1;//horizontal
+			n[1] = mid;//vertical
+			m[0] = mid+1;
+			m[1] = mid;
+			Global.gamePiece[mid+1][mid].setTeam(team);
+
+			return;
+		}
+		
+		//Add the edges as pairs after we've reached both sides of the map
+		if(n[0]-1 == 0){
+			List<List<Integer>> pair = new ArrayList<List<Integer>>();
+			List<Integer> cord1 = new ArrayList<Integer>();
+			List<Integer> cord2 = new ArrayList<Integer>();
+			cord1.add(n[0]-1);
+			cord1.add(n[1]);
+			pair.add(cord1);
+			cord2.add(n[0]-1);
+			cord2.add(n[1]+1);
+			pair.add(cord2);
+			pairs.add(pair);
+			
+			n[0] = n[0]-1;
+		}
+		if(m[0]+1 == gameBoard.length-1){
+			List<List<Integer>> pair = new ArrayList<List<Integer>>();
+			List<Integer> cord1 = new ArrayList<Integer>();
+			List<Integer> cord2 = new ArrayList<Integer>();
+			cord1.add(m[0]+1);
+			cord1.add(m[1]);
+			pair.add(cord1);
+			cord2.add(m[0]+1);
+			cord2.add(m[1]-1);
+			pair.add(cord2);
+			pairs.add(pair);
+			
+			m[0] = m[0]+1;
 		}
 		
 		//Check if one of our pairs is being attacked, and fill in the alternate if so
-		for(int x=0; x<pairs.size(); x++){
+		for(int i=0; i<pairs.size(); i++){
 			System.out.println("Pair listing: "+pairs);
-			if(gameBoard[pairs.get(x).get(0).get(0)][pairs.get(x).get(0).get(1)]==0 || gameBoard[pairs.get(x).get(1).get(0)][pairs.get(x).get(1).get(1)]==0){
-				if(gameBoard[pairs.get(x).get(0).get(0)][pairs.get(x).get(0).get(1)]!=0){
-					System.out.println("Oh no, they played here: "+pairs.get(x).get(0).get(0)+","+pairs.get(x).get(0).get(1));
-					System.out.println("I'll be playing here: "+pairs.get(x).get(1).get(0)+","+pairs.get(x).get(1).get(1));
-					Global.gamePiece[pairs.get(x).get(1).get(0)][pairs.get(x).get(1).get(1)].setTeam(team);
-					pairs.remove(x);
+			if(gameBoard[pairs.get(i).get(0).get(x)][pairs.get(i).get(0).get(y)]==0 || gameBoard[pairs.get(i).get(1).get(x)][pairs.get(i).get(1).get(y)]==0){
+				if(gameBoard[pairs.get(i).get(0).get(x)][pairs.get(i).get(0).get(y)]!=0){
+					System.out.println("Oh no, they played here: "+pairs.get(i).get(0).get(x)+","+pairs.get(i).get(0).get(y));
+					System.out.println("I'll be playing here: "+pairs.get(i).get(1).get(x)+","+pairs.get(i).get(1).get(y));
+					Global.gamePiece[pairs.get(i).get(1).get(x)][pairs.get(i).get(1).get(y)].setTeam(team);
+					pairs.remove(i);
 					
-					return 1;
+					return;
 				}
-				else if(gameBoard[pairs.get(x).get(1).get(0)][pairs.get(x).get(1).get(1)]!=0){
-					System.out.println("Oh no, they played here: "+pairs.get(x).get(1).get(0)+","+pairs.get(x).get(1).get(1));
-					System.out.println("I'll be playing here: "+pairs.get(x).get(0).get(0)+","+pairs.get(x).get(0).get(1));
-					Global.gamePiece[pairs.get(x).get(0).get(0)][pairs.get(x).get(0).get(1)].setTeam(team);
-					pairs.remove(x);
+				else if(gameBoard[pairs.get(i).get(1).get(x)][pairs.get(i).get(1).get(y)]!=0){
+					System.out.println("Oh no, they played here: "+pairs.get(i).get(1).get(x)+","+pairs.get(i).get(1).get(y));
+					System.out.println("I'll be playing here: "+pairs.get(i).get(0).get(x)+","+pairs.get(i).get(0).get(y));
+					Global.gamePiece[pairs.get(i).get(0).get(x)][pairs.get(i).get(0).get(y)].setTeam(team);
+					pairs.remove(i);
 					
-					return 1;
+					return;
 				}
 			}
 			else{
-				pairs.remove(x);
-			}
-		}
-		
-		//Fill in the edges after we've reached both sides of the map
-		if(n[0]-1 == 0){
-			if(gameBoard[n[0]-1][n[1]]==0){
-				Global.gamePiece[n[0]-1][n[1]].setTeam(team);
-				
-				n[0] = n[0]-1;
-				n[1] = n[1];
-				
-				return 1;
-			}
-			else if(gameBoard[n[0]-1][n[1]+1]==0){
-				Global.gamePiece[n[0]-1][n[1]+1].setTeam(team);
-				
-				n[0] = n[0]-1;
-				n[1] = n[1]+1;
-				
-				return 1;
-			}
-		}
-		if(m[0]+1 == gameBoard.length-1){
-			if(gameBoard[m[0]+1][m[1]]==0){
-				Global.gamePiece[m[0]+1][m[1]].setTeam(team);
-				
-				m[0] = m[0]+1;
-				m[1] = m[1];
-				
-				return 1;
-			}
-			else if(gameBoard[m[0]+1][m[1]-1]==0){
-				Global.gamePiece[m[0]+1][m[1]-1].setTeam(team);
-				
-				m[0] = m[0]+1;
-				m[1] = m[1]-1;
-				
-				return 1;
+				pairs.remove(i);
 			}
 		}
 		
 		//Check if they were sneaky and played in front of us
 		if(m[0]+2 <= gameBoard.length-1 && gameBoard[m[0]+1][m[1]]!=0){
 			if(gameBoard[m[0]+1][m[1]-1]==0){
-				Global.gamePiece[m[0]+1][m[1]-1].setTeam(team);
-				
 				m[0] = m[0]+1;
 				m[1] = m[1]-1;
 				
-				return 1;
+				Global.gamePiece[m[x]][m[y]].setTeam(team);
+				return;
 			}
 			else if(gameBoard[m[0]][m[1]+1]==0){
-				Global.gamePiece[m[0]][m[1]+1].setTeam(team);
-				
 				m[0] = m[0];
 				m[1] = m[1]+1;
 				
-				return 1;
+				Global.gamePiece[m[x]][m[y]].setTeam(team);
+				return;
 			}
 		}
 		if(m[0]+2 <= gameBoard.length-1 && (gameBoard[m[0]+1][m[1]-1]!=0 || gameBoard[m[0]][m[1]+1]!=0) && gameBoard[m[0]+1][m[1]]==0){
-			Global.gamePiece[m[0]+1][m[1]].setTeam(team);
-			
 			m[0] = m[0]+1;
 			m[1] = m[1];
 			
-			return 1;
+			Global.gamePiece[m[x]][m[y]].setTeam(team);
+			return;
 		}
 		//Check if they were sneakier and played behind us
 		if(n[0]-2 >= 0 && gameBoard[n[0]-1][n[1]]!=0){
 			if(gameBoard[n[0]-1][n[1]+1]==0){
-				Global.gamePiece[n[0]-1][n[1]+1].setTeam(team);
-				
 				n[0] = n[0]-1;
 				n[1] = n[1]+1;
 				
-				return 1;
+				Global.gamePiece[n[x]][n[y]].setTeam(team);
+				return;
 			}
 			else if(gameBoard[n[0]][n[1]-1]==0){
-				Global.gamePiece[n[0]][n[1]-1].setTeam(team);
-				
 				n[0] = n[0];
 				n[1] = n[1]-1;
 				
-				return 1;
+				Global.gamePiece[n[x]][n[y]].setTeam(team);
+				return;
 			}
 		}
 		if(n[0]-2 >= 0 && (gameBoard[n[0]-1][n[1]+1]!=0 || gameBoard[n[0]][n[1]-1]!=0) && gameBoard[n[0]-1][n[1]]==0){
-			Global.gamePiece[n[0]-1][n[1]].setTeam(team);
-			
 			n[0] = n[0]-1;
 			n[1] = n[1];
 			
-			return 1;
+			Global.gamePiece[n[x]][n[y]].setTeam(team);
+			return;
 		}
 		
 		
 		//Check if we should extend to the left
 		if((n[0]-2) >= 0){
 			if(gameBoard[n[0]-1][n[1]-1]!=0 && gameBoard[n[0]-2][n[1]+1]==0){
-				Global.gamePiece[n[0]-2][n[1]+1].setTeam(team);
-				ArrayList<List<Integer>> pair = new ArrayList();
-				ArrayList<Integer> cord1 = new ArrayList();
-				ArrayList<Integer> cord2 = new ArrayList();
+				List<List<Integer>> pair = new ArrayList<List<Integer>>();
+				List<Integer> cord1 = new ArrayList<Integer>();
+				List<Integer> cord2 = new ArrayList<Integer>();
 				cord1.add(n[0]-1);
 				cord1.add(n[1]);
 				pair.add(cord1);
@@ -402,13 +412,13 @@ public class GameAI implements PlayingEntity {
 				n[0] = n[0]-2;
 				n[1] = n[1]+1;
 				
-				return 1;
+				Global.gamePiece[n[x]][n[y]].setTeam(team);
+				return;
 			}
 			else if(gameBoard[n[0]-2][n[1]+1]!=0 && gameBoard[n[0]-1][n[1]-1]==0){
-				Global.gamePiece[n[0]-1][n[1]-1].setTeam(team);
-				ArrayList<List<Integer>> pair = new ArrayList();
-				ArrayList<Integer> cord1 = new ArrayList();
-				ArrayList<Integer> cord2 = new ArrayList();
+				List<List<Integer>> pair = new ArrayList<List<Integer>>();
+				List<Integer> cord1 = new ArrayList<Integer>();
+				List<Integer> cord2 = new ArrayList<Integer>();
 				cord1.add(n[0]);
 				cord1.add(n[1]-1);
 				pair.add(cord1);
@@ -420,18 +430,17 @@ public class GameAI implements PlayingEntity {
 				n[0] = n[0]-1;
 				n[1] = n[1]-1;
 				
-				return 1;
+				Global.gamePiece[n[x]][n[y]].setTeam(team);
+				return;
 			}
 		}
 		
 		//Check if we should extend to the right
 		if((m[0]+2) <= gameBoard.length-1){
-			System.out.println("Heading right");
 			if(gameBoard[m[0]+2][m[1]-1]!=0 && gameBoard[m[0]+1][m[1]+1]==0){
-				Global.gamePiece[m[0]+1][m[1]+1].setTeam(team);
-				ArrayList<List<Integer>> pair = new ArrayList();
-				ArrayList<Integer> cord1 = new ArrayList();
-				ArrayList<Integer> cord2 = new ArrayList();
+				List<List<Integer>> pair = new ArrayList<List<Integer>>();
+				List<Integer> cord1 = new ArrayList<Integer>();
+				List<Integer> cord2 = new ArrayList<Integer>();
 				cord1.add(m[0]+1);
 				cord1.add(m[1]);
 				pair.add(cord1);
@@ -443,13 +452,13 @@ public class GameAI implements PlayingEntity {
 				m[0] = m[0]+1;
 				m[1] = m[1]+1;
 				
-				return 1;
+				Global.gamePiece[m[x]][m[y]].setTeam(team);
+				return;
 			}
-			else if(gameBoard[m[0]+2][m[1]-1]==0){
-				Global.gamePiece[m[0]+2][m[1]-1].setTeam(team);
-				ArrayList<List<Integer>> pair = new ArrayList();
-				ArrayList<Integer> cord1 = new ArrayList();
-				ArrayList<Integer> cord2 = new ArrayList();
+			else if(gameBoard[m[0]+1][m[1]+1]!=0 && gameBoard[m[0]+2][m[1]-1]==0){
+				List<List<Integer>> pair = new ArrayList<List<Integer>>();
+				List<Integer> cord1 = new ArrayList<Integer>();
+				List<Integer> cord2 = new ArrayList<Integer>();
 				cord1.add(m[0]+1);
 				cord1.add(m[1]);
 				pair.add(cord1);
@@ -461,17 +470,16 @@ public class GameAI implements PlayingEntity {
 				m[0] = m[0]+2;
 				m[1] = m[1]-1;
 				
-				return 1;
+				Global.gamePiece[m[x]][m[y]].setTeam(team);
+				return;
 			}
 		}
 		
 		//Extend left if we haven't gone right
 		if((n[0]-2) >= 0 && gameBoard[n[0]-2][n[1]+1]==0){
-			System.out.println("Heading left");
-			Global.gamePiece[n[0]-2][n[1]+1].setTeam(team);
-			ArrayList<List<Integer>> pair = new ArrayList();
-			ArrayList<Integer> cord1 = new ArrayList();
-			ArrayList<Integer> cord2 = new ArrayList();
+			List<List<Integer>> pair = new ArrayList<List<Integer>>();
+			List<Integer> cord1 = new ArrayList<Integer>();
+			List<Integer> cord2 = new ArrayList<Integer>();
 			cord1.add(n[0]-1);
 			cord1.add(n[1]);
 			pair.add(cord1);
@@ -483,43 +491,59 @@ public class GameAI implements PlayingEntity {
 			n[0] = n[0]-2;
 			n[1] = n[1]+1;
 			
-			return 1;
+			Global.gamePiece[n[x]][n[y]].setTeam(team);
+			return;
+		}
+		//Extend right if we haven't gone left
+		if((m[0]+2) <= gameBoard.length-1 && gameBoard[m[0]+2][m[1]-1]==0){
+			List<List<Integer>> pair = new ArrayList<List<Integer>>();
+			List<Integer> cord1 = new ArrayList<Integer>();
+			List<Integer> cord2 = new ArrayList<Integer>();
+			cord1.add(m[0]+1);
+			cord1.add(m[1]);
+			pair.add(cord1);
+			cord2.add(m[0]+1);
+			cord2.add(m[1]-1);
+			pair.add(cord2);
+			pairs.add(pair);
+
+			m[0] = m[0]+2;
+			m[1] = m[1]-1;
+			
+			Global.gamePiece[m[x]][m[y]].setTeam(team);
+			return;
 		}
 		
 		//Fill in the pairs after we've reached both sides of the map
 		if( (n[0]-2) < 0 && (m[0]+2) > gameBoard.length-1 && pairs.size() > 0){
 			//Play a random pair
-			Global.gamePiece[pairs.get(0).get(1).get(0)][pairs.get(0).get(1).get(1)].setTeam(team);
+			Global.gamePiece[pairs.get(0).get(1).get(x)][pairs.get(0).get(1).get(y)].setTeam(team);
 			pairs.remove(0);
 			
-			return 1;
-		}
-		else{
-			//TODO Add the leftmost and rightmost pieces to win the game (Or just add them as a pair)
+			return;
 		}
 		
 		//Sam's AI
 		int moves=1;
-		for(int x=0; x<gameBoard.length; x++){
-			for(int y=0; y<gameBoard[x].length; y++){
-				if(gameBoard[x][y]==0) moves++;
+		for(int a=0; a<gameBoard.length; a++){
+			for(int b=0; b<gameBoard[a].length; b++){
+				if(gameBoard[a][b]==0) moves++;
 			}
 		}
 		moves*=Math.random();
-		for(int x=0; x<gameBoard.length; x++){
-			for(int y=0; y<gameBoard[x].length; y++){
-				if(gameBoard[x][y]==0) {
+		for(int a=0; a<gameBoard.length; a++){
+			for(int b=0; b<gameBoard[a].length; b++){
+				if(gameBoard[a][b]==0) {
 					moves--;
 				}
 				if(moves==0) {
-					Global.gamePiece[x][y].setTeam(team);
+					Global.gamePiece[a][b].setTeam(team);
 					moves=-10;
 				}	
 			}
 		}
 		
-		//We shouldn't have gotten here. Error.
-		return 0;
+		return;
 	}
 	private void badMove(){
 
