@@ -29,12 +29,6 @@ public class GameAI implements PlayingEntity {
 	@Override
 	public void getPlayerTurn() { // with out net play
 		this.gameBoard=BoardTools.teamGrid();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		makeMove();
 	}
 
@@ -50,7 +44,7 @@ public class GameAI implements PlayingEntity {
 		 * Will's AI
 		 * */
 		//Still needs fixing: Not creating pair on wall
-		
+
 		//Play in the middle if possible
 		int mid = (gameBoard.length-1)/2;
 		if(gameBoard[mid][mid]==0){
@@ -253,11 +247,11 @@ public class GameAI implements PlayingEntity {
 
 
 	} 
-	private void willHorizMove(){
+	private int willHorizMove(){
 		/**
 		 * Will's AI
 		 * */
-
+		
 		//Play in the middle if possible
 		int mid = (gameBoard.length-1)/2;
 		if(gameBoard[mid][mid]==0){
@@ -266,10 +260,10 @@ public class GameAI implements PlayingEntity {
 			m[0] = mid;
 			m[1] = mid;
 			Global.gamePiece[mid][mid].setTeam(team);
-
-			return;
+			
+			return 1;
 		}
-
+		
 		//Check if one of our pairs is being attacked, and fill in the alternate if so
 		for(int x=0; x<pairs.size(); x++){
 			System.out.println("Pair listing: "+pairs);
@@ -279,62 +273,117 @@ public class GameAI implements PlayingEntity {
 					System.out.println("I'll be playing here: "+pairs.get(x).get(1).get(0)+","+pairs.get(x).get(1).get(1));
 					Global.gamePiece[pairs.get(x).get(1).get(0)][pairs.get(x).get(1).get(1)].setTeam(team);
 					pairs.remove(x);
-
-					return;
+					
+					return 1;
 				}
 				else if(gameBoard[pairs.get(x).get(1).get(0)][pairs.get(x).get(1).get(1)]!=0){
 					System.out.println("Oh no, they played here: "+pairs.get(x).get(1).get(0)+","+pairs.get(x).get(1).get(1));
 					System.out.println("I'll be playing here: "+pairs.get(x).get(0).get(0)+","+pairs.get(x).get(0).get(1));
 					Global.gamePiece[pairs.get(x).get(0).get(0)][pairs.get(x).get(0).get(1)].setTeam(team);
 					pairs.remove(x);
-
-					return;
+					
+					return 1;
 				}
 			}
 			else{
 				pairs.remove(x);
 			}
 		}
-
+		
+		//Fill in the edges after we've reached both sides of the map
+		if(n[0]-1 == 0){
+			if(gameBoard[n[0]-1][n[1]]==0){
+				Global.gamePiece[n[0]-1][n[1]].setTeam(team);
+				
+				n[0] = n[0]-1;
+				n[1] = n[1];
+				
+				return 1;
+			}
+			else if(gameBoard[n[0]-1][n[1]+1]==0){
+				Global.gamePiece[n[0]-1][n[1]+1].setTeam(team);
+				
+				n[0] = n[0]-1;
+				n[1] = n[1]+1;
+				
+				return 1;
+			}
+		}
+		if(m[0]+1 == gameBoard.length-1){
+			if(gameBoard[m[0]+1][m[1]]==0){
+				Global.gamePiece[m[0]+1][m[1]].setTeam(team);
+				
+				m[0] = m[0]+1;
+				m[1] = m[1];
+				
+				return 1;
+			}
+			else if(gameBoard[m[0]+1][m[1]-1]==0){
+				Global.gamePiece[m[0]+1][m[1]-1].setTeam(team);
+				
+				m[0] = m[0]+1;
+				m[1] = m[1]-1;
+				
+				return 1;
+			}
+		}
+		
 		//Check if they were sneaky and played in front of us
 		if(m[0]+2 <= gameBoard.length-1 && gameBoard[m[0]+1][m[1]]!=0){
 			if(gameBoard[m[0]+1][m[1]-1]==0){
 				Global.gamePiece[m[0]+1][m[1]-1].setTeam(team);
-
+				
 				m[0] = m[0]+1;
 				m[1] = m[1]-1;
-
-				return;
+				
+				return 1;
 			}
 			else if(gameBoard[m[0]][m[1]+1]==0){
 				Global.gamePiece[m[0]][m[1]+1].setTeam(team);
-
+				
 				m[0] = m[0];
 				m[1] = m[1]+1;
-
-				return;
+				
+				return 1;
 			}
+		}
+		if(m[0]+2 <= gameBoard.length-1 && (gameBoard[m[0]+1][m[1]-1]!=0 || gameBoard[m[0]][m[1]+1]!=0) && gameBoard[m[0]+1][m[1]]==0){
+			Global.gamePiece[m[0]+1][m[1]].setTeam(team);
+			
+			m[0] = m[0]+1;
+			m[1] = m[1];
+			
+			return 1;
 		}
 		//Check if they were sneakier and played behind us
 		if(n[0]-2 >= 0 && gameBoard[n[0]-1][n[1]]!=0){
 			if(gameBoard[n[0]-1][n[1]+1]==0){
 				Global.gamePiece[n[0]-1][n[1]+1].setTeam(team);
-
+				
 				n[0] = n[0]-1;
 				n[1] = n[1]+1;
-
-				return;
+				
+				return 1;
 			}
 			else if(gameBoard[n[0]][n[1]-1]==0){
 				Global.gamePiece[n[0]][n[1]-1].setTeam(team);
-
+				
 				n[0] = n[0];
 				n[1] = n[1]-1;
-
-				return;
+				
+				return 1;
 			}
 		}
-
+		if(n[0]-2 >= 0 && (gameBoard[n[0]-1][n[1]+1]!=0 || gameBoard[n[0]][n[1]-1]!=0) && gameBoard[n[0]-1][n[1]]==0){
+			Global.gamePiece[n[0]-1][n[1]].setTeam(team);
+			
+			n[0] = n[0]-1;
+			n[1] = n[1];
+			
+			return 1;
+		}
+		
+		
 		//Check if we should extend to the left
 		if((n[0]-2) >= 0){
 			if(gameBoard[n[0]-1][n[1]-1]!=0 && gameBoard[n[0]-2][n[1]+1]==0){
@@ -349,11 +398,11 @@ public class GameAI implements PlayingEntity {
 				cord2.add(n[1]+1);
 				pair.add(cord2);
 				pairs.add(pair);
-
+				
 				n[0] = n[0]-2;
 				n[1] = n[1]+1;
-
-				return;
+				
+				return 1;
 			}
 			else if(gameBoard[n[0]-2][n[1]+1]!=0 && gameBoard[n[0]-1][n[1]-1]==0){
 				Global.gamePiece[n[0]-1][n[1]-1].setTeam(team);
@@ -370,11 +419,11 @@ public class GameAI implements PlayingEntity {
 
 				n[0] = n[0]-1;
 				n[1] = n[1]-1;
-
-				return;
+				
+				return 1;
 			}
 		}
-
+		
 		//Check if we should extend to the right
 		if((m[0]+2) <= gameBoard.length-1){
 			System.out.println("Heading right");
@@ -393,8 +442,8 @@ public class GameAI implements PlayingEntity {
 
 				m[0] = m[0]+1;
 				m[1] = m[1]+1;
-
-				return;
+				
+				return 1;
 			}
 			else if(gameBoard[m[0]+2][m[1]-1]==0){
 				Global.gamePiece[m[0]+2][m[1]-1].setTeam(team);
@@ -411,11 +460,11 @@ public class GameAI implements PlayingEntity {
 
 				m[0] = m[0]+2;
 				m[1] = m[1]-1;
-
-				return;
+				
+				return 1;
 			}
 		}
-
+		
 		//Extend left if we haven't gone right
 		if((n[0]-2) >= 0 && gameBoard[n[0]-2][n[1]+1]==0){
 			System.out.println("Heading left");
@@ -433,60 +482,22 @@ public class GameAI implements PlayingEntity {
 
 			n[0] = n[0]-2;
 			n[1] = n[1]+1;
-
-			return;
+			
+			return 1;
 		}
-
-		//Fill in the edges after we've reached both sides of the map
-		if(n[0]-1 == 0){
-			if(gameBoard[n[0]-1][n[1]]==0){
-				Global.gamePiece[n[0]-1][n[1]].setTeam(team);
-
-				n[0] = n[0]-1;
-				n[1] = n[1];
-
-				return;
-			}
-			else if(gameBoard[n[0]-1][n[1]+1]==0){
-				Global.gamePiece[n[0]-1][n[1]+1].setTeam(team);
-
-				n[0] = n[0]-1;
-				n[1] = n[1]+1;
-
-				return;
-			}
-		}
-		if(m[0]+1 == gameBoard.length-1){
-			if(gameBoard[m[0]+1][m[1]]==0){
-				Global.gamePiece[m[0]+1][m[1]].setTeam(team);
-
-				m[0] = m[0]+1;
-				m[1] = m[1];
-
-				return;
-			}
-			else if(gameBoard[m[0]-1][m[1]+1]==0){
-				Global.gamePiece[m[0]-1][m[1]+1].setTeam(team);
-
-				m[0] = m[0]-1;
-				m[1] = m[1]+1;
-
-				return;
-			}
-		}
-
+		
 		//Fill in the pairs after we've reached both sides of the map
 		if( (n[0]-2) < 0 && (m[0]+2) > gameBoard.length-1 && pairs.size() > 0){
 			//Play a random pair
 			Global.gamePiece[pairs.get(0).get(1).get(0)][pairs.get(0).get(1).get(1)].setTeam(team);
 			pairs.remove(0);
-
-			return;
+			
+			return 1;
 		}
 		else{
 			//TODO Add the leftmost and rightmost pieces to win the game (Or just add them as a pair)
 		}
-
+		
 		//Sam's AI
 		int moves=1;
 		for(int x=0; x<gameBoard.length; x++){
@@ -506,9 +517,9 @@ public class GameAI implements PlayingEntity {
 				}	
 			}
 		}
-
+		
 		//We shouldn't have gotten here. Error.
-		return;
+		return 0;
 	}
 	private void badMove(){
 
