@@ -2,6 +2,7 @@ package com.sam.hex;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 
@@ -12,6 +13,8 @@ public class GameAI implements PlayingEntity {
 	int[] n={BoardTools.teamGrid().length-1,BoardTools.teamGrid().length-2},m = {0,0};//n is the leftmost AI move, m is the rightmost AI move
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	List<List<List<Integer>>> pairs = new ArrayList();//List of pair-pieces
+	int rand_a = new Random().nextInt(5)-2;
+	int rand_b = new Random().nextInt(5)-2;
 
 	public GameAI(byte teamNumberT,byte difficaltyT){
 		team=teamNumberT;
@@ -42,8 +45,7 @@ public class GameAI implements PlayingEntity {
 		/**
 		 * Will's AI
 		 * */
-		System.out.println("n equals ["+n[0]+","+n[1]+"]");
-		System.out.println("m equals ["+m[0]+","+m[1]+"]");
+		
 		int x = 0;
 		int y = 0;
 		if(team==2){
@@ -72,18 +74,18 @@ public class GameAI implements PlayingEntity {
 			
 			return;
 		}
-		else if(gameBoard[mid][mid]!=team && gameBoard[mid+1][mid]==0){
-			n[0] = mid+1;//horizontal
-			n[1] = mid;//vertical
-			m[0] = mid+1;
-			m[1] = mid;
-			Global.gamePiece[mid+1][mid].setTeam(team);
+		else if(gameBoard[mid][mid]!=team && gameBoard[mid+rand_a][mid+rand_b]==0){
+			n[x] = mid+rand_a;//horizontal
+			n[y] = mid+rand_b;//vertical
+			m[x] = mid+rand_a;
+			m[y] = mid+rand_b;
+			Global.gamePiece[mid+rand_a][mid+rand_b].setTeam(team);
 
 			return;
 		}
 		
 		//Add the edges as pairs after we've reached both sides of the map
-		if(n[0]-1 == 0){
+		if(n[0]-1 == 0 && n[1]-1 >= 0 && n[1]+1 <= gameBoard.length-1){
 			List<List<Integer>> pair = new ArrayList<List<Integer>>();
 			List<Integer> cord1 = new ArrayList<Integer>();
 			List<Integer> cord2 = new ArrayList<Integer>();
@@ -97,7 +99,7 @@ public class GameAI implements PlayingEntity {
 			
 			n[0] = n[0]-1;
 		}
-		if(m[0]+1 == gameBoard.length-1){
+		if(m[0]+1 == gameBoard.length-1 && m[1]+1 <= gameBoard.length-1 && m[1]-1 >= 0){
 			List<List<Integer>> pair = new ArrayList<List<Integer>>();
 			List<Integer> cord1 = new ArrayList<Integer>();
 			List<Integer> cord2 = new ArrayList<Integer>();
