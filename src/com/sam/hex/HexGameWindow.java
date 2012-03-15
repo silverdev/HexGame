@@ -1,15 +1,15 @@
 package com.sam.hex;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.*;
 import javax.swing.*;
-
-import sl.shapes.*;
 
 //DEPRECATED: This class will not be ported to Android, just ignore it for now.
 
+@SuppressWarnings("serial")
 public class HexGameWindow extends JFrame {
 	public static Canvas cPolygons = new Canvas();
 
@@ -27,6 +27,8 @@ public class HexGameWindow extends JFrame {
 		initRegular();
 
 		setLocationRelativeTo(null);
+		
+		addMenus();
 	}
 
 	/*
@@ -105,5 +107,50 @@ public class HexGameWindow extends JFrame {
 
 			}
 		}
+	}
+	
+	private void addMenus(){
+JMenuBar menuBar = new JMenuBar();
+		
+		setJMenuBar(menuBar);
+		
+		JMenu fileMenu = new JMenu("File");
+		JMenu editMenu = new JMenu("Edit");
+		JMenu viewMenu = new JMenu("View");
+		menuBar.add(fileMenu);
+		menuBar.add(editMenu);
+		menuBar.add(viewMenu);
+		
+		
+		JMenuItem newAction =   new JMenuItem("New");
+		JMenuItem openAction =  new JMenuItem("Open");
+		JMenuItem exitAction =  new JMenuItem("Exit");
+		JMenuItem cutAction =   new JMenuItem("Cut");
+		JMenuItem copyAction =  new  JMenuItem("Copy");
+		JMenuItem pasteAction =  new JMenuItem("Paste");
+		JMenuItem toolbarsAction= new JMenuItem("toolbarsAction");
+		fileMenu.add(newAction);
+		fileMenu.add(openAction);
+		fileMenu.addSeparator();
+		fileMenu.add(exitAction);
+		editMenu.add(cutAction);
+		editMenu.add(copyAction);
+		editMenu.add(pasteAction);
+		editMenu.addSeparator();
+		viewMenu.add(toolbarsAction);
+		
+		newAction.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent act) {
+				//Add action here
+			} 
+		});
+		
+		openAction.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent act) {
+				System.out.println(act.getActionCommand());
+			} 
+		});
 	}
 }

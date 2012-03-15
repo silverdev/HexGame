@@ -2,6 +2,7 @@ package sl.shapes;
 
 import java.awt.*;
 
+@SuppressWarnings("serial")
 public class RegularPolygon extends Polygon {
     public RegularPolygon(double x, double y, double r, int vertexCount) {
         this(x, y, r, vertexCount, 0);

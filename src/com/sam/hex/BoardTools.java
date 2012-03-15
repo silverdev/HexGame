@@ -1,6 +1,5 @@
 package com.sam.hex;
 
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 public class BoardTools {

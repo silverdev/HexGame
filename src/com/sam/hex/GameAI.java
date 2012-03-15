@@ -13,8 +13,9 @@ public class GameAI implements PlayingEntity {
 	int[] n={BoardTools.teamGrid().length-1,BoardTools.teamGrid().length-2},m = {0,0};//n is the leftmost AI move, m is the rightmost AI move
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	List<List<List<Integer>>> pairs = new ArrayList();//List of pair-pieces
-	int rand_a = new Random().nextInt(5)-2;
-	int rand_b = new Random().nextInt(5)-2;
+	int diameter = (int) (0.60*(BoardTools.teamGrid().length-1));
+	int rand_a = new Random().nextInt(diameter)-diameter/2;
+	int rand_b = new Random().nextInt(diameter)-diameter/2;
 
 	public GameAI(byte teamNumberT,byte difficaltyT){
 		team=teamNumberT;
@@ -35,10 +36,10 @@ public class GameAI implements PlayingEntity {
 	}
 	
 	private boolean right(){
-		return m[0]+2 <= gameBoard.length-1 && m[1]+2 <= gameBoard.length-1 && m[1]-1 >= 0;
+		return m[0]+2 <= gameBoard.length-1 && m[1]+1 <= gameBoard.length-1 && m[1]-1 >= 0;
 	}
 	private boolean left(){
-		return n[0]-2 >= 0 && n[1]-1 >= 0 && n[1]+2 <= gameBoard.length-1;
+		return n[0]-2 >= 0 && n[1]-1 >= 0 && n[1]+1 <= gameBoard.length-1;
 	}
 
 	private void makeMove(){
@@ -378,6 +379,7 @@ public class GameAI implements PlayingEntity {
 		
 		return;
 	}
+	@SuppressWarnings("unused")
 	private void badMove(){
 
 
