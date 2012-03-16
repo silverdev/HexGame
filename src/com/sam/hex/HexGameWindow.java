@@ -110,46 +110,108 @@ public class HexGameWindow extends JFrame {
 	}
 	
 	private void addMenus(){
-JMenuBar menuBar = new JMenuBar();
+		JMenuBar menuBar = new JMenuBar();
 		
 		setJMenuBar(menuBar);
 		
 		JMenu fileMenu = new JMenu("File");
-		JMenu editMenu = new JMenu("Edit");
-		JMenu viewMenu = new JMenu("View");
+		JMenu player1Menu = new JMenu("Player 1");
+		JMenu player2Menu = new JMenu("Player 2");
 		menuBar.add(fileMenu);
-		menuBar.add(editMenu);
-		menuBar.add(viewMenu);
-		
-		
-		JMenuItem newAction =   new JMenuItem("New");
-		JMenuItem openAction =  new JMenuItem("Open");
+		menuBar.add(player1Menu);
+		menuBar.add(player2Menu);
+
+		JMenuItem undoAction =  new JMenuItem("Undo");
+		JMenuItem newgameAction =   new JMenuItem("New Game");
+		JMenuItem gridAction =  new JMenuItem("Grid Size");
 		JMenuItem exitAction =  new JMenuItem("Exit");
-		JMenuItem cutAction =   new JMenuItem("Cut");
-		JMenuItem copyAction =  new  JMenuItem("Copy");
-		JMenuItem pasteAction =  new JMenuItem("Paste");
-		JMenuItem toolbarsAction= new JMenuItem("toolbarsAction");
-		fileMenu.add(newAction);
-		fileMenu.add(openAction);
+		JMenuItem p1NameAction =   new JMenuItem("Name");
+		JMenuItem p1ColorAction =  new  JMenuItem("Color");
+		JMenuItem p1ModeAction =  new JMenuItem("Mode");
+		JMenuItem p2NameAction =   new JMenuItem("Name");
+		JMenuItem p2ColorAction =  new  JMenuItem("Color");
+		JMenuItem p2ModeAction =  new JMenuItem("Mode");
+
+		fileMenu.add(undoAction);
+		fileMenu.add(newgameAction);
+		fileMenu.addSeparator();
+		fileMenu.add(gridAction);
 		fileMenu.addSeparator();
 		fileMenu.add(exitAction);
-		editMenu.add(cutAction);
-		editMenu.add(copyAction);
-		editMenu.add(pasteAction);
-		editMenu.addSeparator();
-		viewMenu.add(toolbarsAction);
+		player1Menu.add(p1NameAction);
+		player1Menu.add(p1ColorAction);
+		player1Menu.add(p1ModeAction);
+		player2Menu.add(p2NameAction);
+		player2Menu.add(p2ColorAction);
+		player2Menu.add(p2ModeAction);
 		
-		newAction.addActionListener(new ActionListener() {
+		undoAction.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent act) {
+				//Add action here
+			} 
+		});
+				
+		newgameAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
 				//Add action here
 			} 
 		});
 		
-		openAction.addActionListener(new ActionListener() {
+		gridAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				System.out.println(act.getActionCommand());
+				//Add action here
+			} 
+		});
+		
+		exitAction.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent act) {
+				dispose();
+			} 
+		});
+		
+		p1NameAction.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent act) {
+				//Add action here
+			} 
+		});
+		
+		p1ColorAction.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent act) {
+				//Add action here
+			} 
+		});
+		
+		p1ModeAction.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent act) {
+				//Add action here
+			} 
+		});
+		
+		p2NameAction.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent act) {
+				//Add action here
+			} 
+		});
+		
+		p2ColorAction.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent act) {
+				//Add action here
+			} 
+		});
+		
+		p2ModeAction.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent act) {
+				//Add action here
 			} 
 		});
 	}

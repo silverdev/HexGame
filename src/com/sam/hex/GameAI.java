@@ -14,8 +14,8 @@ public class GameAI implements PlayingEntity {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	List<List<List<Integer>>> pairs = new ArrayList();//List of pair-pieces
 	int diameter = (int) (0.60*(BoardTools.teamGrid().length-1));
-	int rand_a = new Random().nextInt(diameter)-diameter/2;
-	int rand_b = new Random().nextInt(diameter)-diameter/2;
+	int rand_a = (int) ((0.3)*(new Random().nextInt(diameter)-diameter/2));
+	int rand_b = (int) ((0.3)*(new Random().nextInt(diameter)-diameter/2));
 
 	public GameAI(byte teamNumberT,byte difficaltyT){
 		team=teamNumberT;

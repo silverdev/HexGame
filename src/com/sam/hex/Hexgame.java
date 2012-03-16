@@ -4,12 +4,12 @@ import java.lang.Integer;
 
 public class Hexgame {
 
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		if (args.length > 3)
 			Global.set(Integer.parseInt(args[0]), Integer.parseInt(args[1]),
 					Integer.parseInt(args[2]), Byte.parseByte(args[3]));
 		else {
-			Global.set(7, 600, 800, (byte) 2);
+			Global.set(7, 600, 800);
 		}
 		HexGameWindow fr = new HexGameWindow();
 
