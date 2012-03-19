@@ -76,7 +76,7 @@ public class GameAI implements PlayingEntity {
 			n[1] = mid;//vertical
 			m[0] = mid;
 			m[1] = mid;
-			Global.gamePiece[mid][mid].setTeam(team);
+			GameAction.setTeam(team,mid,mid);
 			
 			return;
 		}
@@ -85,7 +85,8 @@ public class GameAI implements PlayingEntity {
 			n[y] = mid+rand_b;//vertical
 			m[x] = mid+rand_a;
 			m[y] = mid+rand_b;
-			Global.gamePiece[mid+rand_a][mid+rand_b].setTeam(team);
+			//Global.gamePiece[mid+rand_a][mid+rand_a].setTeam(team);
+			GameAction.setTeam(team,mid+rand_a,mid+rand_a);
 
 			return;
 		}
@@ -152,14 +153,15 @@ public class GameAI implements PlayingEntity {
 				m[0] = m[0]+1;
 				m[1] = m[1]-1;
 				
-				Global.gamePiece[m[x]][m[y]].setTeam(team);
+				//Global.gamePiece[m[x]][m[y]].setTeam(team);
+				GameAction.setTeam(team,m[x],m[y]);
 				return;
 			}
 			else if(gameBoard[m[x]+1*x+0*y][m[y]+1*y+0*x]==0){
 				m[0] = m[0];
 				m[1] = m[1]+1;
 				
-				Global.gamePiece[m[x]][m[y]].setTeam(team);
+				GameAction.setTeam(team,m[x],m[y]);
 				return;
 			}
 		}
@@ -167,7 +169,9 @@ public class GameAI implements PlayingEntity {
 			m[0] = m[0]+1;
 			m[1] = m[1];
 			
-			Global.gamePiece[m[x]][m[y]].setTeam(team);
+			//Global.gamePiece[m[x]][m[y]].setTeam(team);
+			GameAction.setTeam(team,m[x],m[y]);
+			
 			return;
 		}
 		//Check if they were sneakier and played behind us
@@ -176,14 +180,14 @@ public class GameAI implements PlayingEntity {
 				n[0] = n[0]-1;
 				n[1] = n[1]+1;
 				
-				Global.gamePiece[n[x]][n[y]].setTeam(team);
+				GameAction.setTeam(team,m[x],m[y]);
 				return;
 			}
 			else if(gameBoard[n[x]-1*x+0*y][n[y]-1*y+0*x]==0){
 				n[0] = n[0];
 				n[1] = n[1]-1;
 				
-				Global.gamePiece[n[x]][n[y]].setTeam(team);
+				GameAction.setTeam(team,m[x],m[y]);
 				return;
 			}
 		}
@@ -191,7 +195,7 @@ public class GameAI implements PlayingEntity {
 			n[0] = n[0]-1;
 			n[1] = n[1];
 			
-			Global.gamePiece[n[x]][n[y]].setTeam(team);
+			GameAction.setTeam(team,m[x],m[y]);
 			return;
 		}
 		
@@ -213,7 +217,7 @@ public class GameAI implements PlayingEntity {
 				n[0] = n[0]-2;
 				n[1] = n[1]+1;
 				
-				Global.gamePiece[n[x]][n[y]].setTeam(team);
+				GameAction.setTeam(team,m[x],m[y]);
 				return;
 			}
 			else if(gameBoard[n[x]+1*x-2*y][n[y]+1*y-2*x]!=0 && gameBoard[n[x]-1*x-1*y][n[y]-1*y-1*x]==0){
@@ -231,7 +235,7 @@ public class GameAI implements PlayingEntity {
 				n[0] = n[0]-1;
 				n[1] = n[1]-1;
 				
-				Global.gamePiece[n[x]][n[y]].setTeam(team);
+				GameAction.setTeam(team,m[x],m[y]);
 				return;
 			}
 		}
@@ -253,7 +257,7 @@ public class GameAI implements PlayingEntity {
 				m[0] = m[0]+1;
 				m[1] = m[1]+1;
 				
-				Global.gamePiece[m[x]][m[y]].setTeam(team);
+				GameAction.setTeam(team,m[x],m[y]);
 				return;
 			}
 			else if(gameBoard[m[x]+1*x+1*y][m[y]+1*y+1*x]!=0 && gameBoard[m[x]-1*x+2*y][m[y]-1*y+2*x]==0){
@@ -271,7 +275,7 @@ public class GameAI implements PlayingEntity {
 				m[0] = m[0]+2;
 				m[1] = m[1]-1;
 				
-				Global.gamePiece[m[x]][m[y]].setTeam(team);
+				GameAction.setTeam(team,m[x],m[y]);
 				return;
 			}
 		}
@@ -294,7 +298,7 @@ public class GameAI implements PlayingEntity {
 			n[0] = n[0]-2;
 			n[1] = n[1]+1;
 			
-			Global.gamePiece[n[x]][n[y]].setTeam(team);
+			GameAction.setTeam(team,m[x],m[y]);
 			return;
 		}
 		else if(left() && rand==1 && gameBoard[n[x]-1*x-1*y][n[y]-1*y-1*x]==0){
@@ -312,7 +316,7 @@ public class GameAI implements PlayingEntity {
 			n[0] = n[0]-1;
 			n[1] = n[1]-1;
 			
-			Global.gamePiece[n[x]][n[y]].setTeam(team);
+			GameAction.setTeam(team,m[x],m[y]);
 			return;
 		}
 		//Extend right if we haven't gone left
@@ -331,7 +335,7 @@ public class GameAI implements PlayingEntity {
 			m[0] = m[0]+2;
 			m[1] = m[1]-1;
 			
-			Global.gamePiece[m[x]][m[y]].setTeam(team);
+			GameAction.setTeam(team,m[x],m[y]);
 			return;
 		}
 		else if(right() && rand==1 && gameBoard[m[x]+1*x+1*y][m[y]+1*y+1*x]==0){
@@ -401,7 +405,7 @@ public class GameAI implements PlayingEntity {
 					moves--;
 				}
 				if(moves==0) {
-					Global.gamePiece[x][y].setTeam(team);
+					GameAction.setTeam(team,m[x],m[x]);
 					moves=-10;
 				}	
 			}

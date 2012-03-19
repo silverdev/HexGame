@@ -158,7 +158,7 @@ public class HexGameWindow extends JFrame {
 					Global.moveList.undoTwo();
 				//let ia's know of undo
 				Global.player1.undoCalled();
-				Global.player1.undoCalled();
+				Global.player2.undoCalled();
 				//undo if the game has ended
 				if (Global.gameOver==true){
 					Global.gameOver=false;
