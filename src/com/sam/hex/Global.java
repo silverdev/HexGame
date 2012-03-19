@@ -14,6 +14,13 @@ public class Global {
 	public static Color playerOne=Color.blue;
 	public static Color playerTwo=Color.red;
 	public static byte gameType; //0 Human v Human,1 Human v ai, 2 ai v Human, 3 ai v ai;
+	public static int moveNumber;
+	public static MoveList moveList;
+	public static int playerturn;
+	public static PlayingEntity player1;
+	public static PlayingEntity player2;
+	public static boolean gameOver=false;
+	public static Thread runningGame;
 
 	// public static Color[][] background;
 	public static void set(int gS, int wH, int wW) {
@@ -25,6 +32,7 @@ public class Global {
 			windowWidth = wW;
 		gamePiece = new RegularPolygonGameObject[gridSize][gridSize];
 		hexes = gamePiece;
+		gameOver=false;
 		background = new BufferedImage(windowWidth, windowHeight,
 				BufferedImage.TYPE_INT_ARGB);
 		// background=new Color[windowWidth][windowHeight];
@@ -33,6 +41,7 @@ public class Global {
 		set(gS, wH, wW);
 		if (gameType < 4)
 		gameType=AI;
+		gameOver=false;
 	}
 	// public static int windowHeight=200;
 	// public static int windowWidth=400;

@@ -10,38 +10,52 @@ public class GameObject implements Runnable {
 		theGameRunner = new Thread(this, "runningGame"); // (1) Create a new
 		// thread.
 		System.out.println(theGameRunner.getName());
+		//(2)setup new game varbles
+		Global.moveNumber=0;
+		Global.moveList=(MoveList) new baceList();
+		 Global.playerturn = 1;
+		 Global.runningGame=theGameRunner;
+
+			if(Global.gameType<2) Global.player1=new PlayerObject((byte)1);
+			else Global.player1=new GameAI((byte)1,(byte)1);// sets player vs Ai
+			
+			if((Global.gameType+1)%2>0) Global.player2=new PlayerObject((byte)2);
+			else Global.player2=new GameAI((byte)2,(byte)1);// sets player vs Ai
+		 
+		 theGameRunner.start(); // (3) Start the thread.
+	}
+	
+	public GameObject(boolean undo) {
+		theGameRunner = new Thread(this, "runningGame"); // (1) Create a new
+		// thread.
+		System.out.println(theGameRunner.getName());
 		theGameRunner.start(); // (2) Start the thread.
 	}
 
 	public void run() {
-		PlayingEntity player1;
-		PlayingEntity player2;
-		
-		if(Global.gameType<2) player1=new PlayerObject((byte)1);
-		else player1=new GameAI((byte)1,(byte)1);// sets player vs Ai
-		
-		if((Global.gameType+1)%2>0) player2=new PlayerObject((byte)2);
-		else player2=new GameAI((byte)2,(byte)1);// sets player vs Ai
+		PlayingEntity player1=Global.player1;
+		PlayingEntity player2=Global.player2;
 		
 		
-		byte player = 1;
+	
 		while (true) {
 
-			if (player == 1) {
+			if ( Global.playerturn == 1) {
 				player1.getPlayerTurn();
 				if (GameAction.checkWinPlayer1())
 					break;
-				player = 2;
+				 Global.playerturn = 2;
 			} else {
 				player2.getPlayerTurn();
 				if (GameAction.checkWinPlayer2())
 					break;
-				player = 1;
+				 Global.playerturn = 1;
 				GameAction.checkedFlagReset();
+				Global.moveNumber++;
 			}
 
 		}
-
+		Global.gameOver=true;
 	}
 
 }

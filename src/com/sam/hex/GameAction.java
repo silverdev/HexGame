@@ -2,7 +2,7 @@ package com.sam.hex;
 
 public class GameAction {
 
-	private static RegularPolygonGameObject hex;
+	private static java.awt.Point hex;
 
 	public static boolean checkWinPlayer1() {
 		for (int i = 0; i < Global.gridSize - 1; i++) {
@@ -76,10 +76,14 @@ public class GameAction {
 
 	}
 
-	public static void setPiece(RegularPolygonGameObject h) {
-		hex = h;
+	public static void setPiece(java.awt.Point nhex) {
+		hex=nhex;
 	}
-
+	public static void setTeam(byte t,int x,int y) {
+		
+		Global.moveList=new MoveList(Global.moveList,x,y,t);
+		Global.gamePiece[x][y].setTeam(t);
+	}
 	public static void getPlayerTurn(byte team) {
 		while (true) {
 			while (hex == null) {
@@ -90,8 +94,12 @@ public class GameAction {
 					e.printStackTrace();
 				}
 			}
-			if (hex.getTeam() == 0) {
-				hex.setTeam(team);
+			if (hex.x==-1&&hex.y==-1){ 
+				hex = null;
+				break;}
+			if (Global.gamePiece[hex.x][hex.y].getTeam() == 0) {
+				setTeam(team,hex.x,hex.y);
+				//Global.moveList=new MoveList(Global.moveList,hex.x,hex.y,team);
 				hex = null;
 				break;
 			}

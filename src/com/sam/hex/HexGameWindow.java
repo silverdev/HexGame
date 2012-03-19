@@ -99,9 +99,9 @@ public class HexGameWindow extends JFrame {
 				int x = e.getX();
 				int y = e.getY();
 				for (int xc = 0; xc < Global.gamePiece.length; xc++) {
-					for (RegularPolygonGameObject hex : Global.gamePiece[xc])
-						if (hex.contains(x, y)) {
-							GameAction.setPiece(hex);
+					for (int yc = 0; yc < Global.gamePiece.length; yc++)
+						if (Global.gamePiece[xc][yc].contains(x, y)) {
+							GameAction.setPiece(new java.awt.Point(xc,yc));
 						}
 				}
 
@@ -148,14 +148,28 @@ public class HexGameWindow extends JFrame {
 		undoAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				//Add action here
+				if (Global.gameType==0){
+					Global.moveList.undo();
+					GameAction.setPiece(new java.awt.Point(-1,-1));
+				}
+				if (Global.gameType==1||Global.gameType==2)	
+					Global.moveList.undoTwo();
+				if (Global.gameOver==true){
+					Global.gameOver=false;
+					Global.moveList.replay(0);
+					GameObject RunningGame = new GameObject(true);
+					
+				}
 			} 
 		});
 				
 		newgameAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				//Add action here
+				Global.runningGame.stop();
+				initRegular();
+				GameAction.fullUpdateBoard();
+				GameObject RunningGame = new GameObject();
 			} 
 		});
 		

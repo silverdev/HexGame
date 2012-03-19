@@ -38,8 +38,9 @@ public class RegularPolygonGameObject implements Shape {
 		teamNumber = t;
 		if (teamNumber == 1)
 			setColor(Global.playerOne);
-		else
+		else if (teamNumber == 2)
 			setColor(Global.playerTwo);
+		else setColor(Color.white);
 	}
 
 	public byte getTeam() {

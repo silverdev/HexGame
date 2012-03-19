@@ -344,7 +344,7 @@ public class GameAI implements PlayingEntity {
 			m[0] = m[0]+1;
 			m[1] = m[1]+1;
 			
-			Global.gamePiece[m[x]][m[y]].setTeam(team);
+			GameAction.setTeam(team,m[x],m[x]);
 			return;
 		}
 		
@@ -371,7 +371,7 @@ public class GameAI implements PlayingEntity {
 					moves--;
 				}
 				if(moves==0) {
-					Global.gamePiece[a][b].setTeam(team);
+					GameAction.setTeam(team,a,b);
 					moves=-10;
 				}	
 			}
