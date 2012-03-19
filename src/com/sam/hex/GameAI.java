@@ -23,6 +23,11 @@ public class GameAI implements PlayingEntity {
 
 	}
 
+	public void undoCalled(){
+		//todo
+		return;
+	}
+	
 	public void getPlayerTurn(byte[][] gameBoard) { // for net play
 
 		 this.gameBoard=gameBoard;

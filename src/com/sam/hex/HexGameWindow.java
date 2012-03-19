@@ -148,12 +148,18 @@ public class HexGameWindow extends JFrame {
 		undoAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
+				//undo pvp
 				if (Global.gameType==0){
 					Global.moveList.undo();
 					GameAction.setPiece(new java.awt.Point(-1,-1));
 				}
+				//undo pvc
 				if (Global.gameType==1||Global.gameType==2)	
 					Global.moveList.undoTwo();
+				//let ia's know of undo
+				Global.player1.undoCalled();
+				Global.player1.undoCalled();
+				//undo if the game has ended
 				if (Global.gameOver==true){
 					Global.gameOver=false;
 					Global.moveList.replay(0);

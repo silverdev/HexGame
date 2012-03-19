@@ -20,6 +20,9 @@ public class PlayerObject implements PlayingEntity {
 		this.gameBoard=BoardTools.teamGrid();
 		makeMove();
 	}
+	public void undoCalled(){
+		return;
+	}
 	public void makeMove(){
 		GameAction.getPlayerTurn(team); // lets the player make his move
 	}

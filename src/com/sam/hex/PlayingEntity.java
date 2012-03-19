@@ -11,6 +11,7 @@ public interface PlayingEntity {
 
 	public void getPlayerTurn(byte[][] gameBoard);
 	public void getPlayerTurn();
+	public void undoCalled();
 	
 	
 }
