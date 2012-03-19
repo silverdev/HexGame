@@ -1,10 +1,15 @@
-package com.sam.hex;
+package com.sam.hex.willsai;
 
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+
+import com.sam.hex.BoardTools;
+import com.sam.hex.GameAction;
+import com.sam.hex.Global;
+import com.sam.hex.PlayingEntity;
 
 public class GameAI implements PlayingEntity { 
 	byte team;//1 is left-right, 2 is top-down

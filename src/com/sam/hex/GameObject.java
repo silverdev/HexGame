@@ -1,5 +1,7 @@
 package com.sam.hex;
 
+import com.sam.hex.willsai.GameAI;
+
 //import java.awt.event.MouseAdapter;
 //import java.awt.event.MouseEvent;
 
@@ -39,17 +41,17 @@ public class GameObject implements Runnable {
 		
 	
 		while (true) {
-
-			if ( Global.playerturn == 1) {
+			if(Global.playerturn == 1){
 				player1.getPlayerTurn();
 				if (GameAction.checkWinPlayer1())
 					break;
-				 Global.playerturn = 2;
-			} else {
+				Global.playerturn = 2;
+			} 
+			else {
 				player2.getPlayerTurn();
 				if (GameAction.checkWinPlayer2())
 					break;
-				 Global.playerturn = 1;
+				Global.playerturn = 1;
 				GameAction.checkedFlagReset();
 				Global.moveNumber++;
 			}
