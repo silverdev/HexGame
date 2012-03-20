@@ -1,5 +1,7 @@
 package com.sam.hex;
 
+import com.sam.hex.willsai.GameAI;
+
 //import java.awt.event.MouseAdapter;
 //import java.awt.event.MouseEvent;
 
@@ -7,10 +9,10 @@ public class GameObject implements Runnable {
 	Thread theGameRunner;
 
 	public GameObject() {
-		theGameRunner = new Thread(this, "runningGame"); // (1) Create a new
-		// thread.
-		System.out.println(theGameRunner.getName());
-		//(2)setup new game varbles
+		theGameRunner = new Thread(this, "runningGame"); // (1) Create a new thread.
+		System.out.println(theGameRunner.getName()); 
+		
+		//(2)setup new game variables
 		Global.moveNumber=0;
 		Global.moveList=(MoveList) new baceList();
 		 Global.playerturn = 1;
@@ -26,8 +28,7 @@ public class GameObject implements Runnable {
 	}
 	
 	public GameObject(boolean undo) {
-		theGameRunner = new Thread(this, "runningGame"); // (1) Create a new
-		// thread.
+		theGameRunner = new Thread(this, "runningGame"); // (1) Create a new thread.
 		System.out.println(theGameRunner.getName());
 		theGameRunner.start(); // (2) Start the thread.
 	}
@@ -39,23 +40,24 @@ public class GameObject implements Runnable {
 		
 	
 		while (true) {
-
-			if ( Global.playerturn == 1) {
+			if(Global.playerturn == 1){
 				player1.getPlayerTurn();
 				if (GameAction.checkWinPlayer1())
 					break;
-				 Global.playerturn = 2;
-			} else {
+				Global.playerturn = 2;
+			} 
+			else {
 				player2.getPlayerTurn();
 				if (GameAction.checkWinPlayer2())
 					break;
-				 Global.playerturn = 1;
+				Global.playerturn = 1;
 				GameAction.checkedFlagReset();
 				Global.moveNumber++;
 			}
 
 		}
 		Global.gameOver=true;
+		HexGameWindow.announceWinner(Global.playerturn);
 	}
 
 }

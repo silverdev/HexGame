@@ -1,5 +1,7 @@
 package com.sam.hex;
 
+import java.awt.Point;
+
 public class PlayerObject implements PlayingEntity {
 	
 	byte[][] gameBoard; 
@@ -20,11 +22,32 @@ public class PlayerObject implements PlayingEntity {
 		this.gameBoard=BoardTools.teamGrid();
 		makeMove();
 	}
+	
 	public void undoCalled(){
 		return;
 	}
+	
 	public void makeMove(){
-		GameAction.getPlayerTurn(team); // lets the player make his move
+		while (true) {
+			Point hex = GameAction.hex;
+			while (hex == null) {
+				hex = GameAction.hex;
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			if (hex.equals(new Point(-1,-1))){
+				GameAction.hex = null;
+				break;
+			}
+			if (Global.gamePiece[hex.x][hex.y].getTeam() == 0) {
+				GameAction.makeMove(team, hex);
+				GameAction.hex = null;
+				break;
+			}
+			GameAction.hex = null;
+		}
 	}
-
 }

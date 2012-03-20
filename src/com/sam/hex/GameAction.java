@@ -1,8 +1,10 @@
 package com.sam.hex;
 
+import java.awt.Point;
+
 public class GameAction {
 
-	private static java.awt.Point hex;
+	public static Point hex;
 
 	public static boolean checkWinPlayer1() {
 		for (int i = 0; i < Global.gridSize - 1; i++) {
@@ -84,28 +86,12 @@ public class GameAction {
 		Global.moveList=new MoveList(Global.moveList,x,y,t);
 		Global.gamePiece[x][y].setTeam(t);
 	}
-	public static void getPlayerTurn(byte team) {
-		while (true) {
-			while (hex == null) {
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			if (hex.x==-1&&hex.y==-1){ 
-				hex = null;
-				break;}
-			if (Global.gamePiece[hex.x][hex.y].getTeam() == 0) {
-				setTeam(team,hex.x,hex.y);
-				//Global.moveList=new MoveList(Global.moveList,hex.x,hex.y,team);
-				hex = null;
-				break;
-			}
-			hex = null;
+	
+	public static boolean makeMove(byte team, Point hex){
+		if(Global.gamePiece[hex.x][hex.y].getTeam() == 0){
+			setTeam(team,hex.x,hex.y);
+			return true;
 		}
+		return false;
 	}
-		
-	}
-
+}

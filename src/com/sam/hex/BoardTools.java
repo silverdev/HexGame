@@ -54,10 +54,10 @@ public class BoardTools {
 						+ (cY - cX * slope2)) { // if above line 1 == above line
 					// 2
 					// if((y+x)/(((double)h+(double)w))<.5==((double)h/(double)w>y/x)){
-					Global.background.setRGB((int) x, (int) y, Global.playerOne
+					Global.background.setRGB((int) x, (int) y, Global.player1Color
 							.getRGB());
 				} else {
-					Global.background.setRGB((int) x, (int) y, Global.playerTwo
+					Global.background.setRGB((int) x, (int) y, Global.player2Color
 							.getRGB());
 				}
 				// (((h*w)-h)>y/x)

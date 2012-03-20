@@ -3,11 +3,13 @@ package com.sam.hex;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.*;
+import java.util.prefs.Preferences;
 
-//DEPRECATED: This class will not be ported to Android, just ignore it for now.
+import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class HexGameWindow extends JFrame {
@@ -156,17 +158,17 @@ public class HexGameWindow extends JFrame {
 					GameAction.setPiece(new java.awt.Point(-1,-1));
 				}
 				//undo pvc
-				if (Global.gameType==1||Global.gameType==2)	
+				if (Global.gameType==1||Global.gameType==2)
 					Global.moveList.undoTwo();
-				//let ia's know of undo
+				//let ai know of undo
 				Global.player1.undoCalled();
 				Global.player2.undoCalled();
 				//undo if the game has ended
 				if (Global.gameOver==true){
 					Global.gameOver=false;
 					Global.moveList.replay(0);
+					Global.playerturn = Global.playerturn%2+1;
 					GameObject RunningGame = new GameObject(true);
-					
 				}
 			} 
 		});
@@ -174,16 +176,14 @@ public class HexGameWindow extends JFrame {
 		newgameAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				Global.runningGame.stop();
-				initRegular();
-				GameAction.fullUpdateBoard();
-				GameObject RunningGame = new GameObject();
+				newGame();
 			} 
 		});
 		
 		gridAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
+
 				int newSize;
 				newSize=DialogBoxes.choseGridsize();
 				if (newSize>3){
@@ -193,6 +193,59 @@ public class HexGameWindow extends JFrame {
 					GameAction.fullUpdateBoard();
 					GameObject RunningGame = new GameObject();
 				}
+
+				final JFrame prompt = new JFrame("Grid Size");
+				final JTextField text = new JTextField();
+				JButton okay = new JButton("Save");
+				text.addKeyListener(new KeyListener() {
+					
+					@Override
+					public void keyTyped(KeyEvent e) {
+						//Do nothing
+					}
+					
+					@Override
+					public void keyReleased(KeyEvent e) {
+						if(e.getKeyCode() == KeyEvent.VK_ENTER){
+							try{
+								Global.gridSize = Integer.decode(text.getText());
+								if(Global.gridSize<1) Global.gridSize = 1;
+								Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+								prefs.putInt("gridSize", Global.gridSize);
+								newGame();
+							}
+							catch(Exception ex){}
+							prompt.dispose();
+						}
+					}
+					
+					@Override
+					public void keyPressed(KeyEvent e) {
+						//Do nothing
+					}
+				});
+				okay.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent act) {
+						try{
+							Global.gridSize = Integer.decode(text.getText());
+							if(Global.gridSize<1) Global.gridSize = 1;
+							Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+							prefs.putInt("gridSize", Global.gridSize);
+							newGame();
+						}
+						catch(Exception e){}
+						prompt.dispose();
+						
+					}});
+				prompt.getContentPane().setLayout(new BoxLayout(prompt.getContentPane(), BoxLayout.PAGE_AXIS));
+				prompt.getContentPane().add(text, BorderLayout.CENTER);
+				prompt.getContentPane().add(okay, BorderLayout.CENTER);
+				prompt.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				prompt.setLocationRelativeTo(null);
+				prompt.pack();
+				prompt.setVisible(true);
+
 			} 
 		});
 		
@@ -206,7 +259,50 @@ public class HexGameWindow extends JFrame {
 		p1NameAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
+
 				Global.playerOneName=DialogBoxes.choseName1();
+
+				final JFrame prompt = new JFrame("Player1's Name");
+				final JTextField text = new JTextField(Global.player1Name);
+				JButton okay = new JButton("Save");
+				text.addKeyListener(new KeyListener() {
+					
+					@Override
+					public void keyTyped(KeyEvent e) {
+						//Do nothing
+					}
+					
+					@Override
+					public void keyReleased(KeyEvent e) {
+						if(e.getKeyCode() == KeyEvent.VK_ENTER){
+							Global.player1Name = text.getText();
+							Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+							prefs.put("player1Name", Global.player1Name);
+							prompt.dispose();
+						}
+					}
+					
+					@Override
+					public void keyPressed(KeyEvent e) {
+						//Do nothing
+					}
+				});
+				okay.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent act) {
+						Global.player1Name = text.getText();
+						Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+						prefs.put("player1Name", Global.player1Name);
+						prompt.dispose();
+					}});
+				prompt.getContentPane().setLayout(new BoxLayout(prompt.getContentPane(), BoxLayout.PAGE_AXIS));
+				prompt.getContentPane().add(text, BorderLayout.CENTER);
+				prompt.getContentPane().add(okay, BorderLayout.CENTER);
+				prompt.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				prompt.setLocationRelativeTo(null);
+				prompt.pack();
+				prompt.setVisible(true);
+
 			} 
 		});
 		
@@ -220,14 +316,64 @@ public class HexGameWindow extends JFrame {
 		p1ModeAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				DialogBoxes.choseGameTypePlayer1();
+				String g=DialogBoxes.choseGameTypePlayer1();
+				if (g=="human on human"){Global.gameType=0;}
+				if (g=="human on AI"){Global.gameType=1;}
+				if (g=="AI on human"){Global.gameType=2;}
+				if (g=="AI on AI"){Global.gameType=3;}
+				Global.runningGame.stop();
+				initRegular();
+				GameAction.fullUpdateBoard();
+				GameObject RunningGame = new GameObject();
 			} 
 		});
 		
 		p2NameAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
+
 				Global.playerTwoName=DialogBoxes.choseName2();
+				final JFrame prompt = new JFrame("Player2's Name");
+				final JTextField text = new JTextField(Global.player2Name);
+				JButton okay = new JButton("Save");
+				text.addKeyListener(new KeyListener() {
+					
+					@Override
+					public void keyTyped(KeyEvent e) {
+						//Do nothing
+					}
+					
+					@Override
+					public void keyReleased(KeyEvent e) {
+						if(e.getKeyCode() == KeyEvent.VK_ENTER){
+							Global.player2Name = text.getText();
+							Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+							prefs.put("player2Name", Global.player2Name);
+							prompt.dispose();
+						}
+					}
+					
+					@Override
+					public void keyPressed(KeyEvent e) {
+						//Do nothing
+					}
+				});
+				okay.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent act) {
+						Global.player2Name = text.getText();
+						Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+						prefs.put("player2Name", Global.player2Name);
+						prompt.dispose();
+					}});
+				prompt.getContentPane().setLayout(new BoxLayout(prompt.getContentPane(), BoxLayout.PAGE_AXIS));
+				prompt.getContentPane().add(text, BorderLayout.CENTER);
+				prompt.getContentPane().add(okay, BorderLayout.CENTER);
+				prompt.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				prompt.setLocationRelativeTo(null);
+				prompt.pack();
+				prompt.setVisible(true);
+
 			} 
 		});
 		
@@ -244,5 +390,34 @@ public class HexGameWindow extends JFrame {
 				DialogBoxes.choseGameTypePlayer2();
 			} 
 		});
+	}
+	
+	private void newGame(){
+		Global.runningGame.stop();
+		initRegular();
+		GameAction.fullUpdateBoard();
+		GameObject RunningGame = new GameObject();
+		//TODO Doesn't update the number of hexagons
+	}
+	
+	public static void announceWinner(int team){
+		final JFrame prompt = new JFrame("Player2's Name");
+		final JLabel text = new JLabel();
+		if(team==1) text.setText(Global.player1Name+" wins.");
+		else text.setText(Global.player2Name+" wins.");
+		JButton okay = new JButton("Okay");
+		okay.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent act) {
+				prompt.dispose();
+			}});
+		prompt.getContentPane().setLayout(new BoxLayout(prompt.getContentPane(), BoxLayout.PAGE_AXIS));
+		prompt.getContentPane().add(text, BorderLayout.CENTER);
+		prompt.getContentPane().add(okay, BorderLayout.CENTER);
+		prompt.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		prompt.setLocationRelativeTo(null);
+		prompt.setResizable(false);
+		prompt.pack();
+		prompt.setVisible(true);
 	}
 }
