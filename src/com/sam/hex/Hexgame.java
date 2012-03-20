@@ -11,7 +11,7 @@ public class Hexgame {
 			Global.set(Integer.parseInt(args[0]), Integer.parseInt(args[1]),
 					Integer.parseInt(args[2]), Byte.parseByte(args[3]), Byte.parseByte(args[4]));
 		else {
-			Global.set(7, 600, 800);
+			Global.set(11, 600, 800);
 		}
 		
 		grabPreferences();
@@ -46,6 +46,6 @@ public class Hexgame {
 		}
 		Global.player1Type = prefs.getInt("player1Type", 0);
 		Global.player2Type = prefs.getInt("player2Type", 0);
-		Global.gridSize = prefs.getInt("gridSize", 7);
+		Global.gridSize = prefs.getInt("gridSize", 11);
 	}
 }

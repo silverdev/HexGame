@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.awt.Color;
 
 public class Global {
-	public static int gridSize = 7;
+	public static int gridSize = 11;
 	public static int windowHeight = 600;
 	public static BufferedImage background;
 	public static int windowWidth = 800;

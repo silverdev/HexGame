@@ -2,12 +2,55 @@ package com.sam.hex;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
 
 public class DialogBoxes {
+	
+	public static void resetGameOption() {
+
+		Object[] options = { "Yes make it so", "Cancel" };
+		byte b =(byte) JOptionPane.showOptionDialog(Global.window,
+				"are you sure you want to reset all your options\n all your personal settings will be lost",
+				"Are you sure", JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+		if (b==0){
+			//Clear Preferences
+			Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+			
+			try {
+				prefs.clear();
+			} catch (BackingStoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// restore Defalts
+			Global.gridSize=GlobalDefalts.gridSize;
+			Global.windowHeight=GlobalDefalts.windowHeight;
+			Global.windowWidth=GlobalDefalts.windowWidth;
+			Global.playerOneName=GlobalDefalts.playerOneName;
+			Global.playerTwoName=GlobalDefalts.playerTwoName;
+			Global.player1Name=GlobalDefalts.player1Name;
+			Global.player1Color=GlobalDefalts.player1Color;
+			Global.player1Type=GlobalDefalts.player1Type;
+			Global.player2Name=GlobalDefalts.player2Name;
+			Global.player2Color=GlobalDefalts.player2Color;
+			Global.player2Type=GlobalDefalts.player2Type;
+			Global.aiType=GlobalDefalts.aiType;
+			//restart game
+			Global.runningGame.stop();
+			Global.window.initRegular();
+			GameAction.fullUpdateBoard();
+			new GameObject();
+			
+			
+			
+		}
+
+	}
 
 	public static String chooseGameTypePlayer1() {
 		Object[] possibilities = { "Human", "Computer" };

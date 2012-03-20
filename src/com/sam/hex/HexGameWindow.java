@@ -126,6 +126,7 @@ public class HexGameWindow extends JFrame {
 		JMenuItem undoAction =  new JMenuItem("Undo");
 		JMenuItem newgameAction =   new JMenuItem("New Game");
 		JMenuItem gridAction =  new JMenuItem("Grid Size");
+		JMenuItem resetAction =  new JMenuItem("Reset Preferences");
 		JMenuItem exitAction =  new JMenuItem("Exit");
 		JMenuItem p1NameAction =   new JMenuItem("Name");
 		JMenuItem p1ColorAction =  new  JMenuItem("Color");
@@ -138,6 +139,8 @@ public class HexGameWindow extends JFrame {
 		fileMenu.add(newgameAction);
 		fileMenu.addSeparator();
 		fileMenu.add(gridAction);
+		fileMenu.addSeparator();
+		fileMenu.add(resetAction);
 		fileMenu.addSeparator();
 		fileMenu.add(exitAction);
 		player1Menu.add(p1NameAction);
@@ -192,6 +195,13 @@ public class HexGameWindow extends JFrame {
 					GameAction.fullUpdateBoard();
 					new GameObject();
 				}
+			} 
+		});
+		
+		resetAction.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent act) {
+				DialogBoxes.resetGameOption();
 			} 
 		});
 		
