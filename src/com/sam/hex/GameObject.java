@@ -9,9 +9,9 @@ public class GameObject implements Runnable {
 	Thread theGameRunner;
 
 	public GameObject() {
-		theGameRunner = new Thread(this, "runningGame"); // (1) Create a new
-		// thread.
-		System.out.println(theGameRunner.getName());
+		theGameRunner = new Thread(this, "runningGame"); // (1) Create a new thread.
+		System.out.println(theGameRunner.getName()); 
+		
 		//(2)setup new game variables
 		Global.moveNumber=0;
 		Global.moveList=(MoveList) new baceList();
@@ -57,6 +57,7 @@ public class GameObject implements Runnable {
 
 		}
 		Global.gameOver=true;
+		HexGameWindow.announceWinner(Global.playerturn);
 	}
 
 }

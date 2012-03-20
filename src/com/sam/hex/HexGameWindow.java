@@ -358,4 +358,25 @@ public class HexGameWindow extends JFrame {
 		GameObject RunningGame = new GameObject();
 		//TODO Doesn't update the number of hexagons
 	}
+	
+	public static void announceWinner(int team){
+		final JFrame prompt = new JFrame("Player2's Name");
+		final JLabel text = new JLabel();
+		if(team==1) text.setText(Global.player1Name+" wins.");
+		else text.setText(Global.player2Name+" wins.");
+		JButton okay = new JButton("Okay");
+		okay.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent act) {
+				prompt.dispose();
+			}});
+		prompt.getContentPane().setLayout(new BoxLayout(prompt.getContentPane(), BoxLayout.PAGE_AXIS));
+		prompt.getContentPane().add(text, BorderLayout.CENTER);
+		prompt.getContentPane().add(okay, BorderLayout.CENTER);
+		prompt.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		prompt.setLocationRelativeTo(null);
+		prompt.setResizable(false);
+		prompt.pack();
+		prompt.setVisible(true);
+	}
 }
