@@ -3,6 +3,9 @@ package com.sam.hex;
 import java.awt.Shape; //import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
+import java.util.ArrayList;
+
+import com.sam.hex.lan.LocalNetworkObject;
 
 public class Global {
 	public static int gridSize = 11;
@@ -23,6 +26,8 @@ public class Global {
 	public static Color player2Color=Color.red;
 	public static int player2Type=0;
 
+	public static ArrayList<LocalNetworkObject> localObjects;
+	public static LocalNetworkObject localPlayer;
 	public static String aiType;
 	public static int moveNumber;
 	public static MoveList moveList;
