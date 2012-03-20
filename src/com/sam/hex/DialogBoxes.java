@@ -1,13 +1,17 @@
 package com.sam.hex;
 
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.prefs.Preferences;
 
+import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class DialogBoxes {
 
-	public static String choseGameTypePlayer1() {
+	public static String chooseGameTypePlayer1() {
 		Object[] possibilities = { "human on human", "human on AI",
 				"AI on human", "AI on AI" };
 
@@ -25,7 +29,7 @@ public class DialogBoxes {
 
 	}
 
-	public static String choseGameTypePlayer2() {
+	public static String chooseGameTypePlayer2() {
 		Object[] possibilities = { "gameAI", "Randon" };
 		JFrame frame = new JFrame("AI type Type");
 		String s = (String) JOptionPane.showInputDialog(Global.window,
@@ -42,7 +46,7 @@ public class DialogBoxes {
 
 	}
 
-	public static String choseName1() {
+	public static String chooseName1() {
 
 		String s = (String) JOptionPane.showInputDialog(Global.window,
 				"Choose name for player one:\n", "Player One",
@@ -60,22 +64,20 @@ public class DialogBoxes {
 
 	}
 
-	public static String choseColor1() {
-
-		String s = (String) JOptionPane.showInputDialog(Global.window,
-				"Choose color for player one:\n", "Player One",
-				JOptionPane.PLAIN_MESSAGE);
-
-		// If a string was returned, say so.
-		if ((s != null) && (s.length() > 0)) {
-			return s;
-		}
-
-		return null;
-
+	public static int chooseColor1() {
+		final JColorChooser chooser = new JColorChooser(Global.player1Color);
+		JColorChooser.createDialog(Global.window, "Pick a color", true, chooser, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Global.player1Color=chooser.getColor();
+				Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+				prefs.putInt("player1Color", Global.player1Color.getRGB());
+			}}, null).show();
+		
+		return Global.player1Color.getRGB();
 	}
 
-	public static String choseName2() {
+	public static String chooseName2() {
 
 		String s = (String) JOptionPane.showInputDialog(Global.window,
 				"Choose name for player two:\n", "Player Two",
@@ -93,21 +95,19 @@ public class DialogBoxes {
 
 	}
 
-	public static String choseColor2() {
-
-		String s = (String) JOptionPane.showInputDialog(null,
-				"Choose color for player two:\n", "Player Two",
-				JOptionPane.PLAIN_MESSAGE);
-
-		// If a string was returned, say so.
-		if ((s != null) && (s.length() > 0)) {
-			return s;
-		}
-
-		return null;
-
+	public static int choseColor2() {
+		final JColorChooser chooser = new JColorChooser(Global.player1Color);
+		JColorChooser.createDialog(Global.window, "Pick a color", true, chooser, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Global.player2Color=chooser.getColor();
+				Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+				prefs.putInt("player2Color", Global.player2Color.getRGB());
+			}}, null).show();
+		
+		return Global.player2Color.getRGB();
 	}
-	public static int choseGridsize() {
+	public static int chooseGridsize() {
 
 		String s = (String) JOptionPane.showInputDialog(Global.window,
 				"Choose a new grid size:\n", "Grid Size",

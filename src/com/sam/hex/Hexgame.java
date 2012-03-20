@@ -39,8 +39,8 @@ public class Hexgame {
 		Global.player1Name = prefs.get("player1Name", "Player1");
 		Global.player2Name = prefs.get("player2Name", "Player2");
 		try{
-			Global.player1Color = Color.decode(prefs.get("player1Color", Color.BLUE.toString()));
-			Global.player2Color = Color.decode(prefs.get("player2Color", Color.RED.toString()));
+			Global.player1Color = new Color(prefs.getInt("player1Color", Color.BLUE.getRGB()));
+			Global.player2Color = new Color(prefs.getInt("player2Color", Color.RED.getRGB()));
 		}
 		catch(Exception e){
 			Global.player1Color = Color.BLUE;

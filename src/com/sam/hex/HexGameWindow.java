@@ -186,7 +186,7 @@ public class HexGameWindow extends JFrame {
 		gridAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				DialogBoxes.choseGridsize();
+				DialogBoxes.chooseGridsize();
 				initRegular();
 				GameAction.fullUpdateBoard();
 				GameObject RunningGame = new GameObject();
@@ -203,21 +203,21 @@ public class HexGameWindow extends JFrame {
 		p1NameAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				Global.playerOneName=DialogBoxes.choseName1();
+				Global.playerOneName=DialogBoxes.chooseName1();
 			} 
 		});
 		
 		p1ColorAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				DialogBoxes.choseColor1();
+				DialogBoxes.chooseColor1();
 			} 
 		});
 		
 		p1ModeAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				String g=DialogBoxes.choseGameTypePlayer1();
+				String g=DialogBoxes.chooseGameTypePlayer1();
 				if (g=="human on human"){Global.gameType=0;}
 				if (g=="human on AI"){Global.gameType=1;}
 				if (g=="AI on human"){Global.gameType=2;}
@@ -232,7 +232,7 @@ public class HexGameWindow extends JFrame {
 		p2NameAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				Global.playerTwoName=DialogBoxes.choseName2();
+				Global.playerTwoName=DialogBoxes.chooseName2();
 			} 
 		});
 		
@@ -246,7 +246,7 @@ public class HexGameWindow extends JFrame {
 		p2ModeAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				DialogBoxes.choseGameTypePlayer2();
+				DialogBoxes.chooseGameTypePlayer2();
 			} 
 		});
 	}
