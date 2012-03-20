@@ -31,18 +31,18 @@ public class DialogBoxes {
 			Global.runningGame.stop();
 			
 			// restore Defalts
-			Global.gridSize=GlobalDefalts.gridSize;
-			Global.windowHeight=GlobalDefalts.windowHeight;
-			Global.windowWidth=GlobalDefalts.windowWidth;
-			Global.playerOneName=GlobalDefalts.playerOneName;
-			Global.playerTwoName=GlobalDefalts.playerTwoName;
-			Global.player1Name=GlobalDefalts.player1Name;
-			Global.player1Color=GlobalDefalts.player1Color;
-			Global.player1Type=GlobalDefalts.player1Type;
-			Global.player2Name=GlobalDefalts.player2Name;
-			Global.player2Color=GlobalDefalts.player2Color;
-			Global.player2Type=GlobalDefalts.player2Type;
-			Global.aiType=GlobalDefalts.aiType;
+			Global.gridSize=GlobalDefaults.gridSize;
+			Global.windowHeight=GlobalDefaults.windowHeight;
+			Global.windowWidth=GlobalDefaults.windowWidth;
+			Global.playerOneName=GlobalDefaults.playerOneName;
+			Global.playerTwoName=GlobalDefaults.playerTwoName;
+			Global.player1Name=GlobalDefaults.player1Name;
+			Global.player1Color=GlobalDefaults.player1Color;
+			Global.player1Type=GlobalDefaults.player1Type;
+			Global.player2Name=GlobalDefaults.player2Name;
+			Global.player2Color=GlobalDefaults.player2Color;
+			Global.player2Type=GlobalDefaults.player2Type;
+			Global.aiType=GlobalDefaults.aiType;
 			//restart game
 			
 			Global.window.initRegular();

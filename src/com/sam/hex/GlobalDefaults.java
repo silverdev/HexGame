@@ -1,10 +1,8 @@
 package com.sam.hex;
 
-import java.awt.Shape; //import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.awt.Color;
 
-public class GlobalDefalts {
+public class GlobalDefaults {
 	public static final int gridSize = 11;
 	public static final int windowHeight = 600;
 	public static final int windowWidth = 800;
