@@ -10,37 +10,43 @@ import javax.swing.JOptionPane;
 public class DialogBoxes {
 
 	public static String chooseGameTypePlayer1() {
-		Object[] possibilities = { "human on human", "human on AI",
-				"AI on human", "AI on AI" };
+		Object[] possibilities = { "Human", "Computer" };
 
 		String s = (String) JOptionPane.showInputDialog(Global.window,
 				"Choose a type of game:\n", "Game Type",
 				JOptionPane.PLAIN_MESSAGE, null, possibilities,
-				(Object) "human on human");
+				(Object) "Human");
 
 		// If a string was returned, say so.
 		if ((s != null) && (s.length() > 0)) {
+			if (s=="Human") Global.player1Type=0;
+			else if (s=="Computer") Global.player1Type=1;
+			Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+			prefs.putInt("player1Type", Global.player1Type);
 			return s;
 		}
 
 		return null;
-
 	}
 
 	public static String chooseGameTypePlayer2() {
-		Object[] possibilities = { "gameAI", "Randon" };
+		Object[] possibilities = { "Human", "Computer" };
+
 		String s = (String) JOptionPane.showInputDialog(Global.window,
-				"Choose a type of AI:\n", "AI Type",
+				"Choose a type of game:\n", "Game Type",
 				JOptionPane.PLAIN_MESSAGE, null, possibilities,
-				possibilities[0]);
+				(Object) "Human");
 
 		// If a string was returned, say so.
 		if ((s != null) && (s.length() > 0)) {
+			if (s=="Human") Global.player2Type=0;
+			else if (s=="Computer") Global.player2Type=1;
+			Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+			prefs.putInt("player2Type", Global.player2Type);
 			return s;
 		}
 
 		return null;
-
 	}
 
 	public static String chooseName1() {

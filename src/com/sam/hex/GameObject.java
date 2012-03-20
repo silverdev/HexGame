@@ -18,10 +18,10 @@ public class GameObject implements Runnable {
 		Global.playerturn = 1;
 		Global.runningGame=theGameRunner;
 
-		if(Global.gameType<2) Global.player1=new PlayerObject((byte)1);
+		if(Global.player1Type==0) Global.player1=new PlayerObject((byte)1);
 		else Global.player1=new GameAI((byte)1,(byte)1);// sets player vs Ai
 			
-		if((Global.gameType+1)%2>0) Global.player2=new PlayerObject((byte)2);
+		if(Global.player2Type==0) Global.player2=new PlayerObject((byte)2);
 		else Global.player2=new GameAI((byte)2,(byte)1);// sets player vs Ai
 		 
 		theGameRunner.start(); // (3) Start the thread.

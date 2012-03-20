@@ -7,9 +7,9 @@ import java.util.prefs.Preferences;
 public class Hexgame {
 
 	public static void main(String[] args){
-		if (args.length > 3)
+		if (args.length > 4)
 			Global.set(Integer.parseInt(args[0]), Integer.parseInt(args[1]),
-					Integer.parseInt(args[2]), Byte.parseByte(args[3]));
+					Integer.parseInt(args[2]), Byte.parseByte(args[3]), Byte.parseByte(args[4]));
 		else {
 			Global.set(7, 600, 800);
 		}

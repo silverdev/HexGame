@@ -23,7 +23,6 @@ public class Global {
 	public static Color player2Color=Color.red;
 	public static int player2Type=0;
 
-	public static byte gameType; //0 Human v Human,1 Human v ai, 2 ai v Human, 3 ai v ai;
 	public static String aiType;
 	public static int moveNumber;
 	public static MoveList moveList;
@@ -35,13 +34,13 @@ public class Global {
 	public static HexGameWindow window;
 
 	// public static Color[][] background;
-	public static void set(int gS, int wH, int wW) {
-		if (gS > 0)
-			gridSize = gS;
-		if (wH > 10)
-			windowHeight = wH;
-		if (wW > 10)
-			windowWidth = wW;
+	public static void set(int gridSize, int windowHeight, int windowWidth) {
+		if (gridSize > 0)
+			Global.gridSize = gridSize;
+		if (windowHeight > 10)
+			Global.windowHeight = windowHeight;
+		if (windowWidth > 10)
+			Global.windowWidth = windowWidth;
 		gamePiece = new RegularPolygonGameObject[gridSize][gridSize];
 		hexes = gamePiece;
 		gameOver=false;
@@ -49,10 +48,10 @@ public class Global {
 				BufferedImage.TYPE_INT_ARGB);
 		// background=new Color[windowWidth][windowHeight];
 	}
-	public static void set(int gS, int wH, int wW, byte AI){
-		set(gS, wH, wW);
-		if (gameType < 4)
-		gameType=AI;
+	public static void set(int gridSize, int windowHeight, int windowWidth, byte p1, byte p2){
+		set(gridSize, windowHeight, windowWidth);
+		if (p1 < 2) Global.player1Type=p1;
+		if (p2 < 2) Global.player2Type=p2;
 		gameOver=false;
 	}
 	// public static int windowHeight=200;

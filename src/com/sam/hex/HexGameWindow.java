@@ -151,12 +151,12 @@ public class HexGameWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent act) {
 				//undo pvp
-				if (Global.gameType==0){
+				if (Global.player1Type==0 && Global.player2Type==0){
 					Global.moveList.undo();
 					GameAction.setPiece(new java.awt.Point(-1,-1));
 				}
 				//undo pvc
-				if (Global.gameType==1||Global.gameType==2)
+				if (Global.player1Type==1 || Global.player2Type==1 && !(Global.player1Type==1 && Global.player2Type==1))
 					Global.moveList.undoTwo();
 				//let ai know of undo
 				Global.player1.undoCalled();
@@ -212,17 +212,15 @@ public class HexGameWindow extends JFrame {
 				initRegular();
 				GameAction.fullUpdateBoard();
 				Global.moveList.replay(0);
+				GameAction.checkWinPlayer1();
+				GameAction.checkWinPlayer2();
 			} 
 		});
 		
 		p1ModeAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				String g=DialogBoxes.chooseGameTypePlayer1();
-				if (g=="human on human"){Global.gameType=0;}
-				if (g=="human on AI"){Global.gameType=1;}
-				if (g=="AI on human"){Global.gameType=2;}
-				if (g=="AI on AI"){Global.gameType=3;}
+				DialogBoxes.chooseGameTypePlayer1();
 				Global.runningGame.stop();
 				initRegular();
 				GameAction.fullUpdateBoard();
@@ -244,6 +242,8 @@ public class HexGameWindow extends JFrame {
 				initRegular();
 				GameAction.fullUpdateBoard();
 				Global.moveList.replay(0);
+				GameAction.checkWinPlayer1();
+				GameAction.checkWinPlayer2();
 			} 
 		});
 		
@@ -251,6 +251,10 @@ public class HexGameWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent act) {
 				DialogBoxes.chooseGameTypePlayer2();
+				Global.runningGame.stop();
+				initRegular();
+				GameAction.fullUpdateBoard();
+				new GameObject();
 			} 
 		});
 	}
