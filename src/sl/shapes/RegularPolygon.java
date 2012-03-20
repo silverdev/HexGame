@@ -18,7 +18,7 @@ public class RegularPolygon extends Polygon {
         double addAngle=2*Math.PI/vertexCount;
         double angle=startAngle;
         for (int i=0; i<vertexCount; i++) {
-            res[i]=(int) ((double)Math.round(r*Math.cos(angle))+x);
+            res[i]=(int) ((double)r*Math.cos(angle)+x);
             angle+=addAngle;
         }
         return res;
@@ -29,7 +29,7 @@ public class RegularPolygon extends Polygon {
         double addAngle=2*Math.PI/vertexCount;
         double angle=startAngle;
         for (int i=0; i<vertexCount; i++) {
-            res[i]=(int) ((double)Math.round(r*Math.sin(angle))+y);
+            res[i]=(int) ((double)r*Math.sin(angle)+y);
             angle+=addAngle;
         }
         return res;

@@ -27,6 +27,9 @@ public class DialogBoxes {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			//stop the old game
+			Global.runningGame.stop();
+			
 			// restore Defalts
 			Global.gridSize=GlobalDefalts.gridSize;
 			Global.windowHeight=GlobalDefalts.windowHeight;
@@ -41,7 +44,7 @@ public class DialogBoxes {
 			Global.player2Type=GlobalDefalts.player2Type;
 			Global.aiType=GlobalDefalts.aiType;
 			//restart game
-			Global.runningGame.stop();
+			
 			Global.window.initRegular();
 			GameAction.fullUpdateBoard();
 			new GameObject();
