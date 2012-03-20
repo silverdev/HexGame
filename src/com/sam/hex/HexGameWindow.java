@@ -3,16 +3,13 @@ package com.sam.hex;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.prefs.Preferences;
 
 import javax.swing.*;
 
-@SuppressWarnings("serial")
 public class HexGameWindow extends JFrame {
+	private static final long serialVersionUID = 7740144563399961702L;
 	public static Canvas cPolygons = new Canvas();
 
 	public HexGameWindow() {
@@ -65,6 +62,7 @@ public class HexGameWindow extends JFrame {
 	}
 
 	protected static class Canvas extends JPanel {
+		private static final long serialVersionUID = -4797847956664594904L;
 		Shape[][] hexes;
 		Color color;
 
@@ -168,7 +166,7 @@ public class HexGameWindow extends JFrame {
 					Global.gameOver=false;
 					Global.moveList.replay(0);
 					Global.playerturn = Global.playerturn%2+1;
-					GameObject RunningGame = new GameObject(true);
+					new GameObject(true);
 				}
 			} 
 		});
@@ -179,7 +177,7 @@ public class HexGameWindow extends JFrame {
 				Global.runningGame.stop();
 				initRegular();
 				GameAction.fullUpdateBoard();
-				GameObject RunningGame = new GameObject();
+				new GameObject();
 			} 
 		});
 		
@@ -189,7 +187,7 @@ public class HexGameWindow extends JFrame {
 				DialogBoxes.chooseGridsize();
 				initRegular();
 				GameAction.fullUpdateBoard();
-				GameObject RunningGame = new GameObject();
+				new GameObject();
 			} 
 		});
 		
@@ -225,7 +223,7 @@ public class HexGameWindow extends JFrame {
 				Global.runningGame.stop();
 				initRegular();
 				GameAction.fullUpdateBoard();
-				GameObject RunningGame = new GameObject();
+				new GameObject();
 			} 
 		});
 		

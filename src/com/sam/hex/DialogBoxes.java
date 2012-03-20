@@ -1,12 +1,10 @@
 package com.sam.hex;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.prefs.Preferences;
 
 import javax.swing.JColorChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class DialogBoxes {
@@ -31,7 +29,6 @@ public class DialogBoxes {
 
 	public static String chooseGameTypePlayer2() {
 		Object[] possibilities = { "gameAI", "Randon" };
-		JFrame frame = new JFrame("AI type Type");
 		String s = (String) JOptionPane.showInputDialog(Global.window,
 				"Choose a type of AI:\n", "AI Type",
 				JOptionPane.PLAIN_MESSAGE, null, possibilities,
@@ -72,7 +69,9 @@ public class DialogBoxes {
 				Global.player1Color=chooser.getColor();
 				Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
 				prefs.putInt("player1Color", Global.player1Color.getRGB());
-			}}, null).show();
+			}}, null).setVisible(true);
+		
+		//TODO Reset board, colors
 		
 		return Global.player1Color.getRGB();
 	}
@@ -103,7 +102,7 @@ public class DialogBoxes {
 				Global.player2Color=chooser.getColor();
 				Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
 				prefs.putInt("player2Color", Global.player2Color.getRGB());
-			}}, null).show();
+			}}, null).setVisible(true);
 		
 		return Global.player2Color.getRGB();
 	}

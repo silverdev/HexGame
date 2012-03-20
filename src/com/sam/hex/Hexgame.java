@@ -20,9 +20,7 @@ public class Hexgame {
 		Global.window=fr;
 
 		fr.setVisible(true);
-		@SuppressWarnings("unused")
-		GameObject RunningGame = new GameObject(); // GameObject is very much in
-													// use, do not delete!
+		new GameObject();
 
 		while (true) {
 			GameAction.updateBoard();

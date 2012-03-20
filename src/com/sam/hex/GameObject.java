@@ -15,16 +15,16 @@ public class GameObject implements Runnable {
 		//(2)setup new game variables
 		Global.moveNumber=0;
 		Global.moveList=(MoveList) new baceList();
-		 Global.playerturn = 1;
-		 Global.runningGame=theGameRunner;
+		Global.playerturn = 1;
+		Global.runningGame=theGameRunner;
 
-			if(Global.gameType<2) Global.player1=new PlayerObject((byte)1);
-			else Global.player1=new GameAI((byte)1,(byte)1);// sets player vs Ai
+		if(Global.gameType<2) Global.player1=new PlayerObject((byte)1);
+		else Global.player1=new GameAI((byte)1,(byte)1);// sets player vs Ai
 			
-			if((Global.gameType+1)%2>0) Global.player2=new PlayerObject((byte)2);
-			else Global.player2=new GameAI((byte)2,(byte)1);// sets player vs Ai
+		if((Global.gameType+1)%2>0) Global.player2=new PlayerObject((byte)2);
+		else Global.player2=new GameAI((byte)2,(byte)1);// sets player vs Ai
 		 
-		 theGameRunner.start(); // (3) Start the thread.
+		theGameRunner.start(); // (3) Start the thread.
 	}
 	
 	public GameObject(boolean undo) {
@@ -37,8 +37,6 @@ public class GameObject implements Runnable {
 		PlayingEntity player1=Global.player1;
 		PlayingEntity player2=Global.player2;
 		
-		
-	
 		while (true) {
 			if(Global.playerturn == 1){
 				player1.getPlayerTurn();
@@ -56,8 +54,8 @@ public class GameObject implements Runnable {
 			}
 
 		}
+		
 		Global.gameOver=true;
 		HexGameWindow.announceWinner(Global.playerturn);
 	}
-
 }
