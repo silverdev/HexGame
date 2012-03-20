@@ -40,6 +40,7 @@ public class MoveList {
 	//for replays
 	public void replay(int time){
 		if (thisMove==null) return;
+		//if (time!=0)GameAction.updateBoard();
 		if (nextMove!=null) nextMove.replay(time);
 		Global.gamePiece[thisMove.x][thisMove.y].setTeam(thisMove.team);
 		try {

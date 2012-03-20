@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.lang.reflect.Method;
 
 import javax.swing.*;
 
@@ -125,6 +126,7 @@ public class HexGameWindow extends JFrame {
 
 		JMenuItem undoAction =  new JMenuItem("Undo");
 		JMenuItem newgameAction =   new JMenuItem("New Game");
+		JMenuItem replayAction =   new JMenuItem("Replay Game");
 		JMenuItem gridAction =  new JMenuItem("Grid Size");
 		JMenuItem resetAction =  new JMenuItem("Reset Preferences");
 		JMenuItem exitAction =  new JMenuItem("Exit");
@@ -137,6 +139,7 @@ public class HexGameWindow extends JFrame {
 
 		fileMenu.add(undoAction);
 		fileMenu.add(newgameAction);
+		fileMenu.add(replayAction);
 		fileMenu.addSeparator();
 		fileMenu.add(gridAction);
 		fileMenu.addSeparator();
@@ -181,6 +184,15 @@ public class HexGameWindow extends JFrame {
 				initRegular();
 				GameAction.fullUpdateBoard();
 				new GameObject();
+			} 
+		});
+		
+		replayAction.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent act) {
+				Thread replay = new Thread(new Replay());
+				replay.start();
+				return;
 			} 
 		});
 		

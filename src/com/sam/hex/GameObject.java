@@ -17,6 +17,7 @@ public class GameObject implements Runnable {
 		Global.moveList=(MoveList) new baceList();
 		Global.playerturn = 1;
 		Global.runningGame=theGameRunner;
+		Global.gameOver=false;
 
 		if(Global.player1Type==0) Global.player1=new PlayerObject((byte)1);
 		else Global.player1=new GameAI((byte)1,(byte)1);// sets player vs Ai
