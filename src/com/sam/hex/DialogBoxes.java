@@ -1,5 +1,7 @@
 package com.sam.hex;
 
+import java.util.prefs.Preferences;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -10,7 +12,7 @@ public class DialogBoxes {
 				"AI on human", "AI on AI" };
 
 		String s = (String) JOptionPane.showInputDialog(Global.window,
-				"Chose a type of game:\n", "Game Type",
+				"Choose a type of game:\n", "Game Type",
 				JOptionPane.PLAIN_MESSAGE, null, possibilities,
 				(Object) "human on human");
 
@@ -27,7 +29,7 @@ public class DialogBoxes {
 		Object[] possibilities = { "gameAI", "Randon" };
 		JFrame frame = new JFrame("AI type Type");
 		String s = (String) JOptionPane.showInputDialog(Global.window,
-				"Chose a type of Ai:\n", "AI Type",
+				"Choose a type of AI:\n", "AI Type",
 				JOptionPane.PLAIN_MESSAGE, null, possibilities,
 				possibilities[0]);
 
@@ -43,11 +45,14 @@ public class DialogBoxes {
 	public static String choseName1() {
 
 		String s = (String) JOptionPane.showInputDialog(Global.window,
-				"Chose name for player One:\n", "player One",
+				"Choose name for player one:\n", "Player One",
 				JOptionPane.PLAIN_MESSAGE);
 
 		// If a string was returned, say so.
 		if ((s != null) && (s.length() > 0)) {
+			Global.player1Name = s;
+			Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+			prefs.put("player1Name", Global.player1Name);
 			return s;
 		}
 
@@ -58,7 +63,7 @@ public class DialogBoxes {
 	public static String choseColor1() {
 
 		String s = (String) JOptionPane.showInputDialog(Global.window,
-				"Chose Color for player One:\n", "player One",
+				"Choose color for player one:\n", "Player One",
 				JOptionPane.PLAIN_MESSAGE);
 
 		// If a string was returned, say so.
@@ -73,11 +78,14 @@ public class DialogBoxes {
 	public static String choseName2() {
 
 		String s = (String) JOptionPane.showInputDialog(Global.window,
-				"Chose name for player Two:\n", "player Two",
+				"Choose name for player two:\n", "Player Two",
 				JOptionPane.PLAIN_MESSAGE);
 
 		// If a string was returned, say so.
 		if ((s != null) && (s.length() > 0)) {
+			Global.player2Name = s;
+			Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+			prefs.put("player2Name", Global.player2Name);
 			return s;
 		}
 
@@ -88,7 +96,7 @@ public class DialogBoxes {
 	public static String choseColor2() {
 
 		String s = (String) JOptionPane.showInputDialog(null,
-				"Chose Color for player Two:\n", "player two",
+				"Choose color for player two:\n", "Player Two",
 				JOptionPane.PLAIN_MESSAGE);
 
 		// If a string was returned, say so.
@@ -102,22 +110,32 @@ public class DialogBoxes {
 	public static int choseGridsize() {
 
 		String s = (String) JOptionPane.showInputDialog(Global.window,
-				"Chose Color for player Two:\n", "Customized Dialog",
+				"Choose a new grid size:\n", "Grid Size",
 				JOptionPane.PLAIN_MESSAGE);
-
+		
+		int newSize = Global.gridSize;
 		// If a string was returned, say so.
 		if ((s != null) && (s.length() > 0)) {
-			
 			try {
-				return Integer.parseInt(s);
-			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return 0;
+				newSize = Integer.parseInt(s);
 			}
+			catch (NumberFormatException e) {
+				e.printStackTrace();
+				newSize = Global.gridSize;
+			}
+			if (newSize<4){
+				newSize=4;
+			}
+			Global.runningGame.stop();
+			Global.gridSize=newSize;
+			Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+			prefs.putInt("gridSize", Global.gridSize);
 		}
-
-		return 0;
-
+		return newSize;
+	}
+	
+	public static void announce(int team) {
+		if(team==1) JOptionPane.showMessageDialog(Global.window, Global.player1Name+" wins!");
+		else JOptionPane.showMessageDialog(Global.window, Global.player2Name+" wins!");
 	}
 }

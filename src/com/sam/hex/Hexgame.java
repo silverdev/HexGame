@@ -48,5 +48,6 @@ public class Hexgame {
 		}
 		Global.player1Type = prefs.getInt("player1Type", 0);
 		Global.player2Type = prefs.getInt("player2Type", 0);
+		Global.gridSize = prefs.getInt("gridSize", 7);
 	}
 }
