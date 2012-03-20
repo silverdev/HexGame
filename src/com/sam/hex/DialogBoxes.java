@@ -43,7 +43,7 @@ public class DialogBoxes {
 	public static String choseName1() {
 
 		String s = (String) JOptionPane.showInputDialog(Global.window,
-				"Chose name for player One:\n", "Customized Dialog",
+				"Chose name for player One:\n", "player One",
 				JOptionPane.PLAIN_MESSAGE);
 
 		// If a string was returned, say so.
@@ -58,7 +58,7 @@ public class DialogBoxes {
 	public static String choseColor1() {
 
 		String s = (String) JOptionPane.showInputDialog(Global.window,
-				"Chose Color for player One:\n", "Customized Dialog",
+				"Chose Color for player One:\n", "player One",
 				JOptionPane.PLAIN_MESSAGE);
 
 		// If a string was returned, say so.
@@ -73,7 +73,7 @@ public class DialogBoxes {
 	public static String choseName2() {
 
 		String s = (String) JOptionPane.showInputDialog(Global.window,
-				"Chose name for player Two:\n", "Customized Dialog",
+				"Chose name for player Two:\n", "player Two",
 				JOptionPane.PLAIN_MESSAGE);
 
 		// If a string was returned, say so.
@@ -88,7 +88,7 @@ public class DialogBoxes {
 	public static String choseColor2() {
 
 		String s = (String) JOptionPane.showInputDialog(null,
-				"Chose Color for player Two:\n", "Customized Dialog",
+				"Chose Color for player Two:\n", "player two",
 				JOptionPane.PLAIN_MESSAGE);
 
 		// If a string was returned, say so.
