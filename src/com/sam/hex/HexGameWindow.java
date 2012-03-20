@@ -156,17 +156,17 @@ public class HexGameWindow extends JFrame {
 					GameAction.setPiece(new java.awt.Point(-1,-1));
 				}
 				//undo pvc
-				if (Global.gameType==1||Global.gameType==2)	
+				if (Global.gameType==1||Global.gameType==2)
 					Global.moveList.undoTwo();
-				//let ia's know of undo
+				//let ai know of undo
 				Global.player1.undoCalled();
 				Global.player2.undoCalled();
 				//undo if the game has ended
 				if (Global.gameOver==true){
 					Global.gameOver=false;
 					Global.moveList.replay(0);
+					Global.playerturn = Global.playerturn%2+1;
 					GameObject RunningGame = new GameObject(true);
-					
 				}
 			} 
 		});
@@ -241,7 +241,42 @@ public class HexGameWindow extends JFrame {
 		p1NameAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				//Add action here
+				final JFrame prompt = new JFrame("Player1's Name");
+				final JTextField text = new JTextField(Global.player1Name);
+				JButton okay = new JButton("Save");
+				text.addKeyListener(new KeyListener() {
+					
+					@Override
+					public void keyTyped(KeyEvent e) {
+						//Do nothing
+					}
+					
+					@Override
+					public void keyReleased(KeyEvent e) {
+						if(e.getKeyCode() == KeyEvent.VK_ENTER){
+							Global.player1Name = text.getText();
+							prompt.dispose();
+						}
+					}
+					
+					@Override
+					public void keyPressed(KeyEvent e) {
+						//Do nothing
+					}
+				});
+				okay.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent act) {
+						Global.player1Name = text.getText();
+						prompt.dispose();
+					}});
+				prompt.getContentPane().setLayout(new BoxLayout(prompt.getContentPane(), BoxLayout.PAGE_AXIS));
+				prompt.getContentPane().add(text, BorderLayout.CENTER);
+				prompt.getContentPane().add(okay, BorderLayout.CENTER);
+				prompt.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				prompt.setLocationRelativeTo(null);
+				prompt.pack();
+				prompt.setVisible(true);
 			} 
 		});
 		
@@ -262,7 +297,42 @@ public class HexGameWindow extends JFrame {
 		p2NameAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				//Add action here
+				final JFrame prompt = new JFrame("Player2's Name");
+				final JTextField text = new JTextField(Global.player2Name);
+				JButton okay = new JButton("Save");
+				text.addKeyListener(new KeyListener() {
+					
+					@Override
+					public void keyTyped(KeyEvent e) {
+						//Do nothing
+					}
+					
+					@Override
+					public void keyReleased(KeyEvent e) {
+						if(e.getKeyCode() == KeyEvent.VK_ENTER){
+							Global.player2Name = text.getText();
+							prompt.dispose();
+						}
+					}
+					
+					@Override
+					public void keyPressed(KeyEvent e) {
+						//Do nothing
+					}
+				});
+				okay.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent act) {
+						Global.player2Name = text.getText();
+						prompt.dispose();
+					}});
+				prompt.getContentPane().setLayout(new BoxLayout(prompt.getContentPane(), BoxLayout.PAGE_AXIS));
+				prompt.getContentPane().add(text, BorderLayout.CENTER);
+				prompt.getContentPane().add(okay, BorderLayout.CENTER);
+				prompt.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				prompt.setLocationRelativeTo(null);
+				prompt.pack();
+				prompt.setVisible(true);
 			} 
 		});
 		

@@ -12,7 +12,7 @@ public class GameObject implements Runnable {
 		theGameRunner = new Thread(this, "runningGame"); // (1) Create a new
 		// thread.
 		System.out.println(theGameRunner.getName());
-		//(2)setup new game varbles
+		//(2)setup new game variables
 		Global.moveNumber=0;
 		Global.moveList=(MoveList) new baceList();
 		 Global.playerturn = 1;
@@ -28,8 +28,7 @@ public class GameObject implements Runnable {
 	}
 	
 	public GameObject(boolean undo) {
-		theGameRunner = new Thread(this, "runningGame"); // (1) Create a new
-		// thread.
+		theGameRunner = new Thread(this, "runningGame"); // (1) Create a new thread.
 		System.out.println(theGameRunner.getName());
 		theGameRunner.start(); // (2) Start the thread.
 	}

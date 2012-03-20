@@ -4,7 +4,7 @@ import java.awt.Point;
 
 public class GameAction {
 
-	public static java.awt.Point hex;
+	public static Point hex;
 
 	public static boolean checkWinPlayer1() {
 		for (int i = 0; i < Global.gridSize - 1; i++) {

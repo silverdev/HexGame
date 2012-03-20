@@ -39,13 +39,12 @@ public class MoveList {
 	}
 	//for replays
 	public void replay(int time){
-		if (thisMove==null)return;
+		if (thisMove==null) return;
 		if (nextMove!=null) nextMove.replay(time);
 		Global.gamePiece[thisMove.x][thisMove.y].setTeam(thisMove.team);
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}

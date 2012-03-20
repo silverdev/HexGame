@@ -38,6 +38,10 @@ public class PlayerObject implements PlayingEntity {
 					e.printStackTrace();
 				}
 			}
+			if (hex.equals(new Point(-1,-1))){
+				GameAction.hex = null;
+				break;
+			}
 			if (Global.gamePiece[hex.x][hex.y].getTeam() == 0) {
 				GameAction.makeMove(team, hex);
 				GameAction.hex = null;
