@@ -209,6 +209,9 @@ public class HexGameWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent act) {
 				DialogBoxes.chooseColor1();
+				initRegular();
+				GameAction.fullUpdateBoard();
+				Global.moveList.replay(0);
 			} 
 		});
 		
@@ -238,6 +241,9 @@ public class HexGameWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent act) {
 				DialogBoxes.choseColor2();
+				initRegular();
+				GameAction.fullUpdateBoard();
+				Global.moveList.replay(0);
 			} 
 		});
 		
