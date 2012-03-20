@@ -11,10 +11,12 @@ public class Global {
 	public static int windowWidth = 800;
 	public static RegularPolygonGameObject[][] gamePiece = new RegularPolygonGameObject[0][0];
 	public static Shape[][] hexes = gamePiece;
-	public static Color player1Color=Color.blue;
 	public static String player1Name="Player1";
-	public static Color player2Color=Color.red;
+	public static Color player1Color=Color.blue;
+	public static int player1Type=0;
 	public static String player2Name="Player2";
+	public static Color player2Color=Color.red;
+	public static int player2Type=0;
 	public static byte gameType; //0 Human v Human,1 Human v ai, 2 ai v Human, 3 ai v ai;
 	public static int moveNumber;
 	public static MoveList moveList;

@@ -7,9 +7,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.*;
+import java.util.prefs.Preferences;
 
-//DEPRECATED: This class will not be ported to Android, just ignore it for now.
+import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class HexGameWindow extends JFrame {
@@ -197,6 +197,8 @@ public class HexGameWindow extends JFrame {
 							try{
 								Global.gridSize = Integer.decode(text.getText());
 								if(Global.gridSize<1) Global.gridSize = 1;
+								Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+								prefs.putInt("gridSize", Global.gridSize);
 								newGame();
 							}
 							catch(Exception ex){}
@@ -215,6 +217,8 @@ public class HexGameWindow extends JFrame {
 						try{
 							Global.gridSize = Integer.decode(text.getText());
 							if(Global.gridSize<1) Global.gridSize = 1;
+							Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+							prefs.putInt("gridSize", Global.gridSize);
 							newGame();
 						}
 						catch(Exception e){}
@@ -255,6 +259,8 @@ public class HexGameWindow extends JFrame {
 					public void keyReleased(KeyEvent e) {
 						if(e.getKeyCode() == KeyEvent.VK_ENTER){
 							Global.player1Name = text.getText();
+							Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+							prefs.put("player1Name", Global.player1Name);
 							prompt.dispose();
 						}
 					}
@@ -268,6 +274,8 @@ public class HexGameWindow extends JFrame {
 					@Override
 					public void actionPerformed(ActionEvent act) {
 						Global.player1Name = text.getText();
+						Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+						prefs.put("player1Name", Global.player1Name);
 						prompt.dispose();
 					}});
 				prompt.getContentPane().setLayout(new BoxLayout(prompt.getContentPane(), BoxLayout.PAGE_AXIS));
@@ -311,6 +319,8 @@ public class HexGameWindow extends JFrame {
 					public void keyReleased(KeyEvent e) {
 						if(e.getKeyCode() == KeyEvent.VK_ENTER){
 							Global.player2Name = text.getText();
+							Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+							prefs.put("player2Name", Global.player2Name);
 							prompt.dispose();
 						}
 					}
@@ -324,6 +334,8 @@ public class HexGameWindow extends JFrame {
 					@Override
 					public void actionPerformed(ActionEvent act) {
 						Global.player2Name = text.getText();
+						Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+						prefs.put("player2Name", Global.player2Name);
 						prompt.dispose();
 					}});
 				prompt.getContentPane().setLayout(new BoxLayout(prompt.getContentPane(), BoxLayout.PAGE_AXIS));
