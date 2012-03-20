@@ -58,18 +58,12 @@ public class DialogBoxes {
 	public static String chooseGameTypePlayer1() {
 		Object[] possibilities = { "Human", "Computer" };
 		String s;
-		if(Global.player1Type==0){
+		
 			s = (String) JOptionPane.showInputDialog(Global.window,
 				"Choose a type of game:\n", "Game Type",
 				JOptionPane.PLAIN_MESSAGE, null, possibilities,
-				(Object) "Human");
-		}
-		else{
-			s = (String) JOptionPane.showInputDialog(Global.window,
-					"Choose a type of game:\n", "Game Type",
-					JOptionPane.PLAIN_MESSAGE, null, possibilities,
-					(Object) "Computer");
-		}
+				possibilities[Global.player1Type]);
+		
 
 		// If a string was returned, say so.
 		if ((s != null) && (s.length() > 0)) {
@@ -86,18 +80,11 @@ public class DialogBoxes {
 	public static String chooseGameTypePlayer2() {
 		Object[] possibilities = { "Human", "Computer" };
 		String s;
-		if(Global.player2Type==0){
 			s = (String) JOptionPane.showInputDialog(Global.window,
 				"Choose a type of game:\n", "Game Type",
 				JOptionPane.PLAIN_MESSAGE, null, possibilities,
-				(Object) "Human");
-		}
-		else{
-			s = (String) JOptionPane.showInputDialog(Global.window,
-					"Choose a type of game:\n", "Game Type",
-					JOptionPane.PLAIN_MESSAGE, null, possibilities,
-					(Object) "Computer");
-		}
+				possibilities[Global.player2Type]);
+		
 
 		// If a string was returned, say so.
 		if ((s != null) && (s.length() > 0)) {

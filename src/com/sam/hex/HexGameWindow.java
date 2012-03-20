@@ -226,6 +226,7 @@ public class HexGameWindow extends JFrame {
 				initRegular();
 				GameAction.fullUpdateBoard();
 				Global.moveList.replay(0);
+				GameAction.checkedFlagReset();
 				GameAction.checkWinPlayer1();
 				GameAction.checkWinPlayer2();
 			} 
@@ -259,6 +260,7 @@ public class HexGameWindow extends JFrame {
 				initRegular();
 				GameAction.fullUpdateBoard();
 				Global.moveList.replay(0);
+				GameAction.checkedFlagReset();
 				GameAction.checkWinPlayer1();
 				GameAction.checkWinPlayer2();
 			} 
