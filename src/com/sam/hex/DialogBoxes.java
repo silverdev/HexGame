@@ -11,11 +11,19 @@ public class DialogBoxes {
 
 	public static String chooseGameTypePlayer1() {
 		Object[] possibilities = { "Human", "Computer" };
-
-		String s = (String) JOptionPane.showInputDialog(Global.window,
+		String s;
+		if(Global.player1Type==0){
+			s = (String) JOptionPane.showInputDialog(Global.window,
 				"Choose a type of game:\n", "Game Type",
 				JOptionPane.PLAIN_MESSAGE, null, possibilities,
 				(Object) "Human");
+		}
+		else{
+			s = (String) JOptionPane.showInputDialog(Global.window,
+					"Choose a type of game:\n", "Game Type",
+					JOptionPane.PLAIN_MESSAGE, null, possibilities,
+					(Object) "Computer");
+		}
 
 		// If a string was returned, say so.
 		if ((s != null) && (s.length() > 0)) {
@@ -31,11 +39,19 @@ public class DialogBoxes {
 
 	public static String chooseGameTypePlayer2() {
 		Object[] possibilities = { "Human", "Computer" };
-
-		String s = (String) JOptionPane.showInputDialog(Global.window,
+		String s;
+		if(Global.player2Type==0){
+			s = (String) JOptionPane.showInputDialog(Global.window,
 				"Choose a type of game:\n", "Game Type",
 				JOptionPane.PLAIN_MESSAGE, null, possibilities,
 				(Object) "Human");
+		}
+		else{
+			s = (String) JOptionPane.showInputDialog(Global.window,
+					"Choose a type of game:\n", "Game Type",
+					JOptionPane.PLAIN_MESSAGE, null, possibilities,
+					(Object) "Computer");
+		}
 
 		// If a string was returned, say so.
 		if ((s != null) && (s.length() > 0)) {
@@ -53,7 +69,7 @@ public class DialogBoxes {
 
 		String s = (String) JOptionPane.showInputDialog(Global.window,
 				"Choose name for player one:\n", "Player One",
-				JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.PLAIN_MESSAGE, null, null, Global.player1Name);
 
 		// If a string was returned, say so.
 		if ((s != null) && (s.length() > 0)) {
@@ -86,7 +102,7 @@ public class DialogBoxes {
 
 		String s = (String) JOptionPane.showInputDialog(Global.window,
 				"Choose name for player two:\n", "Player Two",
-				JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.PLAIN_MESSAGE, null, null, Global.player2Name);
 
 		// If a string was returned, say so.
 		if ((s != null) && (s.length() > 0)) {
@@ -101,7 +117,7 @@ public class DialogBoxes {
 	}
 
 	public static int choseColor2() {
-		final JColorChooser chooser = new JColorChooser(Global.player1Color);
+		final JColorChooser chooser = new JColorChooser(Global.player2Color);
 		JColorChooser.createDialog(Global.window, "Pick a color", true, chooser, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -116,7 +132,7 @@ public class DialogBoxes {
 
 		String s = (String) JOptionPane.showInputDialog(Global.window,
 				"Choose a new grid size:\n", "Grid Size",
-				JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.PLAIN_MESSAGE, null, null, Global.gridSize);
 		
 		int newSize = Global.gridSize;
 		// If a string was returned, say so.
@@ -131,7 +147,6 @@ public class DialogBoxes {
 			if (newSize<4){
 				newSize=4;
 			}
-			Global.runningGame.stop();
 			Global.gridSize=newSize;
 			Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
 			prefs.putInt("gridSize", Global.gridSize);

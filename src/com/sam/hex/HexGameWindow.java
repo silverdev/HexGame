@@ -184,10 +184,14 @@ public class HexGameWindow extends JFrame {
 		gridAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
+				int size = Global.gridSize;
 				DialogBoxes.chooseGridsize();
-				initRegular();
-				GameAction.fullUpdateBoard();
-				new GameObject();
+				if(size!=Global.gridSize){
+					Global.runningGame.stop();
+					initRegular();
+					GameAction.fullUpdateBoard();
+					new GameObject();
+				}
 			} 
 		});
 		
@@ -220,11 +224,14 @@ public class HexGameWindow extends JFrame {
 		p1ModeAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
+				int type = Global.player1Type;
 				DialogBoxes.chooseGameTypePlayer1();
-				Global.runningGame.stop();
-				initRegular();
-				GameAction.fullUpdateBoard();
-				new GameObject();
+				if(type!=Global.player1Type){
+					Global.runningGame.stop();
+					initRegular();
+					GameAction.fullUpdateBoard();
+					new GameObject();
+				}
 			} 
 		});
 		
@@ -250,11 +257,14 @@ public class HexGameWindow extends JFrame {
 		p2ModeAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
+				int type = Global.player2Type;
 				DialogBoxes.chooseGameTypePlayer2();
-				Global.runningGame.stop();
-				initRegular();
-				GameAction.fullUpdateBoard();
-				new GameObject();
+				if(type!=Global.player2Type){
+					Global.runningGame.stop();
+					initRegular();
+					GameAction.fullUpdateBoard();
+					new GameObject();
+				}
 			} 
 		});
 	}
