@@ -13,7 +13,10 @@ public class Global {
 	public static Shape[][] hexes = gamePiece;
 	public static Color playerOne=Color.blue;
 	public static Color playerTwo=Color.red;
+	public static String playerOneName;
+	public static String playerTwoName;
 	public static byte gameType; //0 Human v Human,1 Human v ai, 2 ai v Human, 3 ai v ai;
+	public static String aiType;
 	public static int moveNumber;
 	public static MoveList moveList;
 	public static int playerturn;
@@ -21,6 +24,7 @@ public class Global {
 	public static PlayingEntity player2;
 	public static boolean gameOver=false;
 	public static Thread runningGame;
+	public static HexGameWindow window;
 
 	// public static Color[][] background;
 	public static void set(int gS, int wH, int wW) {

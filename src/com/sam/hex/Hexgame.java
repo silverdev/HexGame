@@ -12,7 +12,7 @@ public class Hexgame {
 			Global.set(7, 600, 800);
 		}
 		HexGameWindow fr = new HexGameWindow();
-
+		Global.window=fr;
 		fr.setVisible(true);
 		@SuppressWarnings("unused")
 		GameObject RunningGame = new GameObject(); // GameObject is very much in

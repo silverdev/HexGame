@@ -39,7 +39,9 @@ public class HexGameWindow extends JFrame {
 	 */
 
 	protected void initRegular() {
-
+		Global.gamePiece=new RegularPolygonGameObject[Global.gridSize][Global.gridSize];
+		Global.hexes=Global.gamePiece;
+		
 		double radius = BoardTools.radiusCalculator(Global.windowWidth,
 				Global.windowHeight, Global.gridSize);
 		;
@@ -182,7 +184,15 @@ public class HexGameWindow extends JFrame {
 		gridAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				//Add action here
+				int newSize;
+				newSize=DialogBoxes.choseGridsize();
+				if (newSize>3){
+					Global.runningGame.stop();
+					Global.gridSize=newSize;
+					initRegular();
+					GameAction.fullUpdateBoard();
+					GameObject RunningGame = new GameObject();
+				}
 			} 
 		});
 		
@@ -196,42 +206,42 @@ public class HexGameWindow extends JFrame {
 		p1NameAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				//Add action here
+				Global.playerOneName=DialogBoxes.choseName1();
 			} 
 		});
 		
 		p1ColorAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				//Add action here
+				DialogBoxes.choseColor1();
 			} 
 		});
 		
 		p1ModeAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				//Add action here
+				DialogBoxes.choseGameTypePlayer1();
 			} 
 		});
 		
 		p2NameAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				//Add action here
+				Global.playerTwoName=DialogBoxes.choseName2();
 			} 
 		});
 		
 		p2ColorAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				//Add action here
+				DialogBoxes.choseColor2();
 			} 
 		});
 		
 		p2ModeAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				//Add action here
+				DialogBoxes.choseGameTypePlayer2();
 			} 
 		});
 	}
