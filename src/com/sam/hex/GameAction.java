@@ -83,17 +83,19 @@ public class GameAction {
 	}
 	
 	public static void stopGame(){
-		Global.runningGameIsRuning=false;
+		Global.stop_gameObjectThread=true;
 		setPiece(new java.awt.Point(-1,-1));
 		System.out.print("test");
 		//Global.runningGame.stop();
 		try {
-			Global.runningGame.join();
+			Global.gameObjectThread.join();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Global.stop_gameObjectThread=false;
 	}
+	// do not make public use makeMove(this,t,x,y) instead 
 	private static void setTeam(byte t,int x,int y) {
 		
 		//Global.moveList=new MoveList(Global.moveList,x,y,t);
@@ -102,7 +104,7 @@ public class GameAction {
 	}
 	// use this for points
 	public static boolean makeMove(PlayingEntity player,byte team, Point hex){
-		if(!Global.runningGameIsRuning){
+		if(Global.stop_gameObjectThread){
 			player.undoCalled();
 			return true;}
 		if(Global.gamePiece[hex.x][hex.y].getTeam() == 0){
@@ -113,7 +115,7 @@ public class GameAction {
 	}
 	//or this with x y ints
 	public static boolean makeMove(PlayingEntity player,byte team, int x,int y){
-		if(!Global.runningGameIsRuning){
+		if(Global.stop_gameObjectThread){
 			player.undoCalled();
 			return true;}
 		if(Global.gamePiece[x][y].getTeam() == 0){
