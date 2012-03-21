@@ -15,11 +15,10 @@ public class Hexgame {
 		}
 		
 		grabPreferences();
-		HexGameWindow fr = new HexGameWindow();
+		
+		Global.window = new HexGameWindow();
 
-		Global.window=fr;
-
-		fr.setVisible(true);
+		Global.window.setVisible(true);
 		new GameObject();
 
 		while (true) {
