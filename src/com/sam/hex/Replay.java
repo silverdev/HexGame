@@ -11,13 +11,15 @@ public class Replay implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Global.runningGame.stop();
+		//Global.runningGame.stop();
+		GameAction.stopGame();
 		Global.window.initRegular();
 		GameAction.fullUpdateBoard();
 		Global.moveList.replay(1000);
 		GameAction.checkedFlagReset();
 		if(GameAction.checkWinPlayer1()){HexGameWindow.announceWinner(Global.playerturn);return;}
 		if(GameAction.checkWinPlayer2()){HexGameWindow.announceWinner(Global.playerturn);return;}
+		GameAction.hex=null;
 		new GameObject(true);
 		
 	}

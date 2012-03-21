@@ -36,6 +36,7 @@ public class Global {
 	public static PlayingEntity player2;
 	public static boolean gameOver=false;
 	public static Thread runningGame;
+	public static boolean runningGameIsRuning;
 	public static HexGameWindow window;
 
 	// public static Color[][] background;

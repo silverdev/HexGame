@@ -81,8 +81,21 @@ public class GameAction {
 	public static void setPiece(java.awt.Point nhex) {
 		hex=nhex;
 	}
+	
+	public static void stopGame(){
+		Global.runningGameIsRuning=false;
+		setPiece(new java.awt.Point(-1,-1));
+		System.out.print("test");
+		//Global.runningGame.stop();
+		try {
+			Global.runningGame.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public static void setTeam(byte t,int x,int y) {
-		
+		if(!Global.runningGameIsRuning){return;}
 		Global.moveList=new MoveList(Global.moveList,x,y,t);
 		Global.gamePiece[x][y].setTeam(t);
 	}

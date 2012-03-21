@@ -28,7 +28,8 @@ public class DialogBoxes {
 				e.printStackTrace();
 			}
 			//stop the old game
-			Global.runningGame.stop();
+			//Global.runningGame.stop();
+			GameAction.stopGame();
 			
 			// restore Defalts
 			Global.gridSize=GlobalDefaults.gridSize;
