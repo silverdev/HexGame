@@ -35,8 +35,8 @@ public class Global {
 	public static PlayingEntity player1;
 	public static PlayingEntity player2;
 	public static boolean gameOver=false;
-	public static Thread gameThread;
-	public static boolean gameThreadIsRunning;
+	public static Thread gameObjectThread;
+	public static boolean stop_gameObjectThread;
 	public static HexGameWindow window;
 
 	// public static Color[][] background;

@@ -83,18 +83,18 @@ public class GameAction {
 	}
 	
 	public static void stopGame(){
-		Global.gameThreadIsRunning=false;
+		Global.stop_gameObjectThread=false;
 		setPiece(new java.awt.Point(-1,-1));
 		System.out.print("test");
 		//Global.runningGame.stop();
 		try {
-			Global.gameThread.join();
+			Global.gameObjectThread.join();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 	public static void setTeam(byte t,int x,int y) {
-		if(!Global.gameThreadIsRunning){return;}
+		if(!Global.stop_gameObjectThread){return;}
 		//Global.moveList=new MoveList(Global.moveList,x,y,t);
 		Global.moveList.makeMove(x, y, t);
 		Global.gamePiece[x][y].setTeam(t);
