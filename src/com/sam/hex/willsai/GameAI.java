@@ -418,7 +418,7 @@ public class GameAI implements PlayingEntity {
 
 	}	
 	private void sendMove(int x, int y){
-		GameAction.makeMove(team, new Point(x,y));
+		GameAction.makeMove(this,team, new Point(x,y));
 	}
 	
 	/*  Bah, ignore this for now.

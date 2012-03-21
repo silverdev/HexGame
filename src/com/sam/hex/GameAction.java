@@ -94,16 +94,30 @@ public class GameAction {
 			e.printStackTrace();
 		}
 	}
-	public static void setTeam(byte t,int x,int y) {
-		if(!Global.runningGameIsRuning){return;}
+	private static void setTeam(byte t,int x,int y) {
+		
 		//Global.moveList=new MoveList(Global.moveList,x,y,t);
 		Global.moveList.makeMove(x, y, t);
 		Global.gamePiece[x][y].setTeam(t);
 	}
-	
-	public static boolean makeMove(byte team, Point hex){
+	// use this for points
+	public static boolean makeMove(PlayingEntity player,byte team, Point hex){
+		if(!Global.runningGameIsRuning){
+			player.undoCalled();
+			return true;}
 		if(Global.gamePiece[hex.x][hex.y].getTeam() == 0){
 			setTeam(team,hex.x,hex.y);
+			return true;
+		}
+		return false;
+	}
+	//or this with x y ints
+	public static boolean makeMove(PlayingEntity player,byte team, int x,int y){
+		if(!Global.runningGameIsRuning){
+			player.undoCalled();
+			return true;}
+		if(Global.gamePiece[x][y].getTeam() == 0){
+			setTeam(team,x,y);
 			return true;
 		}
 		return false;

@@ -15,7 +15,7 @@ public class Replay implements Runnable {
 		GameAction.stopGame();
 		Global.window.initRegular();
 		GameAction.fullUpdateBoard();
-		Global.moveList.replay(1000);
+		Global.moveList.replay(500);
 		GameAction.checkedFlagReset();
 		if(GameAction.checkWinPlayer1()){HexGameWindow.announceWinner(Global.playerturn);return;}
 		if(GameAction.checkWinPlayer2()){HexGameWindow.announceWinner(Global.playerturn);return;}
