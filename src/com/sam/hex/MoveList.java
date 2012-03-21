@@ -16,13 +16,17 @@ public class MoveList {
 		thisMove= new Move(x,y,teamNumber,Global.moveNumber);
 		nextMove=oldMove;
 	}
+	public MoveList(MoveList oldMove,Move thisMove){
+		this.thisMove= thisMove;
+		nextMove=oldMove;
+	}
 	public Move getmove(){
 		return thisMove;
 	}
 	/* do not use makeMove might not work with
 	 * base cases and is not tested*/
 	public void makeMove(int x,int y,byte teamNumber){
-		nextMove=new MoveList(nextMove,thisMove.x,thisMove.y,teamNumber);
+		nextMove=new MoveList(nextMove,thisMove);
 		thisMove= new Move(x,y,teamNumber,Global.moveNumber);
 	}
 	public void undo(){

@@ -96,7 +96,8 @@ public class GameAction {
 	}
 	public static void setTeam(byte t,int x,int y) {
 		if(!Global.runningGameIsRuning){return;}
-		Global.moveList=new MoveList(Global.moveList,x,y,t);
+		//Global.moveList=new MoveList(Global.moveList,x,y,t);
+		Global.moveList.makeMove(x, y, t);
 		Global.gamePiece[x][y].setTeam(t);
 	}
 	

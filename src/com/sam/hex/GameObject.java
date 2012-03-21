@@ -14,7 +14,7 @@ public class GameObject implements Runnable {
 		
 		//(2)setup new game variables
 		Global.moveNumber=0;
-		Global.moveList=(MoveList) new baceList();
+		Global.moveList= new MoveList();
 		Global.playerturn = 1;
 		Global.runningGame=theGameRunner;
 		Global.gameOver=false;
