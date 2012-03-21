@@ -21,8 +21,8 @@ public class BoardTools {
 	}
 
 	public static void setBackground(int w, int h) {
-		Global.background = new BufferedImage(Global.windowWidth,
-				Global.windowHeight, BufferedImage.TYPE_INT_ARGB); //the background is drawn to this buffered image. 
+		Global.background = new BufferedImage(w,
+				h, BufferedImage.TYPE_INT_ARGB); //the background is drawn to this buffered image. 
 		RegularPolygonGameObject[][] gamePeace = Global.gamePiece;
 		double radius = BoardTools.radiusCalculator(HexGameWindow.cPolygons
 				.getWidth(), HexGameWindow.cPolygons.getHeight(),

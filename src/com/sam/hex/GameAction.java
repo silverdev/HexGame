@@ -42,7 +42,7 @@ public class GameAction {
 	}
 	public static void updateBoard() {
 		if (HexGameWindow.cPolygons.getWidth() != Global.windowWidth
-				|| HexGameWindow.cPolygons.getHeight() != Global.windowHeight) {
+				|| (HexGameWindow.cPolygons.getHeight()-10) != Global.windowHeight) {
 			fullUpdateBoard();
 		}
 
@@ -53,7 +53,7 @@ public class GameAction {
 
 	public static void fullUpdateBoard() {
 		Global.windowWidth = HexGameWindow.cPolygons.getWidth();
-		Global.windowHeight = HexGameWindow.cPolygons.getHeight();
+		Global.windowHeight = (HexGameWindow.cPolygons.getHeight()-10); //-10 gives an offset to alow the top border to be visable.
 		double radius;
 		RegularPolygonGameObject[][] gamePeace = Global.gamePiece;
 		radius = BoardTools.radiusCalculator(Global.windowWidth,
@@ -72,7 +72,7 @@ public class GameAction {
 						radius, 6, Math.PI / 2);
 		}
 
-		BoardTools.setBackground(Global.windowWidth, Global.windowHeight);
+		if(Global.windowWidth>0&&(Global.windowHeight+10)>0)BoardTools.setBackground(Global.windowWidth, (Global.windowHeight+10));
 		HexGameWindow.cPolygons.revalidate();
 		HexGameWindow.cPolygons.repaint();
 
