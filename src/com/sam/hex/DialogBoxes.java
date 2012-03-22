@@ -218,6 +218,7 @@ public class DialogBoxes {
 			FileOutputStream saveFile = new FileOutputStream(SaveReplayfile());
 			ObjectOutputStream save = new ObjectOutputStream(saveFile);
 			save.writeObject(Global.moveList);
+			save.close();
 			
 		} catch (FileNotFoundException e) {
 			JOptionPane.showMessageDialog(Global.window,
@@ -243,6 +244,7 @@ public class DialogBoxes {
 			FileInputStream saveFile = new FileInputStream(loadReplayFile());
 			ObjectInputStream restore = new ObjectInputStream(saveFile);
 			Global.moveList = (MoveList) restore.readObject();
+			restore.close();
 
 		} catch (FileNotFoundException e) {
 			JOptionPane.showMessageDialog(Global.window,
