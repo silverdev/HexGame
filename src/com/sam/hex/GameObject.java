@@ -59,6 +59,6 @@ public class GameObject implements Runnable {
 		}
 		
 		Global.gameOver=true;
-		HexGameWindow.announceWinner(Global.playerturn);
+		DialogBoxes.announceWinner(Global.playerturn);
 	}
 }

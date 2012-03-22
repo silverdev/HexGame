@@ -1,12 +1,24 @@
 package com.sam.hex;
 
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.File;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+
 
 public class DialogBoxes {
 	
@@ -188,8 +200,96 @@ public class DialogBoxes {
 		return newSize;
 	}
 	
-	public static void announce(int team) {
-		if(team==1) JOptionPane.showMessageDialog(Global.window, Global.player1Name+" wins!");
-		else JOptionPane.showMessageDialog(Global.window, Global.player2Name+" wins!");
+	public static void announceWinner(int team) {
+		String name;
+		if(team==1) name=Global.player1Name;
+		else name=Global.player2Name;
+		Object[] options = { "Ok", "Save Replay" };
+		byte b =(byte) JOptionPane.showOptionDialog(Global.window,
+				name+" wins!",
+				"Do you want to save a replay?", JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+		if (b==1)saveReplay();
+	}
+	public static void saveReplay() {
+	
+		
+		try {
+			FileOutputStream saveFile = new FileOutputStream(SaveReplayfile());
+			ObjectOutputStream save = new ObjectOutputStream(saveFile);
+			save.writeObject(Global.moveList);
+			
+		} catch (FileNotFoundException e) {
+			JOptionPane.showMessageDialog(Global.window,
+					"File Not Found Nothing Saved",
+					"ERROR",
+					JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(Global.window,
+					"File Could not be written",
+					"ERROR",
+					JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+	public static void loadReplay() {
+		try {
+			FileInputStream saveFile = new FileInputStream(loadReplayFile());
+			ObjectInputStream restore = new ObjectInputStream(saveFile);
+			Global.moveList = (MoveList) restore.readObject();
+
+		} catch (FileNotFoundException e) {
+			JOptionPane.showMessageDialog(Global.window,
+					"File Not Found",
+					"ERROR",
+					JOptionPane.ERROR_MESSAGE);
+
+			e.printStackTrace();
+			e.printStackTrace();
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(Global.window,
+					"File could not be read",
+					"ERROR",
+					JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			JOptionPane.showMessageDialog(Global.window,
+					"ClassNotFoundException",
+					"ERROR",
+					JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static File loadReplayFile() {
+		JFileChooser theFileToLoad = new JFileChooser();
+	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+	        "Replay Hexbords", "rhex");
+	    theFileToLoad.setFileFilter(filter);
+	    int returnVal = theFileToLoad.showOpenDialog(Global.window);
+	    if(returnVal == JFileChooser.APPROVE_OPTION) {
+	    	return theFileToLoad.getSelectedFile();
+	    }return loadReplayFile();
+		
+	}
+	public static File SaveReplayfile() {
+		JFileChooser theFileToSave = new JFileChooser();
+	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+	        "Replay Hexbords", "rhex");
+	    theFileToSave.setFileFilter(filter);
+	    int returnVal = theFileToSave.showSaveDialog(Global.window);
+	    if(returnVal == JFileChooser.APPROVE_OPTION) {
+	    	return theFileToSave.getSelectedFile();
+	    } return SaveReplayfile();
+	            
+	    
+		
 	}
 }

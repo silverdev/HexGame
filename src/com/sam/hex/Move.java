@@ -1,6 +1,12 @@
 package com.sam.hex;
 
-public class Move {
+import java.io.Serializable;
+
+public class Move implements Serializable {
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7439386690818203133L;
 private  int x;
 private int y;
 private int time;

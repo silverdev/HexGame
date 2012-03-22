@@ -119,6 +119,7 @@ public class HexGameWindow extends JFrame {
 		JMenuItem undoAction =  new JMenuItem("Undo");
 		JMenuItem newgameAction =   new JMenuItem("New Game");
 		JMenuItem replayAction =   new JMenuItem("Replay Game");
+		JMenuItem loadReplayAction =   new JMenuItem("Load a Replay");
 		JMenuItem gridAction =  new JMenuItem("Grid Size");
 		JMenuItem resetAction =  new JMenuItem("Reset Preferences");
 		JMenuItem exitAction =  new JMenuItem("Exit");
@@ -132,6 +133,7 @@ public class HexGameWindow extends JFrame {
 		fileMenu.add(undoAction);
 		fileMenu.add(newgameAction);
 		fileMenu.add(replayAction);
+		fileMenu.add(loadReplayAction);
 		fileMenu.addSeparator();
 		fileMenu.add(gridAction);
 		fileMenu.addSeparator();
@@ -182,6 +184,17 @@ public class HexGameWindow extends JFrame {
 		replayAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
+				Thread replay = new Thread(new Replay());
+				replay.start();
+				return;
+			} 
+		});
+		
+		loadReplayAction.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent act) {
+				GameAction.stopGame();
+				DialogBoxes.loadReplay();
 				Thread replay = new Thread(new Replay());
 				replay.start();
 				return;
@@ -285,7 +298,5 @@ public class HexGameWindow extends JFrame {
 		});
 	}
 	
-	public static void announceWinner(int team){
-		DialogBoxes.announce(team);
-	}
+
 }

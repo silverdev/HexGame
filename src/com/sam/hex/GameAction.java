@@ -85,6 +85,7 @@ public class GameAction {
 	}
 	
 	public static void stopGame(){
+		if (!Global.gameObjectThread.isAlive())return;
 		Global.stop_gameObjectThread=true;
 		setPiece(new java.awt.Point(-1,-1));
 		System.out.print("test");

@@ -1,7 +1,13 @@
 package com.sam.hex;
 
-public class MoveList {
+import java.io.Serializable;
+
+public class MoveList implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Move thisMove;
 	MoveList nextMove;
 	public MoveList(){
