@@ -175,6 +175,7 @@ public class HexGameWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent act) {
 				GameAction.stopGame();
+				Hexgame.grabPreferences();
 				initRegular();
 				GameAction.fullUpdateBoard();
 				new GameObject();

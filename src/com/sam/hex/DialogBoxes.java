@@ -1,6 +1,5 @@
 package com.sam.hex;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
@@ -24,7 +23,7 @@ public class DialogBoxes {
 	
 	public static void resetGameOption() {
 
-		Object[] options = { "Yes make it so", "Cancel" };
+		Object[] options = { "Yes, make it so", "Cancel" };
 		byte b =(byte) JOptionPane.showOptionDialog(Global.window,
 				"are you sure you want to reset all your options\n all your personal settings will be lost",
 				"Are you sure", JOptionPane.YES_NO_CANCEL_OPTION,
@@ -220,7 +219,8 @@ public class DialogBoxes {
 				
 				FileOutputStream saveFile = new FileOutputStream(file);
 				ObjectOutputStream save = new ObjectOutputStream(saveFile);
-				save.writeObject(Global.moveList);
+				SavedGameObject savedGame = new SavedGameObject(Global.player1Color, Global.player2Color, Global.player1Name, Global.player2Name, Global.moveList, Global.gridSize);
+				save.writeObject(savedGame);
 				save.close();
 			}
 		} catch (FileNotFoundException e) {
@@ -243,7 +243,13 @@ public class DialogBoxes {
 			if(file!=null){
 				FileInputStream saveFile = new FileInputStream(file);
 				ObjectInputStream restore = new ObjectInputStream(saveFile);
-				Global.moveList = (MoveList) restore.readObject();
+				SavedGameObject savedGame = (SavedGameObject) restore.readObject();
+				Global.player1Color = savedGame.player1Color;
+				Global.player2Color = savedGame.player2Color;
+				Global.player1Name = savedGame.player1Name;
+				Global.player2Name = savedGame.player2Name;
+				Global.moveList = savedGame.moveList;
+				Global.gridSize = savedGame.gridSize;
 				restore.close();
 			}
 		} catch (FileNotFoundException e) {
@@ -252,7 +258,6 @@ public class DialogBoxes {
 					"ERROR",
 					JOptionPane.ERROR_MESSAGE);
 
-			e.printStackTrace();
 			e.printStackTrace();
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(Global.window,
@@ -266,8 +271,7 @@ public class DialogBoxes {
 					"ERROR",
 					JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
-		}
-		
+		}	
 	}
 	
 	public static File loadReplayFile() {

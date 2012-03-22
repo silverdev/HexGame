@@ -31,8 +31,9 @@ public class Hexgame {
 		}
 	}
 	
-	private static void grabPreferences(){
+	public static void grabPreferences(){
 		Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+		GameAction.hex = null;
 		setNames(prefs);
 		setColors(prefs);
 		Global.player1Type = prefs.getInt("player1Type", GlobalDefaults.player1Type);
