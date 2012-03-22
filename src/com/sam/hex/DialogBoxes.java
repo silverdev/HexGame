@@ -36,7 +36,6 @@ public class DialogBoxes {
 			try {
 				prefs.clear();
 			} catch (BackingStoreException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			//stop the old game
@@ -139,8 +138,6 @@ public class DialogBoxes {
 				prefs.putInt("player1Color", Global.player1Color.getRGB());
 			}}, null).setVisible(true);
 		
-		//TODO Reset board, colors
-		
 		return Global.player1Color.getRGB();
 	}
 
@@ -212,14 +209,20 @@ public class DialogBoxes {
 		if (b==1)saveReplay();
 	}
 	public static void saveReplay() {
-	
-		
 		try {
-			FileOutputStream saveFile = new FileOutputStream(SaveReplayfile());
-			ObjectOutputStream save = new ObjectOutputStream(saveFile);
-			save.writeObject(Global.moveList);
-			save.close();
-			
+			File file = saveReplayfile();
+			if(file!=null){
+				String filePath = file.getPath();
+				if(!filePath.toLowerCase().endsWith(".rhex"))
+				{
+				    file = new File(filePath + ".rhex");
+				}
+				
+				FileOutputStream saveFile = new FileOutputStream(file);
+				ObjectOutputStream save = new ObjectOutputStream(saveFile);
+				save.writeObject(Global.moveList);
+				save.close();
+			}
 		} catch (FileNotFoundException e) {
 			JOptionPane.showMessageDialog(Global.window,
 					"File Not Found Nothing Saved",
@@ -232,20 +235,17 @@ public class DialogBoxes {
 					"ERROR",
 					JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-		
-		
-		
 	}
 	public static void loadReplay() {
 		try {
-			FileInputStream saveFile = new FileInputStream(loadReplayFile());
-			ObjectInputStream restore = new ObjectInputStream(saveFile);
-			Global.moveList = (MoveList) restore.readObject();
-			restore.close();
-
+			File file = loadReplayFile();
+			if(file!=null){
+				FileInputStream saveFile = new FileInputStream(file);
+				ObjectInputStream restore = new ObjectInputStream(saveFile);
+				Global.moveList = (MoveList) restore.readObject();
+				restore.close();
+			}
 		} catch (FileNotFoundException e) {
 			JOptionPane.showMessageDialog(Global.window,
 					"File Not Found",
@@ -273,25 +273,28 @@ public class DialogBoxes {
 	public static File loadReplayFile() {
 		JFileChooser theFileToLoad = new JFileChooser();
 	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-	        "Replay Hexbords", "rhex");
+	        "Replay Hexboards", "rhex");
 	    theFileToLoad.setFileFilter(filter);
 	    int returnVal = theFileToLoad.showOpenDialog(Global.window);
 	    if(returnVal == JFileChooser.APPROVE_OPTION) {
 	    	return theFileToLoad.getSelectedFile();
-	    }return loadReplayFile();
+	    }
+	    else{
+	    	return null;
+	    }
 		
 	}
-	public static File SaveReplayfile() {
+	public static File saveReplayfile() {
 		JFileChooser theFileToSave = new JFileChooser();
 	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-	        "Replay Hexbords", "rhex");
+	        "Replay Hexboards", "rhex");
 	    theFileToSave.setFileFilter(filter);
 	    int returnVal = theFileToSave.showSaveDialog(Global.window);
 	    if(returnVal == JFileChooser.APPROVE_OPTION) {
 	    	return theFileToSave.getSelectedFile();
-	    } return SaveReplayfile();
-	            
-	    
-		
+	    }
+	    else{
+	    	return null;
+	    }
 	}
 }

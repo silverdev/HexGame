@@ -4,11 +4,9 @@ public class Replay implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//Global.runningGame.stop();
@@ -21,7 +19,6 @@ public class Replay implements Runnable {
 		if(GameAction.checkWinPlayer2()){DialogBoxes.announceWinner(Global.playerturn);return;}
 		GameAction.hex=null;
 		new GameObject(true);
-		
 	}
 
 }

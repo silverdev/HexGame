@@ -52,12 +52,12 @@ public class MoveList implements Serializable {
 		if (thisMove==null) return;
 		//if (time!=0)GameAction.updateBoard();
 		if (nextMove!=null) nextMove.replay(time);
-		Global.gamePiece[thisMove.getX()][thisMove.getY()].setTeam(thisMove.getTeam());
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}	
+		}
+		Global.gamePiece[thisMove.getX()][thisMove.getY()].setTeam(thisMove.getTeam());
 	}
 	
 }

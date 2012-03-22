@@ -297,6 +297,4 @@ public class HexGameWindow extends JFrame {
 			} 
 		});
 	}
-	
-
 }
