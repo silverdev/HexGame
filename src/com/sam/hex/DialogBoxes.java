@@ -178,7 +178,7 @@ public class DialogBoxes {
 		
 		int newSize = Global.gridSize;
 		// If a string was returned, say so.
-		if ((s != null) && (s.length() > 0)) {
+		if ((s != null) && (s.length() > 0) && (s.matches("[0-9]") || s.matches("[0-9][0-9]"))) {
 			try {
 				newSize = Integer.parseInt(s);
 			}

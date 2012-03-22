@@ -50,7 +50,6 @@ public class MoveList implements Serializable {
 	//for replays
 	public void replay(int time){
 		if (thisMove==null) return;
-		//if (time!=0)GameAction.updateBoard();
 		if (nextMove!=null) nextMove.replay(time);
 		try {
 			Thread.sleep(time);
