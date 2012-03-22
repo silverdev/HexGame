@@ -418,7 +418,13 @@ public class GameAI implements PlayingEntity {
 
 	}	
 	private void sendMove(int x, int y){
-		GameAction.makeMove(team, new Point(x,y));
+		GameAction.makeMove(this,team, new Point(x,y));
+	}
+
+	@Override
+	public void error(String errorName) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	/*  Bah, ignore this for now.

@@ -31,7 +31,7 @@ public class MoveList {
 	}
 	public void undo(){
 		if (thisMove==null) return; 
-		Global.gamePiece[thisMove.x][thisMove.y].setTeam((byte) 0);
+		Global.gamePiece[thisMove.getX()][thisMove.getY()].setTeam((byte) 0);
 		thisMove=nextMove.thisMove;
 		nextMove=nextMove.nextMove;
 		
@@ -46,7 +46,7 @@ public class MoveList {
 		if (thisMove==null) return;
 		//if (time!=0)GameAction.updateBoard();
 		if (nextMove!=null) nextMove.replay(time);
-		Global.gamePiece[thisMove.x][thisMove.y].setTeam(thisMove.team);
+		Global.gamePiece[thisMove.getX()][thisMove.getY()].setTeam(thisMove.getTeam());
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {

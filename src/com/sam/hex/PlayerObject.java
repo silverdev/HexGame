@@ -43,11 +43,17 @@ public class PlayerObject implements PlayingEntity {
 				break;
 			}
 			if (Global.gamePiece[hex.x][hex.y].getTeam() == 0) {
-				GameAction.makeMove(team, hex);
+				GameAction.makeMove(this,team, hex);
 				GameAction.hex = null;
 				break;
 			}
 			GameAction.hex = null;
 		}
+	}
+
+	@Override
+	public void error(String errorName) {
+		// TODO Auto-generated method stub
+		
 	}
 }

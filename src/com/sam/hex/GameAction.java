@@ -2,6 +2,8 @@ package com.sam.hex;
 
 import java.awt.Point;
 
+import com.sam.hex.errors.TimeSyncError;
+
 public class GameAction {
 
 	public static Point hex;
@@ -83,7 +85,7 @@ public class GameAction {
 	}
 	
 	public static void stopGame(){
-		Global.stop_gameObjectThread=false;
+		Global.stop_gameObjectThread=true;
 		setPiece(new java.awt.Point(-1,-1));
 		System.out.print("test");
 		//Global.runningGame.stop();
@@ -92,17 +94,43 @@ public class GameAction {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		Global.stop_gameObjectThread=false;
 	}
-	public static void setTeam(byte t,int x,int y) {
-		if(!Global.stop_gameObjectThread){return;}
+	private static void setTeam(byte t,int x,int y) {
 		//Global.moveList=new MoveList(Global.moveList,x,y,t);
 		Global.moveList.makeMove(x, y, t);
 		Global.gamePiece[x][y].setTeam(t);
 	}
 	
-	public static boolean makeMove(byte team, Point hex){
+	public static boolean makeMove(PlayingEntity player,byte team, Point hex){
+		if(Global.stop_gameObjectThread){
+			player.undoCalled();
+			return true;}
 		if(Global.gamePiece[hex.x][hex.y].getTeam() == 0){
 			setTeam(team,hex.x,hex.y);
+			return true;
+		}
+		return false;
+	}
+	public static boolean makeMove(PlayingEntity player,byte team, int x, int y){
+		if(Global.stop_gameObjectThread){
+			player.undoCalled();
+			return true;}
+		if(Global.gamePiece[x][y].getTeam() == 0){
+			setTeam(team,hex.x,hex.y);
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean makeMove(PlayingEntity player,byte team, Move thisMove) throws TimeSyncError{
+		if(Global.stop_gameObjectThread){
+			player.undoCalled();
+			return true;}
+		if(Global.gamePiece[thisMove.getX()][thisMove.getY()].getTeam() == 0){
+			if (Global.moveList.getmove().getTime()+1!=thisMove.getTime()){
+				throw new com.sam.hex.errors.TimeSyncError(player);}
+			setTeam(thisMove.getTeam(),thisMove.getX(),thisMove.getX());
 			return true;
 		}
 		return false;

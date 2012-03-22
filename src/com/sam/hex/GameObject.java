@@ -25,13 +25,13 @@ public class GameObject implements Runnable {
 		if(Global.player2Type==0) Global.player2=new PlayerObject((byte)2);
 		else Global.player2=new GameAI((byte)2,(byte)1);// sets player vs Ai
 		 
-		Global.stop_gameObjectThread=true;
+		Global.stop_gameObjectThread=false;
 		theGameRunner.start(); // (3) Start the thread.
 	}
 	
 	public GameObject(boolean undo) {
 		theGameRunner = new Thread(this, "runningGame"); // (1) Create a new thread.
-		Global.stop_gameObjectThread=true;
+		Global.stop_gameObjectThread=false;
 		System.out.println(theGameRunner.getName());
 		theGameRunner.start(); // (2) Start the thread.
 	}
@@ -41,14 +41,14 @@ public class GameObject implements Runnable {
 		while (true) {
 			if(Global.playerturn == 1){
 				Global.player1.getPlayerTurn();
-				if (!Global.stop_gameObjectThread) return;
+				if (Global.stop_gameObjectThread) return;
 				if (GameAction.checkWinPlayer1())
 					break;
 				Global.playerturn = 2;
 			} 
 			else {
 				Global.player2.getPlayerTurn();
-				if (!Global.stop_gameObjectThread) return;
+				if (Global.stop_gameObjectThread) return;
 				if (GameAction.checkWinPlayer2())
 					break;
 				Global.playerturn = 1;
