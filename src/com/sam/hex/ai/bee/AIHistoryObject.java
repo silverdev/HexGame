@@ -9,7 +9,9 @@ public class AIHistoryObject{
 	public AIHistoryObject(int[][] pieces, HashMap lookUpTable) {
 		this.pieces = new int[pieces.length][pieces.length];
 		for(int i=0;i<pieces.length;i++){
-			this.pieces[i] = pieces[i];
+			for(int j=0;j<pieces.length;j++){
+				this.pieces[i][j] = pieces[i][j];
+			}
 		}
 		this.lookUpTable = lookUpTable;
 	}
