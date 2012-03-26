@@ -156,7 +156,7 @@ public class HexGameWindow extends JFrame {
 					GameAction.setPiece(new java.awt.Point(-1,-1));
 				}
 				//undo pvc
-				if (Global.player1Type==1 || Global.player2Type==1 && !(Global.player1Type==1 && Global.player2Type==1))
+				if (Global.player1Type==1 || Global.player2Type==1 || Global.player1Type==2 || Global.player2Type==2 && !(Global.player1Type==1 && Global.player2Type==1 || Global.player1Type==1 && Global.player2Type==2 || Global.player1Type==2 && Global.player2Type==1 || Global.player1Type==2 && Global.player2Type==2))
 					Global.moveList.undoTwo();
 				//let ai know of undo
 				Global.player1.undoCalled();

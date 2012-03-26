@@ -87,6 +87,7 @@ public class GameAction {
 	public static void stopGame(){
 		if (!Global.gameObjectThread.isAlive())return;
 		Global.stop_gameObjectThread=true;
+		Global.gameOver=true;
 		setPiece(new java.awt.Point(-1,-1));
 		System.out.print("test");
 		//Global.runningGame.stop();
@@ -95,6 +96,7 @@ public class GameAction {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		Global.gameOver=false;
 		Global.stop_gameObjectThread=false;
 	}
 	private static void setTeam(byte t,int x,int y) {
