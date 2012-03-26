@@ -26,9 +26,17 @@ public class LocalPlayerObject implements PlayingEntity {
 	public void undoCalled(){
 	}
 
+	
+
 	@Override
-	public void error(String errorName) {
+	public boolean supportsSave() {
 		// TODO Auto-generated method stub
-		
+		return false;
+	}
+
+	@Override
+	public boolean supportsUndo() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

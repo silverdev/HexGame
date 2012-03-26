@@ -11,7 +11,7 @@ public class PlayerObject implements PlayingEntity {
 	this.team=i;	//sets the players team
 	}
 
-	@Override
+	
 	public void getPlayerTurn(byte[][] gameBoard) {
 		 this.gameBoard=gameBoard;
 		 makeMove();
@@ -51,9 +51,19 @@ public class PlayerObject implements PlayingEntity {
 		}
 	}
 
+
 	@Override
-	public void error(String errorName) {
+	public boolean supportsSave() {
 		// TODO Auto-generated method stub
-		
+		return true;
 	}
+
+
+	@Override
+	public boolean supportsUndo() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	
 }

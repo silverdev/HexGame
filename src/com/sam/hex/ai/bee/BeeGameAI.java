@@ -43,7 +43,17 @@ public class BeeGameAI implements PlayingEntity
     }
 
 
-    /** Runs the Bee thread
+    /** Runs the Bee threadException in thread "runningGame" java.lang.NullPointerException
+	at com.sam.hex.ai.bee.BeeGameAI.evaluate(BeeGameAI.java:481)
+	at com.sam.hex.ai.bee.BeeGameAI.expand(BeeGameAI.java:142)
+	at com.sam.hex.ai.bee.BeeGameAI.expand(BeeGameAI.java:155)
+	at com.sam.hex.ai.bee.BeeGameAI.expand(BeeGameAI.java:155)
+	at com.sam.hex.ai.bee.BeeGameAI.expand(BeeGameAI.java:155)
+	at com.sam.hex.ai.bee.BeeGameAI.expand(BeeGameAI.java:155)
+	at com.sam.hex.ai.bee.BeeGameAI.getBestMove(BeeGameAI.java:107)
+	at com.sam.hex.ai.bee.BeeGameAI.getPlayerTurn(BeeGameAI.java:73)
+	at com.sam.hex.GameObject.run(GameObject.java:53)
+	at java.lang.Thread.run(Thread.java:679)
       */
     @Override
     public void getPlayerTurn()
@@ -706,11 +716,7 @@ public class BeeGameAI implements PlayingEntity
     }
 
 
-	@Override
-	public void getPlayerTurn(byte[][] gameBoard) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 
 	@Override
@@ -722,10 +728,20 @@ public class BeeGameAI implements PlayingEntity
 	}
 
 
+
+
+
 	@Override
-	public void error(String errorName) {
+	public boolean supportsSave() {
 		// TODO Auto-generated method stub
-		
+		return false;
+	}
+
+
+	@Override
+	public boolean supportsUndo() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 }
 

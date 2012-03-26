@@ -421,62 +421,19 @@ public class GameAI implements PlayingEntity {
 		GameAction.makeMove(this,team, new Point(x,y));
 	}
 
+
+
 	@Override
-	public void error(String errorName) {
+	public boolean supportsSave() {
 		// TODO Auto-generated method stub
-		
+		return true;
+	}
+
+	@Override
+	public boolean supportsUndo() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 	
-	/*  Bah, ignore this for now.
-	private void nickMove(){
-		int[][] moves=new int[gameBoard.length][gameBoard.length];
-		 
-		 for(int x=0; x<gameBoard.length; x++){
-			for(int y=0; y<gameBoard[x].length; y++){
-				if(gameBoard[x][y]!=0){
-					moves[x][y]=-10000;
-				}
-				else{
-					//Actually calculate value
-				}
-				if(gameBoard[x][y]!=0 && gameBoard[x][y]!=team){
-					
-				}
-				if(gameBoard[x][y]==team){
-					//Look through all pieces and find distance from my piece
-					for(int i=0; i<gameBoard.length; i++)
-						for(int j=0; j<gameBoard[i].length; j++){
-							if(gameBoard[i][j]==0){
-								//TODO: calculate distance
-								if(team==1){
-									
-								}
-								if(team==2){
-									
-								}
-							}
-							
-						}
-				}
-			}
-		}
-		 
-		 int max=moves[0][0];
-		 ArrayList<RegularPolygonGameObject> possible=new ArrayList<RegularPolygonGameObject>();
-		 possible.add(Global.gamePiece[0][0]);
-		 for(int x=0; x<gameBoard.length; x++){
-				for(int y=0; y<gameBoard[x].length; y++){
-					if (moves[x][y]==max){
-						possible.add(Global.gamePiece[x][y]);
-					}
-					else if(moves[x][y]>max){
-						 max=moves[x][y];
-						 possible=new ArrayList<RegularPolygonGameObject>();
-						 possible.add(Global.gamePiece[x][y]);
-					}
-				}
-			}
-		 int move=(int)(possible.size()*Math.random());
-		 possible.get(move).setTeam(team);
-	} */ 
+	
 }
