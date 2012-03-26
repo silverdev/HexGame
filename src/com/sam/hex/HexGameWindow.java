@@ -158,11 +158,13 @@ public class HexGameWindow extends JFrame {
 				//undo pvc
 				else if (Global.player1.supportsUndo()&&Global.player2.supportsUndo())
 				{
-					
+					GameAction.stopGame();
 					Global.moveList.undoTwo();
 					//let ai know of undo
 					Global.player1.undoCalled();
 					Global.player2.undoCalled();
+					if (Global.gameOver==false)
+						new GameObject(true);
 				}
 				//undo if the game has ended
 				if (Global.gameOver==true){
