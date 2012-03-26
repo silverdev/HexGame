@@ -1,5 +1,6 @@
 package com.sam.hex;
 
+import com.sam.hex.ai.bee.BeeGameAI;
 import com.sam.hex.willsai.GameAI;
 
 //import java.awt.event.MouseAdapter;
@@ -13,17 +14,19 @@ public class GameObject implements Runnable {
 		System.out.println(theGameRunner.getName()); 
 		
 		//(2)setup new game variables
-		Global.moveNumber=0;
+		Global.moveNumber=1;
 		Global.moveList= new MoveList();
 		Global.playerturn = 1;
 		Global.gameObjectThread=theGameRunner;
 		Global.gameOver=false;
 
 		if(Global.player1Type==0) Global.player1=new PlayerObject((byte)1);
-		else Global.player1=new GameAI((byte)1,(byte)1);// sets player vs Ai
+		else if(Global.player1Type==1) Global.player1=new GameAI((byte)1,(byte)1);
+		else if(Global.player1Type==2) Global.player1=new BeeGameAI(1);
 			
 		if(Global.player2Type==0) Global.player2=new PlayerObject((byte)2);
-		else Global.player2=new GameAI((byte)2,(byte)1);// sets player vs Ai
+		else if(Global.player2Type==1) Global.player2=new GameAI((byte)2,(byte)1);
+		else if(Global.player2Type==2) Global.player2=new BeeGameAI(2);
 		 
 		Global.stop_gameObjectThread=false;
 		theGameRunner.start(); // (3) Start the thread.

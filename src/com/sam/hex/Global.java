@@ -29,7 +29,7 @@ public class Global {
 	public static ArrayList<LocalNetworkObject> localObjects;
 	public static LocalNetworkObject localPlayer;
 	public static String aiType;
-	public static int moveNumber;
+	public static int moveNumber = 1;
 	public static MoveList moveList;
 	public static int playerturn;
 	public static PlayingEntity player1;

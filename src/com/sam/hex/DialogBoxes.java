@@ -1,5 +1,6 @@
 package com.sam.hex;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
@@ -67,7 +68,7 @@ public class DialogBoxes {
 	}
 
 	public static String chooseGameTypePlayer1() {
-		Object[] possibilities = { "Human", "Computer" };
+		Object[] possibilities = { "Human", "Computer (Kinda easy)", "Computer (Kinda hard)" };
 		String s;
 		
 			s = (String) JOptionPane.showInputDialog(Global.window,
@@ -79,7 +80,8 @@ public class DialogBoxes {
 		// If a string was returned, say so.
 		if ((s != null) && (s.length() > 0)) {
 			if (s=="Human") Global.player1Type=0;
-			else if (s=="Computer") Global.player1Type=1;
+			else if (s=="Computer (Kinda easy)") Global.player1Type=1;
+			else if (s=="Computer (Kinda hard)") Global.player1Type=2;
 			Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
 			prefs.putInt("player1Type", Global.player1Type);
 			return s;
@@ -89,7 +91,7 @@ public class DialogBoxes {
 	}
 
 	public static String chooseGameTypePlayer2() {
-		Object[] possibilities = { "Human", "Computer" };
+		Object[] possibilities = { "Human", "Computer (Kinda easy)", "Computer (Kinda hard)" };
 		String s;
 			s = (String) JOptionPane.showInputDialog(Global.window,
 				"Choose a type of game:\n", "Game Type",
@@ -100,7 +102,8 @@ public class DialogBoxes {
 		// If a string was returned, say so.
 		if ((s != null) && (s.length() > 0)) {
 			if (s=="Human") Global.player2Type=0;
-			else if (s=="Computer") Global.player2Type=1;
+			else if (s=="Computer (Kinda easy)") Global.player2Type=1;
+			else if (s=="Computer (Kinda hard)") Global.player2Type=2;
 			Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
 			prefs.putInt("player2Type", Global.player2Type);
 			return s;
@@ -219,7 +222,7 @@ public class DialogBoxes {
 				
 				FileOutputStream saveFile = new FileOutputStream(file);
 				ObjectOutputStream save = new ObjectOutputStream(saveFile);
-				SavedGameObject savedGame = new SavedGameObject(Global.player1Color, Global.player2Color, Global.player1Name, Global.player2Name, Global.moveList, Global.gridSize);
+				SavedGameObject savedGame = new SavedGameObject(Global.player1Color.getRGB(), Global.player2Color.getRGB(), Global.player1Name, Global.player2Name, Global.moveList, Global.gridSize);
 				save.writeObject(savedGame);
 				save.close();
 			}
@@ -244,8 +247,8 @@ public class DialogBoxes {
 				FileInputStream saveFile = new FileInputStream(file);
 				ObjectInputStream restore = new ObjectInputStream(saveFile);
 				SavedGameObject savedGame = (SavedGameObject) restore.readObject();
-				Global.player1Color = savedGame.player1Color;
-				Global.player2Color = savedGame.player2Color;
+				Global.player1Color = new Color(savedGame.player1Color);
+				Global.player2Color = new Color(savedGame.player2Color);
 				Global.player1Name = savedGame.player1Name;
 				Global.player2Name = savedGame.player2Name;
 				Global.moveList = savedGame.moveList;

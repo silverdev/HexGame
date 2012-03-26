@@ -98,7 +98,6 @@ public class GameAction {
 		Global.stop_gameObjectThread=false;
 	}
 	private static void setTeam(byte t,int x,int y) {
-		//Global.moveList=new MoveList(Global.moveList,x,y,t);
 		Global.moveList.makeMove(x, y, t);
 		Global.gamePiece[x][y].setTeam(t);
 	}
@@ -106,7 +105,8 @@ public class GameAction {
 	public static boolean makeMove(PlayingEntity player,byte team, Point hex){
 		if(Global.stop_gameObjectThread){
 			player.undoCalled();
-			return true;}
+			return true;
+		}
 		if(Global.gamePiece[hex.x][hex.y].getTeam() == 0){
 			setTeam(team,hex.x,hex.y);
 			return true;

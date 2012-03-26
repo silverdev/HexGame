@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.lang.Integer;
 import java.util.prefs.Preferences;
 
+import com.sam.hex.lan.LocalLobbyWindow;
+
 public class Hexgame {
 
 	public static void main(String[] args){
@@ -17,7 +19,8 @@ public class Hexgame {
 		grabPreferences();
 		
 		Global.window = new HexGameWindow();
-
+//		new LocalLobbyWindow();
+		
 		Global.window.setVisible(true);
 		new GameObject();
 
