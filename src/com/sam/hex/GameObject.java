@@ -1,7 +1,7 @@
 package com.sam.hex;
 
 import com.sam.hex.ai.bee.BeeGameAI;
-import com.sam.hex.willsai.GameAI;
+import com.sam.hex.ai.will.GameAI;
 
 //import java.awt.event.MouseAdapter;
 //import java.awt.event.MouseEvent;

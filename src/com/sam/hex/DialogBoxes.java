@@ -18,6 +18,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import com.sam.hex.replay.SavedGameObject;
+
 
 
 public class DialogBoxes {
@@ -222,7 +224,7 @@ public class DialogBoxes {
 				
 				FileOutputStream saveFile = new FileOutputStream(file);
 				ObjectOutputStream save = new ObjectOutputStream(saveFile);
-				SavedGameObject savedGame = new SavedGameObject(Global.player1Color.getRGB(), Global.player2Color.getRGB(), Global.player1Name, Global.player2Name, Global.moveList, Global.gridSize);
+				SavedGameObject savedGame = new SavedGameObject(Global.player1Color.getRGB(), Global.player2Color.getRGB(), Global.player1Name, Global.player2Name, Global.moveList, Global.gridSize, Global.moveNumber);
 				save.writeObject(savedGame);
 				save.close();
 			}

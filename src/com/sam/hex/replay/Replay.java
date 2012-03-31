@@ -1,4 +1,9 @@
-package com.sam.hex;
+package com.sam.hex.replay;
+
+import com.sam.hex.DialogBoxes;
+import com.sam.hex.GameAction;
+import com.sam.hex.GameObject;
+import com.sam.hex.Global;
 
 public class Replay implements Runnable {
 

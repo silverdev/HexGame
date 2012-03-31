@@ -1,4 +1,4 @@
-package com.sam.hex.willsai;
+package com.sam.hex.ai.will;
 
 import java.util.ArrayList;
 import java.util.List;

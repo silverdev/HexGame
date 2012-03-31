@@ -8,6 +8,8 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 
+import com.sam.hex.replay.Replay;
+
 public class HexGameWindow extends JFrame {
 	private static final long serialVersionUID = 7740144563399961702L;
 	public static Canvas cPolygons = new Canvas();
@@ -30,7 +32,7 @@ public class HexGameWindow extends JFrame {
 		addMenus();
 	}
 
-	protected void initRegular() {
+	public void initRegular() {
 		Global.gamePiece=new RegularPolygonGameObject[Global.gridSize][Global.gridSize];
 		Global.hexes=Global.gamePiece;
 		
