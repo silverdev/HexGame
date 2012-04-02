@@ -14,12 +14,15 @@ public class PlayerObject implements PlayingEntity {
 	
 	public void getPlayerTurn(byte[][] gameBoard) {
 		 this.gameBoard=gameBoard;
+		 GameAction.hex = null;
 		 makeMove();
+	
 	}
 
 	@Override
 	public void getPlayerTurn() {
 		this.gameBoard=BoardTools.teamGrid();
+		GameAction.hex = null;
 		makeMove();
 	}
 	

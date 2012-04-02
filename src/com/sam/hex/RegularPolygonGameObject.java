@@ -52,7 +52,7 @@ public class RegularPolygonGameObject implements Shape {
 		if (team == teamNumber && !checkedflage) {
 			checkedflage = !checkedflage;
 			if (checkSpot(team, x, y) || checkWinTeam(team, x, y, gamePeace)) {
-				objectColor = Color.green;
+				//objectColor = Color.green;
 				return true;
 			}
 		}
@@ -100,11 +100,12 @@ public class RegularPolygonGameObject implements Shape {
 		if (team == teamNumber && !checkedflage) {
 			checkedflage = true;
 			String tempHolder=findShortestPath(team, x, y, gamePeace);
-			if (checkSpot(team, x, y) || tempHolder!=null) {
+			checkedflage = false;
+			if (tempHolder!=null) {
 				
 				return tempHolder;
 			}
-			checkedflage = false;
+			
 		}
 		
 		return null;
@@ -112,7 +113,9 @@ public class RegularPolygonGameObject implements Shape {
 	}
 	public static String findShortestPath(byte team, int x, int y, //used for checking victory condition
 			RegularPolygonGameObject[][] gamePeace) {
-		if(checkWinTeam(team, x, y, gamePeace)){return "";}
+		if(checkSpot(team, x, y)){return "";}
+		//GameAction.checkedFlagReset();
+		//if(!checkWinTeam(team, x, y, gamePeace)){return null;}
 		String[] allPath=new String[6];
 		
 		if (y < gamePeace.length && x - 1 >= 0) {
@@ -141,15 +144,17 @@ public class RegularPolygonGameObject implements Shape {
 					gamePeace);
 		}
 		 int dir= findShortestString(allPath,0,5);
-	     if (allPath[dir]==null) return null;
+	   
+		 if (allPath[dir]==null||allPath[dir]=="null") return null;
+		 // System.out.println(allPath[dir]);
 		 switch (dir){
 		 //ud=y-1 & x+1  dd = y+1 & x-1  uy=y-1 dy=y+1 lx=x-1 rx=x+1
 	     case 0: return "lx"+allPath[0];
 	     case 1: return "rx"+allPath[1];
 	     case 2: return "uy"+allPath[2];
 	     case 3: return "dy"+allPath[3];
-	     case 4: return "dd"+allPath[3];
-	     case 5: return "ud"+allPath[3];
+	     case 4: return "dd"+allPath[4];
+	     case 5: return "ud"+allPath[5];
 		 }
 		return null;
 	}
@@ -175,16 +180,19 @@ public class RegularPolygonGameObject implements Shape {
 		
 		while (path!=null&&!path.isEmpty()){
 				 
-			Global.gamePiece[x][y].setColor(Color.BLACK);
-				switch (posDir.valueOf(path.substring(0, 2))){
+			//System.out.println("test");
+			//System.out.println(path);
+				switch (posDir.valueOf(path.substring(0,2))){
 				 //ud=y-1 & x+1  dd = y+1 & x-1  uy=y-1 dy=y+1 lx=x-1 rx=x+1
-			     case lx: x+=1; return;
-			     case rx: x+=1;return;
-			     case uy: y+=1;return;
-			     case dy: y+=1;return;
-			     case dd:  y+=1; x-=1;return;
-			     case ud:  y-=1; x+=1; return;
+			     case lx: x-=1; break;
+			     case rx: x+=1;break;
+			     case uy: y-=1;break;
+			     case dy: y+=1;break;
+			     case dd:  y+=1; x-=1;break;
+			     case ud:  y-=1; x+=1; break;
 				 }
+				//System.out.println(path);
+				Global.gamePiece[x][y].setColor(Color.green);
 				path=path.substring(2,path.length());
 		} System.out.print("done");
 	}

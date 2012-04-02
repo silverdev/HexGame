@@ -45,18 +45,7 @@ public class DialogBoxes {
 			GameAction.stopGame();
 			
 			// restore Defalts
-			Global.gridSize=GlobalDefaults.gridSize;
-			Global.windowHeight=GlobalDefaults.windowHeight;
-			Global.windowWidth=GlobalDefaults.windowWidth;
-			Global.playerOneName=GlobalDefaults.playerOneName;
-			Global.playerTwoName=GlobalDefaults.playerTwoName;
-			Global.player1Name=GlobalDefaults.player1Name;
-			Global.player1Color=GlobalDefaults.player1Color;
-			Global.player1Type=GlobalDefaults.player1Type;
-			Global.player2Name=GlobalDefaults.player2Name;
-			Global.player2Color=GlobalDefaults.player2Color;
-			Global.player2Type=GlobalDefaults.player2Type;
-			Global.aiType=GlobalDefaults.aiType;
+		Hexgame.grabPreferences();
 			//restart game
 			
 			Global.window.initRegular();
