@@ -9,7 +9,9 @@ import java.util.Random;
 import com.sam.hex.BoardTools;
 import com.sam.hex.GameAction;
 import com.sam.hex.Global;
+import com.sam.hex.PlayerObject;
 import com.sam.hex.PlayingEntity;
+
 
 public class GameAI implements PlayingEntity { 
 	byte team;//1 is left-right, 2 is top-down
@@ -30,26 +32,54 @@ public class GameAI implements PlayingEntity {
 			rand_b = new Random().nextInt(3)-1;
 		}
 	}
+	
+	public class AIHistoryObject{
+		List<List<List<Integer>>> pairs = new ArrayList<List<List<Integer>>>();;
+		int[] n = {0,0};
+		int[] m = {0,0};
+		
+		public AIHistoryObject(List<List<List<Integer>>> pairs, int[] n, int[] m) {
+			for(int i=0;i<pairs.size();i++){
+				this.pairs.add(pairs.get(i));
+			}
+			this.n[0] = n[0];
+			this.n[1] = n[1];
+			this.m[0] = m[0];
+			this.m[1] = m[1];
+		}
+		
+		public String toString(){
+			return pairs.toString()+" : "+n.toString()+" : "+m.toString();
+		}
+	}
 
 	public void getPlayerTurn(byte[][] gameBoard) {//For net play
 		 this.gameBoard=gameBoard;
 		 makeMove();
 	}
 	
+	public Point getPlayerTurn(Point hex) {//For net play
+		return new Point(-1,-1);
+	}
+	
 	public void getPlayerTurn() {//Without net play
+		skipMove = false;
 		this.gameBoard=BoardTools.teamGrid();
 		AIHistoryObject state = new AIHistoryObject(pairs, n, m);
 		history.add(state);
 		makeMove();
 	}
 	
-	@Override
+	boolean skipMove = false;
 	public void undoCalled(){
-		AIHistoryObject previousState = history.get(history.size()-1);
-		pairs = previousState.pairs;
-		n = previousState.n;
-		m = previousState.m;
-		history.remove(history.size()-1);
+		if(history.size()>0){
+			AIHistoryObject previousState = history.get(history.size()-1);
+			pairs = previousState.pairs;
+			n = previousState.n;
+			m = previousState.m;
+			history.remove(history.size()-1);
+		}
+		skipMove = true;
 	}
 	
 	private boolean right(){
@@ -74,7 +104,7 @@ public class GameAI implements PlayingEntity {
 		
 		//Sleep to stop instantaneous playing
 		try {
-			for(int i=0;i<15;i++){
+			for(int i=0;i<10;i++){
     			Thread.sleep(50);
     			if(Global.gameOver) break;
     		}
@@ -395,45 +425,113 @@ public class GameAI implements PlayingEntity {
 		
 		return;
 	}
-	private void badMove(){
-		int moves=0;
-		for(int x=0; x<gameBoard.length; x++){
-			for(int y=0; y<gameBoard[x].length; y++){
-				if(gameBoard[x][y]==0) moves++;
-			}
-		}
-		moves*=Math.random();
-		moves++;
-		for(int x=0; x<gameBoard.length; x++)
-			for(int y=0; y<gameBoard[x].length; y++){
-				if(gameBoard[x][y]==0) {
-					moves--;
-				}
-				if(moves==0) {
-					Global.gamePiece[x][y].setTeam(team);
-					sendMove(x,y);
-					moves=-10;
-				}	
-			}
-
-	}	
+	
 	private void sendMove(int x, int y){
-		GameAction.makeMove(this,team, new Point(x,y));
+		if(!skipMove) GameAction.makeMove(this, team, new Point(x,y));
+		else skipMove = false;
 	}
 
-
-
 	@Override
-	public boolean supportsSave() {
-		// TODO Auto-generated method stub
-		return true;
+	public void newgameCalled() {
+		skipMove = true;
 	}
 
 	@Override
 	public boolean supportsUndo() {
-		// TODO Auto-generated method stub
+		if(team==1){
+			return Global.player2 instanceof PlayerObject;
+		}
+		else{
+			return Global.player1 instanceof PlayerObject;
+		}
+	}
+
+	@Override
+	public boolean supportsNewgame() {
 		return true;
 	}
+
+	@Override
+	public void colorChanged() {
+	}
+
+	@Override
+	public void nameChanged() {
+	}
+
+	@Override
+	public void quit() {
+		skipMove = true;
+	}
+
+	@Override
+	public void win() {
+	}
+
+	@Override
+	public void lose() {
+	}
+
+	@Override
+	public boolean supportsSave() {
+		if(team==(byte)1){
+			return Global.player2 instanceof PlayerObject;
+		}
+		else{
+			return Global.player1 instanceof PlayerObject;
+		}
+	}
 	
-	
+	/*  Bah, ignore this for now.
+	private void nickMove(){
+		int[][] moves=new int[gameBoard.length][gameBoard.length];
+		 
+		 for(int x=0; x<gameBoard.length; x++){
+			for(int y=0; y<gameBoard[x].length; y++){
+				if(gameBoard[x][y]!=0){
+					moves[x][y]=-10000;
+				}
+				else{
+					//Actually calculate value
+				}
+				if(gameBoard[x][y]!=0 && gameBoard[x][y]!=team){
+					
+				}
+				if(gameBoard[x][y]==team){
+					//Look through all pieces and find distance from my piece
+					for(int i=0; i<gameBoard.length; i++)
+						for(int j=0; j<gameBoard[i].length; j++){
+							if(gameBoard[i][j]==0){
+								//TODO: calculate distance
+								if(team==1){
+									
+								}
+								if(team==2){
+									
+								}
+							}
+							
+						}
+				}
+			}
+		}
+		 
+		 int max=moves[0][0];
+		 ArrayList<RegularPolygonGameObject> possible=new ArrayList<RegularPolygonGameObject>();
+		 possible.add(Global.gamePiece[0][0]);
+		 for(int x=0; x<gameBoard.length; x++){
+				for(int y=0; y<gameBoard[x].length; y++){
+					if (moves[x][y]==max){
+						possible.add(Global.gamePiece[x][y]);
+					}
+					else if(moves[x][y]>max){
+						 max=moves[x][y];
+						 possible=new ArrayList<RegularPolygonGameObject>();
+						 possible.add(Global.gamePiece[x][y]);
+					}
+				}
+			}
+		 int move=(int)(possible.size()*Math.random());
+		 possible.get(move).setTeam(team);
+	} */ 
 }

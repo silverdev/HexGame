@@ -3,9 +3,11 @@ package com.sam.hex.ai.bee;
 import java.awt.Point;
 import java.math.*;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.sam.hex.GameAction;
 import com.sam.hex.Global;
+import com.sam.hex.PlayerObject;
 import com.sam.hex.PlayingEntity;
 
 /** The "Bee" class.
@@ -18,9 +20,10 @@ public class BeeGameAI implements PlayingEntity
     private final static int RED = 1, BLUE = 2, EMPTY = 0;
     private final static int MAX_DEPTH = 5, BEAM_SIZE = 5;
     private int[] [] pieces;
-    private HashMap lookUpTable;
+    private ConcurrentHashMap lookUpTable;
     private int team;
-    List<AIHistoryObject> history = new LinkedList<AIHistoryObject>();//List of the AI's state. Used when Undo is called.
+    private LinkedList<AIHistoryObject> history = new LinkedList<AIHistoryObject>();//List of the AI's state. Used when Undo is called.
+    private int gridSize;
 
     /** Constructor for the Bee object
     *@param game    the currently running game
@@ -29,48 +32,61 @@ public class BeeGameAI implements PlayingEntity
     */
     public BeeGameAI (int team)
     {
-    this.team = team;
-	// Creates the pieces array that stores the board inside Bee
-	pieces = new int [Global.gridSize + 2] [Global.gridSize + 2];
-	for (int i = 1 ; i < pieces.length - 1 ; i++)
-	{
-	    pieces [i] [0] = RED;
-	    pieces [0] [i] = BLUE;
-	    pieces [i] [pieces.length - 1] = RED;
-	    pieces [pieces.length - 1] [i] = BLUE;
-	}
-	lookUpTable = new HashMap ();
+	    this.team = team;
+		// Creates the pieces array that stores the board inside Bee
+	    gridSize = Global.gridSize;
+		pieces = new int [gridSize + 2] [gridSize + 2];
+		for (int i = 1 ; i < pieces.length - 1 ; i++)
+		{
+		    pieces [i] [0] = RED;
+		    pieces [0] [i] = BLUE;
+		    pieces [i] [pieces.length - 1] = RED;
+		    pieces [pieces.length - 1] [i] = BLUE;
+		}
+		lookUpTable = new ConcurrentHashMap ();
+    }
+    
+    public class AIHistoryObject{
+    	int[][] pieces;
+    	ConcurrentHashMap lookUpTable;
+    	
+    	public AIHistoryObject(int[][] pieces, ConcurrentHashMap lookUpTable) {
+    		this.pieces = new int[pieces.length][pieces.length];
+    		for(int i=0;i<pieces.length;i++){
+    			for(int j=0;j<pieces.length;j++){
+    				this.pieces[i][j] = pieces[i][j];
+    			}
+    		}
+    		this.lookUpTable = lookUpTable;
+    	}
     }
 
 
-    /** Runs the Bee threadException in thread "runningGame" java.lang.NullPointerException
-	at com.sam.hex.ai.bee.BeeGameAI.evaluate(BeeGameAI.java:481)
-	at com.sam.hex.ai.bee.BeeGameAI.expand(BeeGameAI.java:142)
-	at com.sam.hex.ai.bee.BeeGameAI.expand(BeeGameAI.java:155)
-	at com.sam.hex.ai.bee.BeeGameAI.expand(BeeGameAI.java:155)
-	at com.sam.hex.ai.bee.BeeGameAI.expand(BeeGameAI.java:155)
-	at com.sam.hex.ai.bee.BeeGameAI.expand(BeeGameAI.java:155)
-	at com.sam.hex.ai.bee.BeeGameAI.getBestMove(BeeGameAI.java:107)
-	at com.sam.hex.ai.bee.BeeGameAI.getPlayerTurn(BeeGameAI.java:73)
-	at com.sam.hex.GameObject.run(GameObject.java:53)
-	at java.lang.Thread.run(Thread.java:679)
+    /** Runs the Bee thread
       */
     @Override
     public void getPlayerTurn()
     {
+    	skipMove = false;
     	AIHistoryObject state = new AIHistoryObject(pieces, lookUpTable);
 		history.add(state);
+		int moveNumber = Global.moveNumber;
     	
 	    Point lastMove;
-		if(Global.moveNumber>1) lastMove = new Point(Global.gridSize-1-Global.moveList.getmove().getY(), Global.moveList.getmove().getX());
-		else lastMove=null;
+		try{
+			if(moveNumber>1) lastMove = new Point(gridSize-1-Global.moveList.getmove().getY(), Global.moveList.getmove().getX());
+			else lastMove=null;
+		}
+		catch(Exception e){
+			lastMove=null;
+		}
 		System.out.println("Last move: "+lastMove);
 		// If Bee is to make the first move in the game,
 		// it makes it in the centre of the board.
 		if (lastMove == null)
 		{
 		    pieces [pieces.length / 2] [pieces.length / 2] = team;
-		    GameAction.makeMove(this, (byte) team, new Point(pieces.length / 2 - 1, pieces.length / 2 - 1));
+		    if(!skipMove) GameAction.makeMove(this, (byte) team, new Point(pieces.length / 2 - 1, pieces.length / 2 - 1));
 		}
 		// If a move has been made already,
 		// Bee records the move in the pieces array
@@ -85,9 +101,42 @@ public class BeeGameAI implements PlayingEntity
 		    int x = bestMove.x - 1;
 		    int y = bestMove.y - 1;
 		    
-		    if(x>=0 && y>=0) GameAction.makeMove(this, (byte) team, new Point(y, Global.gridSize-1-x));
+		    if(!skipMove) GameAction.makeMove(this, (byte) team, new Point(y, gridSize-1-x));
 		    System.out.println("My move: "+new Point(x,y));
 		}
+	}
+    
+    private boolean skipMove = false;
+	@Override
+	public void undoCalled() {
+		if(history.size()>0){
+			AIHistoryObject previousState = history.get(history.size()-1);
+			pieces = previousState.pieces;
+			lookUpTable = previousState.lookUpTable;
+			history.remove(history.size()-1);
+		}
+		skipMove = true;
+	}
+
+
+	@Override
+	public void newgameCalled() {
+		skipMove = true;
+	}
+	
+	@Override
+	public boolean supportsUndo() {
+		if(team==1){
+			return Global.player2 instanceof PlayerObject;
+		}
+		else{
+			return Global.player1 instanceof PlayerObject;
+		}
+	}
+
+	@Override
+	public boolean supportsNewgame() {
+		return true;
 	}
 
 
@@ -716,32 +765,40 @@ public class BeeGameAI implements PlayingEntity
     }
 
 
-	
-
-
 	@Override
-	public void undoCalled() {
-		AIHistoryObject previousState = history.get(history.size()-1);
-		pieces = previousState.pieces;
-		lookUpTable = previousState.lookUpTable;
-		history.remove(history.size()-1);
+	public void colorChanged() {
 	}
 
 
+	@Override
+	public void nameChanged() {
+	}
 
+
+	@Override
+	public void quit() {
+		skipMove = true;
+	}
+
+
+	@Override
+	public void win() {
+	}
+
+
+	@Override
+	public void lose() {
+	}
 
 
 	@Override
 	public boolean supportsSave() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
-	public boolean supportsUndo() {
-		// TODO Auto-generated method stub
-		return true;
+		if(team==1){
+			return Global.player2 instanceof PlayerObject;
+		}
+		else{
+			return Global.player1 instanceof PlayerObject;
+		}
 	}
 }
 

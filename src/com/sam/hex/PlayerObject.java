@@ -8,65 +8,75 @@ public class PlayerObject implements PlayingEntity {
 	byte team;
 	
 	public PlayerObject(byte i) {
-	this.team=i;	//sets the players team
+		this.team=i;//Set the player's team
 	}
-
 	
-	public void getPlayerTurn(byte[][] gameBoard) {
-		 this.gameBoard=gameBoard;
-		 GameAction.hex = null;
-		 makeMove();
-	
-	}
-
-	@Override
 	public void getPlayerTurn() {
-		this.gameBoard=BoardTools.teamGrid();
 		GameAction.hex = null;
-		makeMove();
-	}
-	
-	public void undoCalled(){
-		return;
-	}
-	
-	public void makeMove(){
-		while (true) {
+		looper: while (true) {
 			Point hex = GameAction.hex;
 			while (hex == null) {
 				hex = GameAction.hex;
 				try {
-					Thread.sleep(100);
+					Thread.sleep(80);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				if(Global.gameOver) break looper;
 			}
 			if (hex.equals(new Point(-1,-1))){
 				GameAction.hex = null;
 				break;
 			}
-			if (Global.gamePiece[hex.x][hex.y].getTeam() == 0) {
-				GameAction.makeMove(this,team, hex);
+			if (GameAction.makeMove(this, team, hex)) {
 				GameAction.hex = null;
 				break;
 			}
 			GameAction.hex = null;
 		}
 	}
-
-
-	@Override
-	public boolean supportsSave() {
-		// TODO Auto-generated method stub
-		return true;
+	
+	public void undoCalled(){
+		GameAction.hex = new Point(-1,-1);
 	}
 
+	public void newgameCalled() {
+		GameAction.hex = new Point(-1,-1);
+	}
 
 	@Override
 	public boolean supportsUndo() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
-	
+	@Override
+	public boolean supportsNewgame() {
+		return true;
+	}
+
+	@Override
+	public void colorChanged() {
+	}
+
+	@Override
+	public void nameChanged() {
+	}
+
+	@Override
+	public void quit() {
+		GameAction.hex = new Point(-1,-1);
+	}
+
+	@Override
+	public void win() {
+	}
+
+	@Override
+	public void lose() {
+	}
+
+	@Override
+	public boolean supportsSave() {
+		return true;
+	}
 }

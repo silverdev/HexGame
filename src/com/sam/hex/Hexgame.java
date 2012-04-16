@@ -22,7 +22,7 @@ public class Hexgame {
 //		new LocalLobbyWindow();
 		
 		Global.window.setVisible(true);
-		new GameObject();
+		Global.game = new GameObject();
 
 		while (true) {
 			GameAction.updateBoard();

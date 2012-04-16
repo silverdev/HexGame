@@ -15,10 +15,6 @@ public class Global {
 	public static RegularPolygonGameObject[][] gamePiece = new RegularPolygonGameObject[0][0];
 	public static Shape[][] hexes = gamePiece;
 
-
-	public static String playerOneName;
-	public static String playerTwoName;
-
 	public static String player1Name="Player1";
 	public static Color player1Color=Color.blue;
 	public static int player1Type=0;
@@ -31,12 +27,13 @@ public class Global {
 	public static String aiType;
 	public static int moveNumber = 1;
 	public static MoveList moveList;
-	public static int playerturn;
+	public static int currentPlayer;
 	public static PlayingEntity player1;
 	public static PlayingEntity player2;
 	public static boolean gameOver=false;
-	public static Thread gameObjectThread;
-	public static boolean stop_gameObjectThread;
+	public static GameObject game;
+	public static Thread gameThread;
+	public static int gameLocation=0;
 	public static HexGameWindow window;
 
 	// public static Color[][] background;

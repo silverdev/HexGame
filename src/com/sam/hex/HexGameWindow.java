@@ -166,14 +166,14 @@ public class HexGameWindow extends JFrame {
 					Global.player1.undoCalled();
 					Global.player2.undoCalled();
 					if (Global.gameOver==false)
-						new GameObject(true);
+						Global.game = new GameObject(true);
 				}
 				//undo if the game has ended
 				if (Global.gameOver==true){
 					Global.gameOver=false;
 					Global.moveList.replay(0);
-					Global.playerturn = Global.playerturn%2+1;
-					new GameObject(true);
+					Global.currentPlayer = Global.currentPlayer%2+1;
+					Global.game = new GameObject(true);
 				}
 			} 
 		});
@@ -185,7 +185,7 @@ public class HexGameWindow extends JFrame {
 				Hexgame.grabPreferences();
 				initRegular();
 				GameAction.fullUpdateBoard();
-				new GameObject();
+				Global.game = new GameObject();
 			} 
 		});
 		
@@ -218,7 +218,7 @@ public class HexGameWindow extends JFrame {
 					GameAction.stopGame();
 					initRegular();
 					GameAction.fullUpdateBoard();
-					new GameObject();
+					Global.game = new GameObject();
 				}
 			} 
 		});
@@ -240,7 +240,7 @@ public class HexGameWindow extends JFrame {
 		p1NameAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				Global.playerOneName=DialogBoxes.chooseName1();
+				Global.player1Name=DialogBoxes.chooseName1();
 			} 
 		});
 		
@@ -252,8 +252,8 @@ public class HexGameWindow extends JFrame {
 				GameAction.fullUpdateBoard();
 				Global.moveList.replay(0);
 				GameAction.checkedFlagReset();
-				GameAction.checkWinPlayer1();
-				GameAction.checkWinPlayer2();
+				GameAction.checkWinPlayer(1);
+				GameAction.checkWinPlayer(2);
 			} 
 		});
 		
@@ -266,7 +266,7 @@ public class HexGameWindow extends JFrame {
 					GameAction.stopGame();
 					initRegular();
 					GameAction.fullUpdateBoard();
-					new GameObject();
+					Global.game = new GameObject();
 				}
 			} 
 		});
@@ -274,7 +274,7 @@ public class HexGameWindow extends JFrame {
 		p2NameAction.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent act) {
-				Global.playerTwoName=DialogBoxes.chooseName2();
+				Global.player2Name=DialogBoxes.chooseName2();
 			} 
 		});
 		
@@ -286,8 +286,8 @@ public class HexGameWindow extends JFrame {
 				GameAction.fullUpdateBoard();
 				Global.moveList.replay(0);
 				GameAction.checkedFlagReset();
-				GameAction.checkWinPlayer1();
-				GameAction.checkWinPlayer2();
+				GameAction.checkWinPlayer(1);
+				GameAction.checkWinPlayer(2);
 			} 
 		});
 		
@@ -300,7 +300,7 @@ public class HexGameWindow extends JFrame {
 					GameAction.stopGame();
 					initRegular();
 					GameAction.fullUpdateBoard();
-					new GameObject();
+					Global.game = new GameObject();
 				}
 			} 
 		});
