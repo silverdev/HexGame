@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -17,8 +16,6 @@ import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import com.sam.hex.replay.SavedGameObject;
 
 
 
@@ -202,70 +199,72 @@ public class DialogBoxes {
 		if (b==1)saveReplay();
 	}
 	public static void saveReplay() {
-		try {
-			File file = saveReplayfile();
-			if(file!=null){
-				String filePath = file.getPath();
-				if(!filePath.toLowerCase().endsWith(".rhex"))
-				{
-				    file = new File(filePath + ".rhex");
-				}
-				
-				FileOutputStream saveFile = new FileOutputStream(file);
-				ObjectOutputStream save = new ObjectOutputStream(saveFile);
-				SavedGameObject savedGame = new SavedGameObject(Global.player1Color.getRGB(), Global.player2Color.getRGB(), Global.player1Name, Global.player2Name, Global.moveList, Global.gridSize, Global.moveNumber);
-				save.writeObject(savedGame);
-				save.close();
+		File file = saveReplayfile();
+		if(file!=null){
+			if(!file.getPath().toLowerCase().endsWith(".rhex")){
+				file = new File(file.getPath() + ".rhex");
 			}
-		} catch (FileNotFoundException e) {
-			JOptionPane.showMessageDialog(Global.window,
-					"File Not Found Nothing Saved",
-					"ERROR",
-					JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(Global.window,
-					"File Could not be written",
-					"ERROR",
-					JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
+			try {
+				ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(file));
+				
+				outputStream.writeObject(Global.player1Color.getRGB());
+				outputStream.writeObject(Global.player2Color.getRGB());
+				outputStream.writeObject(Global.player1Name);
+				outputStream.writeObject(Global.player2Name);
+				outputStream.writeObject(Global.moveList);
+				outputStream.writeObject(Global.gridSize);
+				outputStream.writeObject(Global.moveNumber);
+//				if(Global.player1.supportsSave()){
+//					outputStream.writeObject(Global.player1);
+//					outputStream.writeObject(Global.player1Type);
+//				}
+//				else{
+//					outputStream.writeObject(new PlayerObject((byte)1));
+//					outputStream.writeObject((byte)0);
+//				}
+//				if(Global.player2.supportsSave()){
+//					outputStream.writeObject(Global.player2);
+//					outputStream.writeObject(Global.player2Type);
+//				}
+//				else {
+//					outputStream.writeObject(new PlayerObject((byte)2));
+//					outputStream.writeObject((byte)0);
+//				}
+				
+				outputStream.flush();
+                outputStream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	public static void loadReplay() {
-		try {
-			File file = loadReplayFile();
-			if(file!=null){
-				FileInputStream saveFile = new FileInputStream(file);
-				ObjectInputStream restore = new ObjectInputStream(saveFile);
-				SavedGameObject savedGame = (SavedGameObject) restore.readObject();
-				Global.player1Color = new Color(savedGame.player1Color);
-				Global.player2Color = new Color(savedGame.player2Color);
-				Global.player1Name = savedGame.player1Name;
-				Global.player2Name = savedGame.player2Name;
-				Global.moveList = savedGame.moveList;
-				Global.gridSize = savedGame.gridSize;
-				restore.close();
-			}
-		} catch (FileNotFoundException e) {
-			JOptionPane.showMessageDialog(Global.window,
-					"File Not Found",
-					"ERROR",
-					JOptionPane.ERROR_MESSAGE);
-
-			e.printStackTrace();
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(Global.window,
-					"File could not be read",
-					"ERROR",
-					JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			JOptionPane.showMessageDialog(Global.window,
-					"ClassNotFoundException",
-					"ERROR",
-					JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-		}	
+		File file = loadReplayFile();
+		if(file!=null){
+	        try {
+	            //Construct the ObjectInputStream object
+	        	ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file));
+	            
+	            Global.player1Color = new Color((Integer) inputStream.readObject());
+				Global.player2Color = new Color((Integer) inputStream.readObject());
+				Global.player1Name = (String) inputStream.readObject();
+				Global.player2Name = (String) inputStream.readObject();
+				Global.moveList = (MoveList) inputStream.readObject();
+				Global.gridSize = (Integer) inputStream.readObject();
+				Global.moveNumber = (Integer) inputStream.readObject();
+				Global.player1 = new PlayerObject((byte)1);
+				Global.player1Type = 0;
+				Global.player2 = new PlayerObject((byte)2);
+				Global.player2Type = 0;
+				
+				inputStream.close();
+	        }
+	        catch(Exception e){
+	        	e.printStackTrace();
+	        }
+			
+			Global.currentPlayer=(Global.moveNumber%2)+1;
+		}
 	}
 	
 	public static File loadReplayFile() {
