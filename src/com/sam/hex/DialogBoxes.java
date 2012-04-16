@@ -214,6 +214,10 @@ public class DialogBoxes {
 				outputStream.writeObject(Global.moveList);
 				outputStream.writeObject(Global.gridSize);
 				outputStream.writeObject(Global.moveNumber);
+				outputStream.writeObject(null);
+				outputStream.writeObject(null);
+				outputStream.writeObject(null);
+				outputStream.writeObject(null);
 //				if(Global.player1.supportsSave()){
 //					outputStream.writeObject(Global.player1);
 //					outputStream.writeObject(Global.player1Type);
