@@ -75,7 +75,7 @@ public class BeeGameAI implements PlayingEntity
     	
 	    Point lastMove;
 		try{
-			if(moveNumber>1) lastMove = new Point(gridSize-1-Hexgame.runningGame.moveList.getmove().getY(), Hexgame.runningGame.moveList.getmove().getX());
+			if(moveNumber>1) lastMove = new Point(gridSize-1-Hexgame.runningGame.getMoveList().getmove().getY(), Hexgame.runningGame.getMoveList().getmove().getX());
 			else lastMove=null;
 		}
 		catch(Exception e){
