@@ -13,7 +13,7 @@ public class Replay implements Runnable {
 		GameAction.stopGame();
 		Hexgame.window.initRegular();
 		GameAction.fullUpdateBoard();
-		Hexgame.runningGame.moveList.replay(900);
+		Hexgame.runningGame.getMoveList().replay(900);
 		GameAction.checkedFlagReset();
 		if(GameAction.checkWinPlayer(1)){DialogBoxes.announceWinner(1);return;}
 		if(GameAction.checkWinPlayer(2)){DialogBoxes.announceWinner(2);return;}
