@@ -25,16 +25,8 @@ public class Global {
 	public static ArrayList<LocalNetworkObject> localObjects;
 	public static LocalNetworkObject localPlayer;
 	public static String aiType;
-	public static int moveNumber = 1;
-	public static MoveList moveList;
-	public static int currentPlayer;
-	public static PlayingEntity player1;
-	public static PlayingEntity player2;
-	public static boolean gameOver=false;
-	public static GameObject game;
-	public static Thread gameThread;
 	public static int gameLocation=0;
-	public static HexGameWindow window;
+
 
 	// public static Color[][] background;
 	public static void set(int gridSize, int windowHeight, int windowWidth) {
@@ -46,7 +38,6 @@ public class Global {
 			Global.windowWidth = windowWidth;
 		gamePiece = new RegularPolygonGameObject[gridSize][gridSize];
 		hexes = gamePiece;
-		gameOver=false;
 		background = new BufferedImage(windowWidth, windowHeight,
 				BufferedImage.TYPE_INT_ARGB);
 		// background=new Color[windowWidth][windowHeight];
@@ -55,7 +46,6 @@ public class Global {
 		set(gridSize, windowHeight, windowWidth);
 		if (p1 < 2) Global.player1Type=p1;
 		if (p2 < 2) Global.player2Type=p2;
-		gameOver=false;
 	}
 	// public static int windowHeight=200;
 	// public static int windowWidth=400;

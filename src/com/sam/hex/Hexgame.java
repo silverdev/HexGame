@@ -7,6 +7,9 @@ import java.util.prefs.Preferences;
 import com.sam.hex.lan.LocalLobbyWindow;
 
 public class Hexgame {
+	
+	public static HexGameWindow window; 
+	public static GameObject runningGame;
 
 	public static void main(String[] args){
 		if (args.length > 4)
@@ -18,12 +21,11 @@ public class Hexgame {
 		
 		grabPreferences();
 		
-		Global.window = new HexGameWindow();
+		window = new HexGameWindow();
 //		new LocalLobbyWindow();
 		
-		Global.window.setVisible(true);
-		Global.game = new GameObject();
-
+		window.setVisible(true);
+		runningGame = new GameObject();
 		while (true) {
 			GameAction.updateBoard();
 			try {

@@ -11,11 +11,11 @@ public class MoveList implements Serializable {
 	}
 	
 	public MoveList(int x,int y,byte teamNumber){
-		thisMove= new Move(x,y,teamNumber,Global.moveNumber);
+		thisMove= new Move(x,y,teamNumber,Hexgame.runningGame.moveNumber);
 	}
 	
 	public MoveList(MoveList oldMove,int x,int y,byte teamNumber){
-		thisMove= new Move(x,y,teamNumber,Global.moveNumber);
+		thisMove= new Move(x,y,teamNumber,Hexgame.runningGame.moveNumber);
 		nextMove=oldMove;
 	}
 	public MoveList(MoveList oldMove,Move thisMove){
@@ -29,7 +29,7 @@ public class MoveList implements Serializable {
 	 * base cases and is not tested*/
 	public void makeMove(int x,int y,byte teamNumber){
 		nextMove=new MoveList(nextMove,thisMove);
-		thisMove= new Move(x,y,teamNumber,Global.moveNumber);
+		thisMove= new Move(x,y,teamNumber,Hexgame.runningGame.moveNumber);
 	}
 	public void undo(){
 		if (thisMove==null) return; 

@@ -7,77 +7,93 @@ import com.sam.hex.ai.will.GameAI;
 //import java.awt.event.MouseEvent;
 
 public class GameObject implements Runnable {
-	private boolean game=true;
-	private boolean threadAlive=true;
 
+	protected int moveNumber;
+	protected MoveList moveList;
+	public int currentPlayer;
+	
+	public boolean gameOver=false;
+	
+
+	public boolean game=true;
+	public boolean threadAlive=true;
+	public PlayingEntity player1;
+	public PlayingEntity player2;
+	public Thread gameThread;
+	public RegularPolygonGameObject[][] gamePiece;
+	
 	public GameObject() {
-		Global.gameThread = new Thread(this, "runningGame"); // (1) Create a new thread.
-		System.out.println(Global.gameThread.getName()); 
+		this.gameThread = new Thread(this, "runningGame"); // (1) Create a new thread.
+		System.out.println(this.gameThread.getName()); 
 		
 		//(2)setup new game variables
-		Global.moveNumber=1;
-		Global.moveList= new MoveList();
-		Global.currentPlayer = 1;
+		this.moveNumber=1;
+		this.moveList= new MoveList();
+		this.currentPlayer = 1;
+		threadAlive=true;
+		game=true;
+		this.gamePiece=Global.gamePiece;
+		gameOver=false;
 
-		if(Global.player1Type==0) Global.player1=new PlayerObject((byte)1);
-		else if(Global.player1Type==1) Global.player1=new GameAI((byte)1,(byte)1);
-		else if(Global.player1Type==2) Global.player1=new BeeGameAI(1);
+		if(Global.player1Type==0) this.player1=new PlayerObject((byte)1);
+		else if(Global.player1Type==1) this.player1=new GameAI((byte)1,(byte)1);
+		else if(Global.player1Type==2) this.player1=new BeeGameAI(1);
 			
-		if(Global.player2Type==0) Global.player2=new PlayerObject((byte)2);
-		else if(Global.player2Type==1) Global.player2=new GameAI((byte)2,(byte)1);
-		else if(Global.player2Type==2) Global.player2=new BeeGameAI(2);
+		if(Global.player2Type==0) this.player2=new PlayerObject((byte)2);
+		else if(Global.player2Type==1) this.player2=new GameAI((byte)2,(byte)1);
+		else if(Global.player2Type==2) this.player2=new BeeGameAI(2);
 		 
 		start();
-		Global.gameThread.start(); // (3) Start the thread.
+		this.gameThread.start(); // (3) Start the thread.
 	}
 	
 	public GameObject(boolean undo) {
-		Global.gameThread = new Thread(this, "runningGame"); // (1) Create a new thread.
+		this.gameThread = new Thread(this, "runningGame"); // (1) Create a new thread.
 		start();
-		System.out.println(Global.gameThread.getName());
-		Global.gameThread.start(); // (2) Start the thread.
+		System.out.println(this.gameThread.getName());
+		this.gameThread.start(); // (2) Start the thread.
 	}
 	
 	public void start(){
-		Global.gameOver = false;
+		this.gameOver = false;
 		game=true;
 	}
 	
 	public void stop(){
-		Global.gameOver=true;
+		this.gameOver=true;
 		game=false;
 		threadAlive=false;
-		Global.player1.quit();
-		Global.player2.quit();
+		this.player1.quit();
+		this.player2.quit();
 	}
 	
 	public void run() {
 		while(threadAlive){//Keeps the thread alive even if the game has ended
 			while(game){//Loop the game
-				if(Global.currentPlayer == 1){
-					Global.player1.getPlayerTurn();
+				if(this.currentPlayer == 1){
+					this.player1.getPlayerTurn();
 					if (GameAction.checkWinPlayer(1)){
-						Global.gameOver=true;
+						this.gameOver=true;
 						game=false;
-						Global.player1.win();
-						Global.player2.lose();
+						this.player1.win();
+						this.player2.lose();
 						DialogBoxes.announceWinner(1);
 					}
-					Global.currentPlayer = 2;
+					this.currentPlayer = 2;
 				} 
 				else {
-					Global.player2.getPlayerTurn();
+					this.player2.getPlayerTurn();
 					if (GameAction.checkWinPlayer(2)){
-						Global.gameOver=true;
+						this.gameOver=true;
 						game=false;
-						Global.player1.lose();
-						Global.player2.win();
+						this.player1.lose();
+						this.player2.win();
 						DialogBoxes.announceWinner(2);
 					}
-					Global.currentPlayer = 1;
+					this.currentPlayer = 1;
 					GameAction.checkedFlagReset();
 				}
-				Global.moveNumber++;
+				this.moveNumber++;
 			}
 		
 			try {
@@ -86,5 +102,11 @@ public class GameObject implements Runnable {
 				e.printStackTrace();
 			}
 		}
+	}
+	public int getMoveNumber(){
+		return moveNumber;
+	}
+	public MoveList getMoveList(){
+		return moveList;
 	}
 }
