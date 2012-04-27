@@ -11,11 +11,11 @@ public class MoveList implements Serializable {
 	}
 	
 	public MoveList(int x,int y,byte teamNumber){
-		thisMove= new Move(x,y,teamNumber,Global.moveNumber);
+		thisMove= new Move(x,y,teamNumber,Hexgame.runningGame.moveNumber);
 	}
 	
 	public MoveList(MoveList oldMove,int x,int y,byte teamNumber){
-		thisMove= new Move(x,y,teamNumber,Global.moveNumber);
+		thisMove= new Move(x,y,teamNumber,Hexgame.runningGame.moveNumber);
 		nextMove=oldMove;
 	}
 	public MoveList(MoveList oldMove,Move thisMove){
@@ -29,11 +29,11 @@ public class MoveList implements Serializable {
 	 * base cases and is not tested*/
 	public void makeMove(int x,int y,byte teamNumber){
 		nextMove=new MoveList(nextMove,thisMove);
-		thisMove= new Move(x,y,teamNumber,Global.moveNumber);
+		thisMove= new Move(x,y,teamNumber,Hexgame.runningGame.moveNumber);
 	}
 	public void undo(){
 		if (thisMove==null) return; 
-		Global.gamePiece[thisMove.getX()][thisMove.getY()].setTeam((byte) 0);
+		Hexgame.runningGame.gamePiece[thisMove.getX()][thisMove.getY()].setTeam((byte) 0);
 		thisMove=nextMove.thisMove;
 		nextMove=nextMove.nextMove;
 		
@@ -52,6 +52,6 @@ public class MoveList implements Serializable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		Global.gamePiece[thisMove.getX()][thisMove.getY()].setTeam(thisMove.getTeam());
+		Hexgame.runningGame.gamePiece[thisMove.getX()][thisMove.getY()].setTeam(thisMove.getTeam());
 	}	
 }

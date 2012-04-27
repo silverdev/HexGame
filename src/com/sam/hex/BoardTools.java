@@ -23,7 +23,7 @@ public class BoardTools {
 	public static void setBackground(int w, int h) {
 		Global.background = new BufferedImage(w,
 				h, BufferedImage.TYPE_INT_ARGB); //the background is drawn to this buffered image. 
-		RegularPolygonGameObject[][] gamePeace = Global.gamePiece;
+		RegularPolygonGameObject[][] gamePeace = Hexgame.runningGame.gamePiece;
 		double radius = BoardTools.radiusCalculator(HexGameWindow.cPolygons
 				.getWidth(), HexGameWindow.cPolygons.getHeight(),
 				Global.gridSize);
@@ -68,7 +68,7 @@ public class BoardTools {
 
 	public static byte[][] teamGrid() { //not yet use but will be used to sent netcode
 		byte[][] loyalty = new byte[Global.gridSize][Global.gridSize];
-		RegularPolygonGameObject[][] gamePeace = Global.gamePiece;
+		RegularPolygonGameObject[][] gamePeace = Hexgame.runningGame.gamePiece;
 		for (int x = 0; x < gamePeace.length; x++)
 			for (int y = 0; y < gamePeace.length; y++)
 				loyalty[x][y] = gamePeace[x][y].getTeam();

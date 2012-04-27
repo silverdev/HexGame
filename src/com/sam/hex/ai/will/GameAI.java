@@ -9,6 +9,7 @@ import java.util.Random;
 import com.sam.hex.BoardTools;
 import com.sam.hex.GameAction;
 import com.sam.hex.Global;
+import com.sam.hex.Hexgame;
 import com.sam.hex.PlayerObject;
 import com.sam.hex.PlayingEntity;
 
@@ -106,7 +107,7 @@ public class GameAI implements PlayingEntity {
 		try {
 			for(int i=0;i<10;i++){
     			Thread.sleep(50);
-    			if(Global.gameOver) break;
+    			if(Hexgame.runningGame.gameOver) break;
     		}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -439,10 +440,10 @@ public class GameAI implements PlayingEntity {
 	@Override
 	public boolean supportsUndo() {
 		if(team==1){
-			return Global.player2 instanceof PlayerObject;
+			return Hexgame.runningGame.player2 instanceof PlayerObject;
 		}
 		else{
-			return Global.player1 instanceof PlayerObject;
+			return Hexgame.runningGame.player1 instanceof PlayerObject;
 		}
 	}
 
@@ -475,10 +476,10 @@ public class GameAI implements PlayingEntity {
 	@Override
 	public boolean supportsSave() {
 		if(team==(byte)1){
-			return Global.player2 instanceof PlayerObject;
+			return Hexgame.runningGame.player2 instanceof PlayerObject;
 		}
 		else{
-			return Global.player1 instanceof PlayerObject;
+			return Hexgame.runningGame.player1 instanceof PlayerObject;
 		}
 	}
 	

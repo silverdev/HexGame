@@ -24,7 +24,7 @@ public class DialogBoxes {
 	public static void resetGameOption() {
 
 		Object[] options = { "Yes, make it so", "Cancel" };
-		byte b =(byte) JOptionPane.showOptionDialog(Global.window,
+		byte b =(byte) JOptionPane.showOptionDialog(Hexgame.window,
 				"are you sure you want to reset all your options\n all your personal settings will be lost",
 				"Are you sure", JOptionPane.YES_NO_CANCEL_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
@@ -45,9 +45,10 @@ public class DialogBoxes {
 		Hexgame.grabPreferences();
 			//restart game
 			
-			Global.window.initRegular();
+			Hexgame.window.initRegular();
 			GameAction.fullUpdateBoard();
-			new GameObject();
+			Hexgame.runningGame = new GameObject();
+			Hexgame.runningGame.initGame();
 			
 			
 			
@@ -59,7 +60,7 @@ public class DialogBoxes {
 		Object[] possibilities = { "Human", "Computer (Kinda easy)", "Computer (Kinda hard)" };
 		String s;
 		
-			s = (String) JOptionPane.showInputDialog(Global.window,
+			s = (String) JOptionPane.showInputDialog(Hexgame.window,
 				"Choose a type of game:\n", "Game Type",
 				JOptionPane.PLAIN_MESSAGE, null, possibilities,
 				possibilities[Global.player1Type]);
@@ -81,7 +82,7 @@ public class DialogBoxes {
 	public static String chooseGameTypePlayer2() {
 		Object[] possibilities = { "Human", "Computer (Kinda easy)", "Computer (Kinda hard)" };
 		String s;
-			s = (String) JOptionPane.showInputDialog(Global.window,
+			s = (String) JOptionPane.showInputDialog(Hexgame.window,
 				"Choose a type of game:\n", "Game Type",
 				JOptionPane.PLAIN_MESSAGE, null, possibilities,
 				possibilities[Global.player2Type]);
@@ -102,7 +103,7 @@ public class DialogBoxes {
 
 	public static String chooseName1() {
 
-		String s = (String) JOptionPane.showInputDialog(Global.window,
+		String s = (String) JOptionPane.showInputDialog(Hexgame.window,
 				"Choose name for player one:\n", "Player One",
 				JOptionPane.PLAIN_MESSAGE, null, null, Global.player1Name);
 
@@ -120,7 +121,7 @@ public class DialogBoxes {
 
 	public static int chooseColor1() {
 		final JColorChooser chooser = new JColorChooser(Global.player1Color);
-		JColorChooser.createDialog(Global.window, "Pick a color", true, chooser, new ActionListener() {
+		JColorChooser.createDialog(Hexgame.window, "Pick a color", true, chooser, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Global.player1Color=chooser.getColor();
@@ -133,7 +134,7 @@ public class DialogBoxes {
 
 	public static String chooseName2() {
 
-		String s = (String) JOptionPane.showInputDialog(Global.window,
+		String s = (String) JOptionPane.showInputDialog(Hexgame.window,
 				"Choose name for player two:\n", "Player Two",
 				JOptionPane.PLAIN_MESSAGE, null, null, Global.player2Name);
 
@@ -151,7 +152,7 @@ public class DialogBoxes {
 
 	public static int choseColor2() {
 		final JColorChooser chooser = new JColorChooser(Global.player2Color);
-		JColorChooser.createDialog(Global.window, "Pick a color", true, chooser, new ActionListener() {
+		JColorChooser.createDialog(Hexgame.window, "Pick a color", true, chooser, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Global.player2Color=chooser.getColor();
@@ -163,7 +164,7 @@ public class DialogBoxes {
 	}
 	public static int chooseGridsize() {
 
-		String s = (String) JOptionPane.showInputDialog(Global.window,
+		String s = (String) JOptionPane.showInputDialog(Hexgame.window,
 				"Choose a new grid size:\n", "Grid Size",
 				JOptionPane.PLAIN_MESSAGE, null, null, Global.gridSize);
 		
@@ -192,7 +193,7 @@ public class DialogBoxes {
 		if(team==1) name=Global.player1Name;
 		else name=Global.player2Name;
 		Object[] options = { "Ok", "Save Replay" };
-		byte b =(byte) JOptionPane.showOptionDialog(Global.window,
+		byte b =(byte) JOptionPane.showOptionDialog(Hexgame.window,
 				name+" wins!",
 				"Do you want to save a replay?", JOptionPane.YES_NO_CANCEL_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
@@ -211,9 +212,9 @@ public class DialogBoxes {
 				outputStream.writeObject(Global.player2Color.getRGB());
 				outputStream.writeObject(Global.player1Name);
 				outputStream.writeObject(Global.player2Name);
-				outputStream.writeObject(Global.moveList);
+				outputStream.writeObject(Hexgame.runningGame.moveList);
 				outputStream.writeObject(Global.gridSize);
-				outputStream.writeObject(Global.moveNumber);
+				outputStream.writeObject(Hexgame.runningGame.moveNumber);
 				outputStream.writeObject(null);
 				outputStream.writeObject(null);
 				outputStream.writeObject(null);
@@ -253,12 +254,12 @@ public class DialogBoxes {
 				Global.player2Color = new Color((Integer) inputStream.readObject());
 				Global.player1Name = (String) inputStream.readObject();
 				Global.player2Name = (String) inputStream.readObject();
-				Global.moveList = (MoveList) inputStream.readObject();
+				Hexgame.runningGame.moveList = (MoveList) inputStream.readObject();
 				Global.gridSize = (Integer) inputStream.readObject();
-				Global.moveNumber = (Integer) inputStream.readObject();
-				Global.player1 = new PlayerObject((byte)1);
+				Hexgame.runningGame.moveNumber = (Integer) inputStream.readObject();
+				Hexgame.runningGame.player1 = new PlayerObject((byte)1);
 				Global.player1Type = 0;
-				Global.player2 = new PlayerObject((byte)2);
+				Hexgame.runningGame.player2 = new PlayerObject((byte)2);
 				Global.player2Type = 0;
 				
 				inputStream.close();
@@ -267,7 +268,7 @@ public class DialogBoxes {
 	        	e.printStackTrace();
 	        }
 			
-			Global.currentPlayer=(Global.moveNumber%2)+1;
+	        Hexgame.runningGame.currentPlayer=(Hexgame.runningGame.moveNumber%2)+1;
 		}
 	}
 	
@@ -276,7 +277,7 @@ public class DialogBoxes {
 	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
 	        "Replay Hexboards", "rhex");
 	    theFileToLoad.setFileFilter(filter);
-	    int returnVal = theFileToLoad.showOpenDialog(Global.window);
+	    int returnVal = theFileToLoad.showOpenDialog(Hexgame.window);
 	    if(returnVal == JFileChooser.APPROVE_OPTION) {
 	    	return theFileToLoad.getSelectedFile();
 	    }
@@ -290,7 +291,7 @@ public class DialogBoxes {
 	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
 	        "Replay Hexboards", "rhex");
 	    theFileToSave.setFileFilter(filter);
-	    int returnVal = theFileToSave.showSaveDialog(Global.window);
+	    int returnVal = theFileToSave.showSaveDialog(Hexgame.window);
 	    if(returnVal == JFileChooser.APPROVE_OPTION) {
 	    	return theFileToSave.getSelectedFile();
 	    }

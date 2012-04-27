@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.sam.hex.GameAction;
 import com.sam.hex.Global;
+import com.sam.hex.Hexgame;
 import com.sam.hex.PlayerObject;
 import com.sam.hex.PlayingEntity;
 
@@ -70,11 +71,11 @@ public class BeeGameAI implements PlayingEntity
     	skipMove = false;
     	AIHistoryObject state = new AIHistoryObject(pieces, lookUpTable);
 		history.add(state);
-		int moveNumber = Global.moveNumber;
+		int moveNumber = Hexgame.runningGame.getMoveNumber();
     	
 	    Point lastMove;
 		try{
-			if(moveNumber>1) lastMove = new Point(gridSize-1-Global.moveList.getmove().getY(), Global.moveList.getmove().getX());
+			if(moveNumber>1) lastMove = new Point(gridSize-1-Hexgame.runningGame.getMoveList().getmove().getY(), Hexgame.runningGame.getMoveList().getmove().getX());
 			else lastMove=null;
 		}
 		catch(Exception e){
@@ -127,10 +128,10 @@ public class BeeGameAI implements PlayingEntity
 	@Override
 	public boolean supportsUndo() {
 		if(team==1){
-			return Global.player2 instanceof PlayerObject;
+			return Hexgame.runningGame.player2 instanceof PlayerObject;
 		}
 		else{
-			return Global.player1 instanceof PlayerObject;
+			return Hexgame.runningGame.player1 instanceof PlayerObject;
 		}
 	}
 
@@ -794,10 +795,10 @@ public class BeeGameAI implements PlayingEntity
 	@Override
 	public boolean supportsSave() {
 		if(team==1){
-			return Global.player2 instanceof PlayerObject;
+			return Hexgame.runningGame.player2 instanceof PlayerObject;
 		}
 		else{
-			return Global.player1 instanceof PlayerObject;
+			return Hexgame.runningGame.player1 instanceof PlayerObject;
 		}
 	}
 }

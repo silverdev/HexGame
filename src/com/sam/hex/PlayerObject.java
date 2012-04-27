@@ -22,7 +22,7 @@ public class PlayerObject implements PlayingEntity {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				if(Global.gameOver) break looper;
+				if(Hexgame.runningGame.gameOver) break looper;
 			}
 			if (hex.equals(new Point(-1,-1))){
 				GameAction.hex = null;
