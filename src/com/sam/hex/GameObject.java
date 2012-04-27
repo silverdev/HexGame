@@ -32,9 +32,12 @@ public class GameObject implements Runnable {
 		this.currentPlayer = 1;
 		threadAlive=true;
 		game=true;
-		this.gamePiece=Global.gamePiece;
 		gameOver=false;
-
+		
+	
+	}
+	public void initGame() {
+		Hexgame.window.initRegular();
 		if(Global.player1Type==0) this.player1=new PlayerObject((byte)1);
 		else if(Global.player1Type==1) this.player1=new GameAI((byte)1,(byte)1);
 		else if(Global.player1Type==2) this.player1=new BeeGameAI(1);
@@ -42,12 +45,12 @@ public class GameObject implements Runnable {
 		if(Global.player2Type==0) this.player2=new PlayerObject((byte)2);
 		else if(Global.player2Type==1) this.player2=new GameAI((byte)2,(byte)1);
 		else if(Global.player2Type==2) this.player2=new BeeGameAI(2);
-		 
 		start();
 		this.gameThread.start(); // (3) Start the thread.
+		
 	}
 	
-	public GameObject(boolean undo) {
+	public void restart() {
 		this.gameThread = new Thread(this, "runningGame"); // (1) Create a new thread.
 		start();
 		System.out.println(this.gameThread.getName());
@@ -62,13 +65,12 @@ public class GameObject implements Runnable {
 	public void stop(){
 		this.gameOver=true;
 		game=false;
-		threadAlive=false;
 		this.player1.quit();
 		this.player2.quit();
 	}
 	
 	public void run() {
-		while(threadAlive){//Keeps the thread alive even if the game has ended
+		
 			while(game){//Loop the game
 				if(this.currentPlayer == 1){
 					this.player1.getPlayerTurn();
@@ -101,7 +103,7 @@ public class GameObject implements Runnable {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		}
+		
 	}
 	public int getMoveNumber(){
 		return moveNumber;
@@ -109,4 +111,6 @@ public class GameObject implements Runnable {
 	public MoveList getMoveList(){
 		return moveList;
 	}
+
+	
 }

@@ -11,10 +11,10 @@ public class GameAction {
 	public static synchronized boolean checkWinPlayer(int team) {
 		if(team==1){
 			for (int i = 0; i < Global.gridSize; i++) {
-				if (RegularPolygonGameObject.checkWinTeam((byte) 1, Global.gridSize, i, Global.gamePiece)) {
+				if (RegularPolygonGameObject.checkWinTeam((byte) 1, Global.gridSize, i, Hexgame.runningGame.gamePiece)) {
 					System.out.println("Player one wins");
 					checkedFlagReset();
-					String path=RegularPolygonGameObject.findShortestPath((byte) 1, Global.gridSize, i, Global.gamePiece);
+					String path=RegularPolygonGameObject.findShortestPath((byte) 1, Global.gridSize, i, Hexgame.runningGame.gamePiece);
 					RegularPolygonGameObject.colorPath(Global.gridSize,i,path);
 					return true;
 				}
@@ -23,10 +23,10 @@ public class GameAction {
 		}
 		else{
 			for (int i = 0; i < Global.gridSize; i++) {
-				if (RegularPolygonGameObject.checkWinTeam((byte) 2, i, Global.gridSize, Global.gamePiece)) {
+				if (RegularPolygonGameObject.checkWinTeam((byte) 2, i, Global.gridSize, Hexgame.runningGame.gamePiece)) {
 					System.out.println("Player two wins");
 					checkedFlagReset();
-					String path=RegularPolygonGameObject.findShortestPath((byte) 2, i, Global.gridSize, Global.gamePiece);
+					String path=RegularPolygonGameObject.findShortestPath((byte) 2, i, Global.gridSize, Hexgame.runningGame.gamePiece);
 					RegularPolygonGameObject.colorPath(i,Global.gridSize,path);
 					return true;
 				}
@@ -38,7 +38,7 @@ public class GameAction {
 	public static void checkedFlagReset() {
 		for (int x = Global.gridSize - 1; x >= 0; x--) {
 			for (int y = Global.gridSize - 1; y >= 0; y--) {
-				Global.gamePiece[x][y].checkedflage = false;
+				Hexgame.runningGame.gamePiece[x][y].checkedflage = false;
 			}
 		}
 	}
@@ -57,7 +57,7 @@ public class GameAction {
 		Global.windowWidth = HexGameWindow.cPolygons.getWidth();
 		Global.windowHeight = (HexGameWindow.cPolygons.getHeight()-10); //-10 gives an offset to alow the top border to be visable.
 		double radius;
-		RegularPolygonGameObject[][] gamePeace = Global.gamePiece;
+		RegularPolygonGameObject[][] gamePeace = Hexgame.runningGame.gamePiece;
 		radius = BoardTools.radiusCalculator(Global.windowWidth,
 				Global.windowHeight, Global.gridSize);
 		// radius = BoardTools.radiusCalculator(400,400, 7);
@@ -67,7 +67,7 @@ public class GameAction {
 		int xOffset = (int) ((HexGameWindow.cPolygons.getWidth() - (hrad
 				* gamePeace.length * 2 + hrad * (gamePeace[0].length - 1))) / 2);
 
-		for (int xc = 0; xc < Global.gamePiece.length; xc++) {
+		for (int xc = 0; xc < Hexgame.runningGame.gamePiece.length; xc++) {
 			for (int yc = 0; yc < gamePeace[0].length; yc++)
 				gamePeace[xc][yc].update((hrad + yc * hrad + 2 * hrad * xc)
 						+ xOffset, (1.5 * radius * yc + radius) + yOffset,
@@ -273,6 +273,7 @@ public class GameAction {
 					Hexgame.runningGame.moveList.replay(0);
 					Hexgame.runningGame.currentPlayer = (Hexgame.runningGame.currentPlayer%2)+1;
 					Hexgame.runningGame.start();
+					//Hexgame.runningGame.gameThread.start
 				}
 			}
 		}

@@ -12,8 +12,7 @@ public class Global {
 	public static int windowHeight = 600;
 	public static BufferedImage background;
 	public static int windowWidth = 800;
-	public static RegularPolygonGameObject[][] gamePiece = new RegularPolygonGameObject[0][0];
-	public static Shape[][] hexes = gamePiece;
+	public static Shape[][] hexes;
 
 	public static String player1Name="Player1";
 	public static Color player1Color=Color.blue;
@@ -36,8 +35,7 @@ public class Global {
 			Global.windowHeight = windowHeight;
 		if (windowWidth > 10)
 			Global.windowWidth = windowWidth;
-		gamePiece = new RegularPolygonGameObject[gridSize][gridSize];
-		hexes = gamePiece;
+		
 		background = new BufferedImage(windowWidth, windowHeight,
 				BufferedImage.TYPE_INT_ARGB);
 		// background=new Color[windowWidth][windowHeight];

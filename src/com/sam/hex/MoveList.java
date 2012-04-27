@@ -33,7 +33,7 @@ public class MoveList implements Serializable {
 	}
 	public void undo(){
 		if (thisMove==null) return; 
-		Global.gamePiece[thisMove.getX()][thisMove.getY()].setTeam((byte) 0);
+		Hexgame.runningGame.gamePiece[thisMove.getX()][thisMove.getY()].setTeam((byte) 0);
 		thisMove=nextMove.thisMove;
 		nextMove=nextMove.nextMove;
 		
@@ -52,6 +52,6 @@ public class MoveList implements Serializable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		Global.gamePiece[thisMove.getX()][thisMove.getY()].setTeam(thisMove.getTeam());
+		Hexgame.runningGame.gamePiece[thisMove.getX()][thisMove.getY()].setTeam(thisMove.getTeam());
 	}	
 }

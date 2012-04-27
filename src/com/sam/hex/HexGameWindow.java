@@ -25,16 +25,17 @@ public class HexGameWindow extends JFrame {
 						GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH,
 						new Insets(0, 0, 0, 0), 5, 5));
 		setSize(Global.windowWidth, Global.windowHeight);
-		initRegular();
+		//initRegular();
 
 		setLocationRelativeTo(null);
 		
 		addMenus();
 	}
-
+	
+	
 	public void initRegular() {
-		Global.gamePiece=new RegularPolygonGameObject[Global.gridSize][Global.gridSize];
-		Global.hexes=Global.gamePiece;
+		Hexgame.runningGame.gamePiece=new RegularPolygonGameObject[Global.gridSize][Global.gridSize];
+		Global.hexes=Hexgame.runningGame.gamePiece;
 		
 		double radius = BoardTools.radiusCalculator(Global.windowWidth,
 				Global.windowHeight, Global.gridSize);
@@ -54,6 +55,7 @@ public class HexGameWindow extends JFrame {
 								+ yOffset, radius, 6, Math.PI / 2);
 		}
 		cPolygons.setShapes(hexes, Color.blue);
+		GameAction.fullUpdateBoard();
 	}
 
 	protected static class Canvas extends JPanel {
@@ -95,9 +97,9 @@ public class HexGameWindow extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				int x = e.getX();
 				int y = e.getY();
-				for (int xc = 0; xc < Global.gamePiece.length; xc++) {
-					for (int yc = 0; yc < Global.gamePiece.length; yc++)
-						if (Global.gamePiece[xc][yc].contains(x, y)) {
+				for (int xc = 0; xc < Hexgame.runningGame.gamePiece.length; xc++) {
+					for (int yc = 0; yc < Hexgame.runningGame.gamePiece.length; yc++)
+						if (Hexgame.runningGame.gamePiece[xc][yc].contains(x, y)) {
 							GameAction.setPiece(new java.awt.Point(xc,yc));
 						}
 				}
@@ -166,14 +168,14 @@ public class HexGameWindow extends JFrame {
 					Hexgame.runningGame.player1.undoCalled();
 					Hexgame.runningGame.player2.undoCalled();
 					if (Hexgame.runningGame.gameOver==false)
-						Hexgame.runningGame = new GameObject(true);
+						Hexgame.runningGame.restart();
 				}
 				//undo if the game has ended
 				if (Hexgame.runningGame.gameOver==true){
 					Hexgame.runningGame.gameOver=false;
 					Hexgame.runningGame.moveList.replay(0);
 					Hexgame.runningGame.currentPlayer = Hexgame.runningGame.currentPlayer%2+1;
-					Hexgame.runningGame = new GameObject(true);
+					Hexgame.runningGame.restart();
 				}
 			} 
 		});
@@ -186,6 +188,7 @@ public class HexGameWindow extends JFrame {
 				initRegular();
 				GameAction.fullUpdateBoard();
 				Hexgame.runningGame = new GameObject();
+				Hexgame.runningGame.initGame();
 			} 
 		});
 		
@@ -219,6 +222,7 @@ public class HexGameWindow extends JFrame {
 					initRegular();
 					GameAction.fullUpdateBoard();
 					Hexgame.runningGame = new GameObject();
+					Hexgame.runningGame.initGame();
 				}
 			} 
 		});
@@ -267,6 +271,7 @@ public class HexGameWindow extends JFrame {
 					initRegular();
 					GameAction.fullUpdateBoard();
 					Hexgame.runningGame = new GameObject();
+					Hexgame.runningGame.initGame();
 				}
 			} 
 		});
@@ -301,6 +306,7 @@ public class HexGameWindow extends JFrame {
 					initRegular();
 					GameAction.fullUpdateBoard();
 					Hexgame.runningGame = new GameObject();
+					Hexgame.runningGame.initGame();
 				}
 			} 
 		});

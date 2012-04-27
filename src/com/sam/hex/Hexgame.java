@@ -26,6 +26,8 @@ public class Hexgame {
 		
 		window.setVisible(true);
 		runningGame = new GameObject();
+		runningGame.initGame();
+		
 		while (true) {
 			GameAction.updateBoard();
 			try {
