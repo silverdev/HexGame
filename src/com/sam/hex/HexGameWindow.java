@@ -25,16 +25,17 @@ public class HexGameWindow extends JFrame {
 						GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH,
 						new Insets(0, 0, 0, 0), 5, 5));
 		setSize(Global.windowWidth, Global.windowHeight);
-		initRegular();
+		//initRegular();
 
 		setLocationRelativeTo(null);
 		
 		addMenus();
 	}
-
+	
+	
 	public void initRegular() {
-		Global.gamePiece=new RegularPolygonGameObject[Global.gridSize][Global.gridSize];
-		Global.hexes=Global.gamePiece;
+		Hexgame.runningGame.gamePiece=new RegularPolygonGameObject[Global.gridSize][Global.gridSize];
+		Global.hexes=Hexgame.runningGame.gamePiece;
 		
 		double radius = BoardTools.radiusCalculator(Global.windowWidth,
 				Global.windowHeight, Global.gridSize);
@@ -54,6 +55,7 @@ public class HexGameWindow extends JFrame {
 								+ yOffset, radius, 6, Math.PI / 2);
 		}
 		cPolygons.setShapes(hexes, Color.blue);
+		GameAction.fullUpdateBoard();
 	}
 
 	protected static class Canvas extends JPanel {
@@ -95,9 +97,9 @@ public class HexGameWindow extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				int x = e.getX();
 				int y = e.getY();
-				for (int xc = 0; xc < Global.gamePiece.length; xc++) {
-					for (int yc = 0; yc < Global.gamePiece.length; yc++)
-						if (Global.gamePiece[xc][yc].contains(x, y)) {
+				for (int xc = 0; xc < Hexgame.runningGame.gamePiece.length; xc++) {
+					for (int yc = 0; yc < Hexgame.runningGame.gamePiece.length; yc++)
+						if (Hexgame.runningGame.gamePiece[xc][yc].contains(x, y)) {
 							GameAction.setPiece(new java.awt.Point(xc,yc));
 						}
 				}
@@ -153,27 +155,27 @@ public class HexGameWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent act) {
 				//undo pvp
-				if (Global.player1Type==0 && Global.player2Type==0){
-					Global.moveList.undo();
+				if (Hexgame.runningGame.player1 instanceof PlayerObject && Hexgame.runningGame.player2 instanceof PlayerObject){
+					Hexgame.runningGame.moveList.undo();
 					GameAction.setPiece(new java.awt.Point(-1,-1));
 				}
 				//undo pvc
-				else if (Global.player1.supportsUndo()&&Global.player2.supportsUndo())
+				else if (Hexgame.runningGame.player1.supportsUndo()&&Hexgame.runningGame.player2.supportsUndo())
 				{
 					GameAction.stopGame();
-					Global.moveList.undoTwo();
+					Hexgame.runningGame.moveList.undoTwo();
 					//let ai know of undo
-					Global.player1.undoCalled();
-					Global.player2.undoCalled();
-					if (Global.gameOver==false)
-						Global.game = new GameObject(true);
+					Hexgame.runningGame.player1.undoCalled();
+					Hexgame.runningGame.player2.undoCalled();
+					if (Hexgame.runningGame.gameOver==false)
+						Hexgame.runningGame.restart();
 				}
 				//undo if the game has ended
-				if (Global.gameOver==true){
-					Global.gameOver=false;
-					Global.moveList.replay(0);
-					Global.currentPlayer = Global.currentPlayer%2+1;
-					Global.game = new GameObject(true);
+				if (Hexgame.runningGame.gameOver==true){
+					Hexgame.runningGame.gameOver=false;
+					Hexgame.runningGame.moveList.replay(0);
+					Hexgame.runningGame.currentPlayer = Hexgame.runningGame.currentPlayer%2+1;
+					Hexgame.runningGame.restart();
 				}
 			} 
 		});
@@ -185,7 +187,8 @@ public class HexGameWindow extends JFrame {
 				Hexgame.grabPreferences();
 				initRegular();
 				GameAction.fullUpdateBoard();
-				Global.game = new GameObject();
+				Hexgame.runningGame = new GameObject();
+				Hexgame.runningGame.initGame();
 			} 
 		});
 		
@@ -218,7 +221,8 @@ public class HexGameWindow extends JFrame {
 					GameAction.stopGame();
 					initRegular();
 					GameAction.fullUpdateBoard();
-					Global.game = new GameObject();
+					Hexgame.runningGame = new GameObject();
+					Hexgame.runningGame.initGame();
 				}
 			} 
 		});
@@ -250,7 +254,7 @@ public class HexGameWindow extends JFrame {
 				DialogBoxes.chooseColor1();
 				initRegular();
 				GameAction.fullUpdateBoard();
-				Global.moveList.replay(0);
+				Hexgame.runningGame.moveList.replay(0);
 				GameAction.checkedFlagReset();
 				GameAction.checkWinPlayer(1);
 				GameAction.checkWinPlayer(2);
@@ -266,7 +270,8 @@ public class HexGameWindow extends JFrame {
 					GameAction.stopGame();
 					initRegular();
 					GameAction.fullUpdateBoard();
-					Global.game = new GameObject();
+					Hexgame.runningGame = new GameObject();
+					Hexgame.runningGame.initGame();
 				}
 			} 
 		});
@@ -284,7 +289,7 @@ public class HexGameWindow extends JFrame {
 				DialogBoxes.choseColor2();
 				initRegular();
 				GameAction.fullUpdateBoard();
-				Global.moveList.replay(0);
+				Hexgame.runningGame.moveList.replay(0);
 				GameAction.checkedFlagReset();
 				GameAction.checkWinPlayer(1);
 				GameAction.checkWinPlayer(2);
@@ -300,7 +305,8 @@ public class HexGameWindow extends JFrame {
 					GameAction.stopGame();
 					initRegular();
 					GameAction.fullUpdateBoard();
-					Global.game = new GameObject();
+					Hexgame.runningGame = new GameObject();
+					Hexgame.runningGame.initGame();
 				}
 			} 
 		});

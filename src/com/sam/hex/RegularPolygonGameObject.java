@@ -192,7 +192,7 @@ public class RegularPolygonGameObject implements Shape {
 			     case ud:  y-=1; x+=1; break;
 				 }
 				//System.out.println(path);
-				Global.gamePiece[x][y].setColor(Color.green);
+				Hexgame.runningGame.gamePiece[x][y].setColor(Color.green);
 				path=path.substring(2,path.length());
 		} System.out.print("done");
 	}
