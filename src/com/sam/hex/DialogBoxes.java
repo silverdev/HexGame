@@ -47,7 +47,8 @@ public class DialogBoxes {
 			
 			Hexgame.window.initRegular();
 			GameAction.fullUpdateBoard();
-			new GameObject();
+			Hexgame.runningGame = new GameObject();
+			Hexgame.runningGame.initGame();
 			
 			
 			
