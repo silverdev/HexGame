@@ -165,7 +165,7 @@ public class DialogBoxes {
             }
             if(Hexgame.gameInfo.options.gridSize != newSize) {
                 Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
-                prefs.putInt("gridSize", Hexgame.gameInfo.options.gridSize);
+                prefs.putInt("gridSize", newSize);
                 Hexgame.restart();
             }
         }

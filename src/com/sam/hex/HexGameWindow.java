@@ -213,7 +213,7 @@ public class HexGameWindow extends JFrame {
         undoAction.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent act) {
-                GameAction.undo(0, Hexgame.runningGame);
+                GameAction.undo(GameAction.LOCAL_GAME, Hexgame.runningGame);
                 return;
             }
 
