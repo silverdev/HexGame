@@ -8,6 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -44,10 +46,31 @@ public class HexGameWindow extends JFrame {
         addMenus();
     }
 
-    protected static class Canvas extends JPanel {
+    protected static class Canvas extends JPanel implements ComponentListener {
+        public Canvas() {
+            addComponentListener(this);
+        }
+
         private static final long serialVersionUID = -4797847956664594904L;
         RegularPolygonGameObject[][] hexes;
         private MyListener hexListener;
+
+        public void resizeShapes() {
+            if(hexes == null) {
+                return;
+            }
+            double radius = BoardTools.radiusCalculator(super.getWidth(), super.getHeight(), Hexgame.gameInfo.options.gridSize);
+
+            double hrad = radius * Math.sqrt(3) / 2; // Horizontal radius
+            int yOffset = (int) ((super.getHeight() - ((3 * radius / 2) * (hexes[0].length - 1) + 2 * radius)) / 2);
+            int xOffset = (int) ((super.getWidth() - (hrad * hexes.length * 2 + hrad * (hexes[0].length - 1))) / 2);
+
+            for(int xc = 0; xc < hexes.length; xc++) {
+                for(int yc = 0; yc < hexes[0].length; yc++)
+                    hexes[xc][yc].update((hrad + yc * hrad + 2 * hrad * xc) + xOffset, (1.5 * radius * yc + radius) + yOffset, radius, 6, Math.PI / 2);
+            }
+            BoardTools.setBackground(super.getWidth(), super.getHeight());
+        }
 
         public void setShapes(Game game, GameInfo info) {
             this.hexes = new RegularPolygonGameObject[info.options.gridSize][info.options.gridSize];
@@ -84,7 +107,8 @@ public class HexGameWindow extends JFrame {
             g.setColor(Color.black);
             for(int i = 0; i < hexes.length; i++) {
                 for(int q = 0; q < hexes[i].length; q++) {
-                    g.setColor(new Color(Hexgame.gameInfo.players[Hexgame.runningGame.gamePiece[i][q].getTeam()].getColor()));
+                    g.setColor(Hexgame.runningGame.gamePiece[i][q].isWinningPath() ? Color.GREEN : new Color(
+                            Hexgame.gameInfo.players[Hexgame.runningGame.gamePiece[i][q].getTeam()].getColor()));
                     ((Graphics2D) g).fill(hexes[i][q]);
                     g.setColor(Color.black);
                     ((Graphics2D) g).draw(hexes[i][q]);
@@ -115,6 +139,31 @@ public class HexGameWindow extends JFrame {
                 }
 
             }
+        }
+
+        @Override
+        public void componentHidden(ComponentEvent e) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void componentMoved(ComponentEvent e) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void componentResized(ComponentEvent e) {
+            resizeShapes();
+            repaint();
+
+        }
+
+        @Override
+        public void componentShown(ComponentEvent e) {
+            // TODO Auto-generated method stub
+
         }
     }
 
