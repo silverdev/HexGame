@@ -47,6 +47,7 @@ public class HexGameWindow extends JFrame {
     protected static class Canvas extends JPanel {
         private static final long serialVersionUID = -4797847956664594904L;
         RegularPolygonGameObject[][] hexes;
+        private MyListener hexListener;
 
         public void setShapes(Game game, GameInfo info) {
             this.hexes = new RegularPolygonGameObject[info.options.gridSize][info.options.gridSize];
@@ -63,7 +64,11 @@ public class HexGameWindow extends JFrame {
                             6, Math.PI / 2);
             }
             BoardTools.setBackground(super.getWidth(), super.getHeight());
-            addMouseListener(new MyListener(this.hexes));
+            if(hexListener != null) {
+                this.removeMouseListener(hexListener);
+            }
+            hexListener = new MyListener(this.hexes);
+            addMouseListener(hexListener);
         }
 
         @Override
@@ -175,7 +180,7 @@ public class HexGameWindow extends JFrame {
         replayAction.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent act) {
-                Hexgame.runningGame.replay(10000);
+                Hexgame.runningGame.replay(200);
                 return;
             }
         });

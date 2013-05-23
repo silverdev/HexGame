@@ -61,6 +61,7 @@ public class Hexgame {
         runningGame.stop();
         gameInfo = buildGame(new PlayerObject(1), new PlayerObject(2));
         runningGame = gameInfo.makeGame();
+        runningGame.setGameListener(new Callbacks(runningGame, window));
         window.cPolygons.setShapes(runningGame, gameInfo);
         HexGameWindow.cPolygons.repaint();
         runningGame.gameOptions.timer = new Timer(0, 0, 0);
