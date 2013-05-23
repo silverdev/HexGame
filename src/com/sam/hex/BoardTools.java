@@ -2,6 +2,8 @@ package com.sam.hex;
 
 import java.awt.image.BufferedImage;
 
+import com.hex.core.GamePiece;
+
 public class BoardTools {
 	static double spaceH; // Horizontal
 	static double spaceV; // Vertical
@@ -21,12 +23,12 @@ public class BoardTools {
 	}
 
 	public static void setBackground(int w, int h) {
-		Global.background = new BufferedImage(w,
+		Hexgame.window.hexBackground = new BufferedImage(w,
 				h, BufferedImage.TYPE_INT_ARGB); //the background is drawn to this buffered image. 
-		RegularPolygonGameObject[][] gamePeace = Hexgame.runningGame.gamePiece;
+		GamePiece[][] gamePeace = Hexgame.runningGame.gamePiece;
 		double radius = BoardTools.radiusCalculator(HexGameWindow.cPolygons
 				.getWidth(), HexGameWindow.cPolygons.getHeight(),
-				Global.gridSize);
+				Hexgame.gameInfo.options.gridSize);
 		double hrad = radius * Math.sqrt(3) / 2; // Horizontal radius
 		int yOffset = (int) ((HexGameWindow.cPolygons.getHeight() - ((3 * radius / 2)
 				* (gamePeace[0].length - 1) + 2 * radius)) / 2);
@@ -54,11 +56,11 @@ public class BoardTools {
 						+ (cY - cX * slope2)) { // if above line 1 == above line
 					// 2
 					// if((y+x)/(((double)h+(double)w))<.5==((double)h/(double)w>y/x)){
-					Global.background.setRGB((int) x, (int) y, Global.player1Color
-							.getRGB());
+					Hexgame.window.hexBackground.setRGB((int) x, (int) y,
+								Hexgame.gameInfo.player1.getColor());
 				} else {
-					Global.background.setRGB((int) x, (int) y, Global.player2Color
-							.getRGB());
+					Hexgame.window.hexBackground.setRGB((int) x, (int) y, 
+							Hexgame.gameInfo.player2.getColor());
 				}
 				// (((h*w)-h)>y/x)
 			}
@@ -66,12 +68,6 @@ public class BoardTools {
 
 	}
 
-	public static byte[][] teamGrid() { //not yet use but will be used to sent netcode
-		byte[][] loyalty = new byte[Global.gridSize][Global.gridSize];
-		RegularPolygonGameObject[][] gamePeace = Hexgame.runningGame.gamePiece;
-		for (int x = 0; x < gamePeace.length; x++)
-			for (int y = 0; y < gamePeace.length; y++)
-				loyalty[x][y] = gamePeace[x][y].getTeam();
-		return loyalty;
-	}
+
+	
 }

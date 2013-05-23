@@ -3,11 +3,6 @@ package com.sam.hex;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.File;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
@@ -17,286 +12,198 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-
-
 public class DialogBoxes {
-	
-	public static void resetGameOption() {
 
-		Object[] options = { "Yes, make it so", "Cancel" };
-		byte b =(byte) JOptionPane.showOptionDialog(Hexgame.window,
-				"are you sure you want to reset all your options\n all your personal settings will be lost",
-				"Are you sure", JOptionPane.YES_NO_CANCEL_OPTION,
-				JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
-		if (b==0){
-			//Clear Preferences
-			Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
-			
-			try {
-				prefs.clear();
-			} catch (BackingStoreException e) {
-				e.printStackTrace();
-			}
-			//stop the old game
-			//Global.runningGame.stop();
-			GameAction.stopGame();
-			
-			// restore Defalts
-		Hexgame.grabPreferences();
-			//restart game
-			
-			Hexgame.window.initRegular();
-			GameAction.fullUpdateBoard();
-			Hexgame.runningGame = new GameObject();
-			Hexgame.runningGame.initGame();
-			
-			
-			
-		}
+    public static void resetGameOption() {
 
-	}
+        Object[] options = { "Yes, make it so", "Cancel" };
+        byte b = (byte) JOptionPane.showOptionDialog(Hexgame.window,
+                "are you sure you want to reset all your options\n all your personal settings will be lost", "Are you sure", JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+        if(b == 0) {
+            // Clear Preferences
+            Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
 
-	public static String chooseGameTypePlayer1() {
-		Object[] possibilities = { "Human", "Computer (Kinda easy)", "Computer (Kinda hard)" };
-		String s;
-		
-			s = (String) JOptionPane.showInputDialog(Hexgame.window,
-				"Choose a type of game:\n", "Game Type",
-				JOptionPane.PLAIN_MESSAGE, null, possibilities,
-				possibilities[Global.player1Type]);
-		
+            try {
+                prefs.clear();
+            }
+            catch(BackingStoreException e) {
+                e.printStackTrace();
+            }
 
-		// If a string was returned, say so.
-		if ((s != null) && (s.length() > 0)) {
-			if (s=="Human") Global.player1Type=0;
-			else if (s=="Computer (Kinda easy)") Global.player1Type=1;
-			else if (s=="Computer (Kinda hard)") Global.player1Type=2;
-			Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
-			prefs.putInt("player1Type", Global.player1Type);
-			return s;
-		}
+            // restart game
 
-		return null;
-	}
+            Hexgame.restart();
 
-	public static String chooseGameTypePlayer2() {
-		Object[] possibilities = { "Human", "Computer (Kinda easy)", "Computer (Kinda hard)" };
-		String s;
-			s = (String) JOptionPane.showInputDialog(Hexgame.window,
-				"Choose a type of game:\n", "Game Type",
-				JOptionPane.PLAIN_MESSAGE, null, possibilities,
-				possibilities[Global.player2Type]);
-		
+        }
 
-		// If a string was returned, say so.
-		if ((s != null) && (s.length() > 0)) {
-			if (s=="Human") Global.player2Type=0;
-			else if (s=="Computer (Kinda easy)") Global.player2Type=1;
-			else if (s=="Computer (Kinda hard)") Global.player2Type=2;
-			Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
-			prefs.putInt("player2Type", Global.player2Type);
-			return s;
-		}
+    }
 
-		return null;
-	}
+    public static String chooseGameTypePlayer1() {
+        Object[] possibilities = { "Human", "Computer (Kinda easy)", "Computer (Kinda hard)" };
+        String s;
 
-	public static String chooseName1() {
+        s = (String) JOptionPane.showInputDialog(Hexgame.window, "Choose a type of game:\n", "Game Type", JOptionPane.PLAIN_MESSAGE, null, possibilities,
+                possibilities[Hexgame.gameInfo.player1.getType()]);
 
-		String s = (String) JOptionPane.showInputDialog(Hexgame.window,
-				"Choose name for player one:\n", "Player One",
-				JOptionPane.PLAIN_MESSAGE, null, null, Global.player1Name);
+        // If a string was returned, say so.
+        if((s != null) && (s.length() > 0)) {
+            int type = 0;
+            if(s == "Human") type = 0;
+            else if(s == "Computer (Kinda easy)") type = 1;
+            else if(s == "Computer (Kinda hard)") type = 2;
+            if(type != Hexgame.gameInfo.player1.getType()) {
+                Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+                prefs.putInt("player1Type", type);
+                Hexgame.restart();
+            }
+            return s;
+        }
 
-		// If a string was returned, say so.
-		if ((s != null) && (s.length() > 0)) {
-			Global.player1Name = s;
-			Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
-			prefs.put("player1Name", Global.player1Name);
-			return s;
-		}
+        return null;
+    }
 
-		return null;
+    public static String chooseGameTypePlayer2() {
+        Object[] possibilities = { "Human", "Computer (Kinda easy)", "Computer (Kinda hard)" };
+        String s;
+        s = (String) JOptionPane.showInputDialog(Hexgame.window, "Choose a type of game:\n", "Game Type", JOptionPane.PLAIN_MESSAGE, null, possibilities,
+                possibilities[Hexgame.gameInfo.player2.getType()]);
 
-	}
+        // If a string was returned, say so.
+        if((s != null) && (s.length() > 0)) {
+            int type;
+            if(s == "Human") type = 0;
+            else if(s == "Computer (Kinda easy)") type = 1;
+            else if(s == "Computer (Kinda hard)") type = 2;
+            Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+            prefs.putInt("player2Type", Hexgame.gameInfo.player2.getType());
+            return s;
+        }
 
-	public static int chooseColor1() {
-		final JColorChooser chooser = new JColorChooser(Global.player1Color);
-		JColorChooser.createDialog(Hexgame.window, "Pick a color", true, chooser, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Global.player1Color=chooser.getColor();
-				Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
-				prefs.putInt("player1Color", Global.player1Color.getRGB());
-			}}, null).setVisible(true);
-		
-		return Global.player1Color.getRGB();
-	}
+        return null;
+    }
 
-	public static String chooseName2() {
+    public static String chooseName1() {
 
-		String s = (String) JOptionPane.showInputDialog(Hexgame.window,
-				"Choose name for player two:\n", "Player Two",
-				JOptionPane.PLAIN_MESSAGE, null, null, Global.player2Name);
+        String s = (String) JOptionPane.showInputDialog(Hexgame.window, "Choose name for player one:\n", "Player One", JOptionPane.PLAIN_MESSAGE, null, null,
+                Hexgame.gameInfo.player1.getName());
 
-		// If a string was returned, say so.
-		if ((s != null) && (s.length() > 0)) {
-			Global.player2Name = s;
-			Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
-			prefs.put("player2Name", Global.player2Name);
-			return s;
-		}
+        // If a string was returned, say so.
+        if((s != null) && (s.length() > 0)) {
+            Hexgame.gameInfo.player1.setName(s);
+            Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+            prefs.put("player1Name", Hexgame.gameInfo.player1.getName());
+            return s;
+        }
 
-		return null;
+        return null;
 
-	}
+    }
 
-	public static int choseColor2() {
-		final JColorChooser chooser = new JColorChooser(Global.player2Color);
-		JColorChooser.createDialog(Hexgame.window, "Pick a color", true, chooser, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Global.player2Color=chooser.getColor();
-				Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
-				prefs.putInt("player2Color", Global.player2Color.getRGB());
-			}}, null).setVisible(true);
-		
-		return Global.player2Color.getRGB();
-	}
-	public static int chooseGridsize() {
+    public static int chooseColor1() {
+        final JColorChooser chooser = new JColorChooser(new Color(Hexgame.gameInfo.player1.getColor()));
+        JColorChooser.createDialog(Hexgame.window, "Pick a color", true, chooser, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Hexgame.gameInfo.player1.setColor(chooser.getColor().getRGB());
+                Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+                prefs.putInt("player1Color", Hexgame.gameInfo.player1.getColor());
+            }
+        }, null).setVisible(true);
 
-		String s = (String) JOptionPane.showInputDialog(Hexgame.window,
-				"Choose a new grid size:\n", "Grid Size",
-				JOptionPane.PLAIN_MESSAGE, null, null, Global.gridSize);
-		
-		int newSize = Global.gridSize;
-		// If a string was returned, say so.
-		if ((s != null) && (s.length() > 0) && (s.matches("[0-9]") || s.matches("[0-9][0-9]"))) {
-			try {
-				newSize = Integer.parseInt(s);
-			}
-			catch (NumberFormatException e) {
-				e.printStackTrace();
-				newSize = Global.gridSize;
-			}
-			if (newSize<4){
-				newSize=4;
-			}
-			Global.gridSize=newSize;
-			Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
-			prefs.putInt("gridSize", Global.gridSize);
-		}
-		return newSize;
-	}
-	
-	public static void announceWinner(int team) {
-		String name;
-		if(team==1) name=Global.player1Name;
-		else name=Global.player2Name;
-		Object[] options = { "Ok", "Save Replay" };
-		byte b =(byte) JOptionPane.showOptionDialog(Hexgame.window,
-				name+" wins!",
-				"Do you want to save a replay?", JOptionPane.YES_NO_CANCEL_OPTION,
-				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-		if (b==1)saveReplay();
-	}
-	public static void saveReplay() {
-		File file = saveReplayfile();
-		if(file!=null){
-			if(!file.getPath().toLowerCase().endsWith(".rhex")){
-				file = new File(file.getPath() + ".rhex");
-			}
-			try {
-				ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(file));
-				
-				outputStream.writeObject(Global.player1Color.getRGB());
-				outputStream.writeObject(Global.player2Color.getRGB());
-				outputStream.writeObject(Global.player1Name);
-				outputStream.writeObject(Global.player2Name);
-				outputStream.writeObject(Hexgame.runningGame.moveList);
-				outputStream.writeObject(Global.gridSize);
-				outputStream.writeObject(Hexgame.runningGame.moveNumber);
-				outputStream.writeObject(null);
-				outputStream.writeObject(null);
-				outputStream.writeObject(null);
-				outputStream.writeObject(null);
-//				if(Global.player1.supportsSave()){
-//					outputStream.writeObject(Global.player1);
-//					outputStream.writeObject(Global.player1Type);
-//				}
-//				else{
-//					outputStream.writeObject(new PlayerObject((byte)1));
-//					outputStream.writeObject((byte)0);
-//				}
-//				if(Global.player2.supportsSave()){
-//					outputStream.writeObject(Global.player2);
-//					outputStream.writeObject(Global.player2Type);
-//				}
-//				else {
-//					outputStream.writeObject(new PlayerObject((byte)2));
-//					outputStream.writeObject((byte)0);
-//				}
-				
-				outputStream.flush();
-                outputStream.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	public static void loadReplay() {
-		File file = loadReplayFile();
-		if(file!=null){
-	        try {
-	            //Construct the ObjectInputStream object
-	        	ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file));
-	            
-	            Global.player1Color = new Color((Integer) inputStream.readObject());
-				Global.player2Color = new Color((Integer) inputStream.readObject());
-				Global.player1Name = (String) inputStream.readObject();
-				Global.player2Name = (String) inputStream.readObject();
-				Hexgame.runningGame.moveList = (MoveList) inputStream.readObject();
-				Global.gridSize = (Integer) inputStream.readObject();
-				Hexgame.runningGame.moveNumber = (Integer) inputStream.readObject();
-				Hexgame.runningGame.player1 = new PlayerObject((byte)1);
-				Global.player1Type = 0;
-				Hexgame.runningGame.player2 = new PlayerObject((byte)2);
-				Global.player2Type = 0;
-				
-				inputStream.close();
-	        }
-	        catch(Exception e){
-	        	e.printStackTrace();
-	        }
-			
-	        Hexgame.runningGame.currentPlayer=(Hexgame.runningGame.moveNumber%2)+1;
-		}
-	}
-	
-	public static File loadReplayFile() {
-		JFileChooser theFileToLoad = new JFileChooser();
-	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-	        "Replay Hexboards", "rhex");
-	    theFileToLoad.setFileFilter(filter);
-	    int returnVal = theFileToLoad.showOpenDialog(Hexgame.window);
-	    if(returnVal == JFileChooser.APPROVE_OPTION) {
-	    	return theFileToLoad.getSelectedFile();
-	    }
-	    else{
-	    	return null;
-	    }
-		
-	}
-	public static File saveReplayfile() {
-		JFileChooser theFileToSave = new JFileChooser();
-	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-	        "Replay Hexboards", "rhex");
-	    theFileToSave.setFileFilter(filter);
-	    int returnVal = theFileToSave.showSaveDialog(Hexgame.window);
-	    if(returnVal == JFileChooser.APPROVE_OPTION) {
-	    	return theFileToSave.getSelectedFile();
-	    }
-	    else{
-	    	return null;
-	    }
-	}
+        return Hexgame.gameInfo.player1.getColor();
+    }
+
+    public static String chooseName2() {
+
+        String s = (String) JOptionPane.showInputDialog(Hexgame.window, "Choose name for player one:\n", "Player One", JOptionPane.PLAIN_MESSAGE, null, null,
+                Hexgame.gameInfo.player2.getName());
+
+        // If a string was returned, say so.
+        if((s != null) && (s.length() > 0)) {
+            Hexgame.gameInfo.player2.setName(s);
+            Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+            prefs.put("player2Name", Hexgame.gameInfo.player2.getName());
+            return s;
+        }
+
+        return null;
+
+    }
+
+    public static int chooseColor2() {
+        final JColorChooser chooser = new JColorChooser(new Color(Hexgame.gameInfo.player2.getColor()));
+        JColorChooser.createDialog(Hexgame.window, "Pick a color", true, chooser, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Hexgame.gameInfo.player2.setColor(chooser.getColor().getRGB());
+                Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+                prefs.putInt("player2Color", Hexgame.gameInfo.player2.getColor());
+            }
+        }, null).setVisible(true);
+
+        return Hexgame.gameInfo.player2.getColor();
+    }
+
+    public static void chooseGridsize() {
+
+        String s = (String) JOptionPane.showInputDialog(Hexgame.window, "Choose a new grid size:\n", "Grid Size", JOptionPane.PLAIN_MESSAGE, null, null,
+                Hexgame.gameInfo.options.gridSize);
+
+        int newSize = Hexgame.gameInfo.options.gridSize;
+        // If a string was returned, say so.
+        if((s != null) && (s.length() > 0) && (s.matches("[0-9]") || s.matches("[0-9][0-9]"))) {
+            try {
+                newSize = Integer.parseInt(s);
+            }
+            catch(NumberFormatException e) {
+                e.printStackTrace();
+                newSize = Hexgame.gameInfo.options.gridSize;
+            }
+            if(newSize < 4) {
+                newSize = 4;
+            }
+            if(Hexgame.gameInfo.options.gridSize != newSize) {
+                Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+                prefs.putInt("gridSize", Hexgame.gameInfo.options.gridSize);
+                Hexgame.restart();
+            }
+        }
+
+    }
+
+    public static File loadReplayFile() {
+        JFileChooser theFileToLoad = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Replay Hexboards", "rhex");
+        theFileToLoad.setFileFilter(filter);
+        int returnVal = theFileToLoad.showOpenDialog(Hexgame.window);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            return theFileToLoad.getSelectedFile();
+        }
+        else {
+            return null;
+        }
+
+    }
+
+    public static File saveReplayfile() {
+        JFileChooser theFileToSave = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Replay Hexboards", "rhex");
+        theFileToSave.setFileFilter(filter);
+        int returnVal = theFileToSave.showSaveDialog(Hexgame.window);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            return theFileToSave.getSelectedFile();
+        }
+        else {
+            return null;
+        }
+    }
+
+    public static void announceWinner(String name) {
+
+        Object[] options = { "Ok", "Save Replay" };
+        byte b = (byte) JOptionPane.showOptionDialog(Hexgame.window, name + " wins!", "Do you want to save a replay?", JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        if(b == 1) saveReplayfile();
+    }
 }
