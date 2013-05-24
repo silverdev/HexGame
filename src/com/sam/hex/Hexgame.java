@@ -2,8 +2,10 @@ package com.sam.hex;
 
 import java.util.prefs.Preferences;
 
+import com.hex.ai.GameAI;
 import com.hex.core.Game;
 import com.hex.core.PlayerObject;
+import com.hex.core.PlayingEntity;
 import com.hex.core.Timer;
 
 public class Hexgame {
@@ -23,7 +25,7 @@ public class Hexgame {
             width = 800;
         }
 
-        gameInfo = buildGame(new PlayerObject(1), new PlayerObject(2));
+        gameInfo = buildGame();
         runningGame = gameInfo.makeGame();
         window = new HexGameWindow(hight, width);
 
@@ -35,12 +37,14 @@ public class Hexgame {
         runningGame.start();
     }
 
-    public static GameInfo buildGame(PlayerObject player1, PlayerObject player2) {
+    public static GameInfo buildGame() {
         Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
 
         Game.GameOptions options = new Game.GameOptions();
-        player1.player1Type = prefs.getInt("player1Type", GlobalDefaults.player1Type);
-        player2.player2Type = prefs.getInt("player2Type", GlobalDefaults.player2Type);
+        int player1Type = prefs.getInt("player1Type", GlobalDefaults.player1Type);
+        int player2Type = prefs.getInt("player2Type", GlobalDefaults.player2Type);
+        PlayingEntity player1 = loadPlayer(player1Type, 1);
+        PlayingEntity player2 = loadPlayer(player2Type, 2);
         options.gridSize = prefs.getInt("gridSize", GlobalDefaults.gridSize);
 
         player1.setName(prefs.get("player1Name", GlobalDefaults.player1Name));
@@ -57,9 +61,26 @@ public class Hexgame {
         return new GameInfo(options, player1, player2);
     }
 
+    private static PlayingEntity loadPlayer(int playerType, int playerNumber) {
+        switch(playerType) {
+        case 0:
+            return new PlayerObject(playerNumber);
+        case 1:
+            return loadIA(playerNumber);
+        case 2:
+            throw new RuntimeException("not yet implented");
+        }
+        throw new RuntimeException("invalid player type");
+    }
+
+    private static PlayingEntity loadIA(int playerNumber) {
+        // return new PlayerObject(playerNumber);
+        return new GameAI(playerNumber);
+    }
+
     public static void restart() {
         runningGame.stop();
-        gameInfo = buildGame(new PlayerObject(1), new PlayerObject(2));
+        gameInfo = buildGame();
         runningGame = gameInfo.makeGame();
         runningGame.setGameListener(new Callbacks(runningGame, window));
         window.cPolygons.setShapes(runningGame, gameInfo);

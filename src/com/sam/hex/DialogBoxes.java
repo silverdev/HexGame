@@ -26,6 +26,7 @@ public class DialogBoxes {
 
             try {
                 prefs.clear();
+
             }
             catch(BackingStoreException e) {
                 e.printStackTrace();
@@ -39,22 +40,22 @@ public class DialogBoxes {
 
     }
 
-    public static String chooseGameTypePlayer1() {
-        Object[] possibilities = { "Human", "Computer (Kinda easy)", "Computer (Kinda hard)" };
+    public static String chooseGameTypePlayer(int player_num) {
+        Object[] possibilities = { "Human", "Computer", "Net" };
         String s;
 
         s = (String) JOptionPane.showInputDialog(Hexgame.window, "Choose a type of game:\n", "Game Type", JOptionPane.PLAIN_MESSAGE, null, possibilities,
-                possibilities[Hexgame.gameInfo.player1.getType()]);
+                possibilities[Hexgame.gameInfo.players[player_num].getType().ordinal()]);
 
         // If a string was returned, say so.
         if((s != null) && (s.length() > 0)) {
             int type = 0;
             if(s == "Human") type = 0;
-            else if(s == "Computer (Kinda easy)") type = 1;
-            else if(s == "Computer (Kinda hard)") type = 2;
-            if(type != Hexgame.gameInfo.player1.getType()) {
+            else if(s == "Computer") type = 1;
+            else if(s == "Net") type = 2;
+            if(type != Hexgame.gameInfo.players[player_num].getType().ordinal()) {
                 Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
-                prefs.putInt("player1Type", type);
+                prefs.putInt("player" + player_num + "Type", type);
                 Hexgame.restart();
             }
             return s;
@@ -63,36 +64,16 @@ public class DialogBoxes {
         return null;
     }
 
-    public static String chooseGameTypePlayer2() {
-        Object[] possibilities = { "Human", "Computer (Kinda easy)", "Computer (Kinda hard)" };
-        String s;
-        s = (String) JOptionPane.showInputDialog(Hexgame.window, "Choose a type of game:\n", "Game Type", JOptionPane.PLAIN_MESSAGE, null, possibilities,
-                possibilities[Hexgame.gameInfo.player2.getType()]);
-
-        // If a string was returned, say so.
-        if((s != null) && (s.length() > 0)) {
-            int type;
-            if(s == "Human") type = 0;
-            else if(s == "Computer (Kinda easy)") type = 1;
-            else if(s == "Computer (Kinda hard)") type = 2;
-            Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
-            prefs.putInt("player2Type", Hexgame.gameInfo.player2.getType());
-            return s;
-        }
-
-        return null;
-    }
-
-    public static String chooseName1() {
+    public static String chooseName(int player_num) {
 
         String s = (String) JOptionPane.showInputDialog(Hexgame.window, "Choose name for player one:\n", "Player One", JOptionPane.PLAIN_MESSAGE, null, null,
-                Hexgame.gameInfo.player1.getName());
+                Hexgame.gameInfo.players[player_num].getName());
 
         // If a string was returned, say so.
         if((s != null) && (s.length() > 0)) {
-            Hexgame.gameInfo.player1.setName(s);
+            Hexgame.gameInfo.players[player_num].setName(s);
             Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
-            prefs.put("player1Name", Hexgame.gameInfo.player1.getName());
+            prefs.put("player" + player_num + "Name", Hexgame.gameInfo.players[player_num].getName());
             return s;
         }
 
@@ -100,49 +81,19 @@ public class DialogBoxes {
 
     }
 
-    public static int chooseColor1() {
-        final JColorChooser chooser = new JColorChooser(new Color(Hexgame.gameInfo.player1.getColor()));
+    public static int chooseColor(final int player_num) {
+        final JColorChooser chooser = new JColorChooser(new Color(Hexgame.gameInfo.players[player_num].getColor()));
         JColorChooser.createDialog(Hexgame.window, "Pick a color", true, chooser, new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
-                Hexgame.gameInfo.player1.setColor(chooser.getColor().getRGB());
+                Hexgame.gameInfo.players[player_num].setColor(chooser.getColor().getRGB());
                 Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
-                prefs.putInt("player1Color", Hexgame.gameInfo.player1.getColor());
+                prefs.putInt("player" + player_num + "Color", Hexgame.gameInfo.players[player_num].getColor());
             }
         }, null).setVisible(true);
 
-        return Hexgame.gameInfo.player1.getColor();
-    }
-
-    public static String chooseName2() {
-
-        String s = (String) JOptionPane.showInputDialog(Hexgame.window, "Choose name for player one:\n", "Player One", JOptionPane.PLAIN_MESSAGE, null, null,
-                Hexgame.gameInfo.player2.getName());
-
-        // If a string was returned, say so.
-        if((s != null) && (s.length() > 0)) {
-            Hexgame.gameInfo.player2.setName(s);
-            Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
-            prefs.put("player2Name", Hexgame.gameInfo.player2.getName());
-            return s;
-        }
-
-        return null;
-
-    }
-
-    public static int chooseColor2() {
-        final JColorChooser chooser = new JColorChooser(new Color(Hexgame.gameInfo.player2.getColor()));
-        JColorChooser.createDialog(Hexgame.window, "Pick a color", true, chooser, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Hexgame.gameInfo.player2.setColor(chooser.getColor().getRGB());
-                Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
-                prefs.putInt("player2Color", Hexgame.gameInfo.player2.getColor());
-            }
-        }, null).setVisible(true);
-
-        return Hexgame.gameInfo.player2.getColor();
+        return Hexgame.gameInfo.players[player_num].getColor();
     }
 
     public static void chooseGridsize() {

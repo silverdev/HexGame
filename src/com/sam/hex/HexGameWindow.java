@@ -23,7 +23,6 @@ import javax.swing.JPanel;
 import com.hex.core.Game;
 import com.hex.core.GameAction;
 import com.hex.core.Point;
-import com.sam.hex.replay.Replay;
 
 public class HexGameWindow extends JFrame {
     public static Canvas cPolygons = new Canvas();
@@ -70,6 +69,7 @@ public class HexGameWindow extends JFrame {
                     hexes[xc][yc].update((hrad + yc * hrad + 2 * hrad * xc) + xOffset, (1.5 * radius * yc + radius) + yOffset, radius, 6, Math.PI / 2);
             }
             BoardTools.setBackground(super.getWidth(), super.getHeight());
+            repaint();
         }
 
         public void setShapes(Game game, GameInfo info) {
@@ -239,8 +239,7 @@ public class HexGameWindow extends JFrame {
             public void actionPerformed(ActionEvent act) {
 
                 // DialogBoxes.loadReplay();
-                Thread replay = new Thread(new Replay());
-                replay.start();
+                Hexgame.runningGame.replay(200);
                 return;
             }
         });
@@ -269,15 +268,16 @@ public class HexGameWindow extends JFrame {
         p1NameAction.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent act) {
-                DialogBoxes.chooseName1();
+                DialogBoxes.chooseName(1);
             }
         });
 
         p1ColorAction.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent act) {
-                DialogBoxes.chooseColor1();
+                DialogBoxes.chooseColor(1);
                 Hexgame.window.invalidate();
+                cPolygons.resizeShapes();
             }
         });
 
@@ -285,7 +285,7 @@ public class HexGameWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent act) {
 
-                DialogBoxes.chooseGameTypePlayer1();
+                DialogBoxes.chooseGameTypePlayer(1);
 
             }
         });
@@ -293,14 +293,15 @@ public class HexGameWindow extends JFrame {
         p2NameAction.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent act) {
-                DialogBoxes.chooseName2();
+                DialogBoxes.chooseName(2);
             }
         });
 
         p2ColorAction.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent act) {
-                DialogBoxes.chooseColor2();
+                DialogBoxes.chooseColor(2);
+                cPolygons.resizeShapes();
 
             }
         });
@@ -308,7 +309,7 @@ public class HexGameWindow extends JFrame {
         p2ModeAction.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent act) {
-                DialogBoxes.chooseGameTypePlayer2();
+                DialogBoxes.chooseGameTypePlayer(2);
             }
         });
     }

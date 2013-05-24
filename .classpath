@@ -4,5 +4,6 @@
 	<classpathentry excluding="src/" kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/hex-core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/hex-ai"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
