@@ -1,5 +1,7 @@
 package com.sam.hex;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.prefs.Preferences;
 
 import com.hex.ai.AiTypes;
@@ -83,5 +85,25 @@ public class Hexgame {
         HexGameWindow.cPolygons.repaint();
         runningGame.gameOptions.timer = new Timer(0, 0, 0);
         runningGame.start();
+    }
+
+    public static void loadGame(File file) {
+        runningGame.stop();
+        try {
+            runningGame = Game.load(file);
+        }
+        catch(ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException("error loading game, Bad file?");
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("error loading game for some reson");
+        }
+        runningGame.setGameListener(new Callbacks(runningGame, window));
+        window.cPolygons.setShapes(runningGame, gameInfo);
+        HexGameWindow.cPolygons.repaint();
+        runningGame.start();
+
     }
 }

@@ -24,7 +24,9 @@ import com.hex.core.Game;
 import com.hex.core.GameAction;
 import com.hex.core.Point;
 
+@SuppressWarnings("serial")
 public class HexGameWindow extends JFrame {
+
     public static Canvas cPolygons = new Canvas();
 
     public static BufferedImage hexBackground;
@@ -242,8 +244,7 @@ public class HexGameWindow extends JFrame {
         loadReplayAction.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent act) {
-
-                // DialogBoxes.loadReplay();
+                Hexgame.loadGame(DialogBoxes.loadReplayFile());
                 Hexgame.runningGame.replay(200);
                 return;
             }
