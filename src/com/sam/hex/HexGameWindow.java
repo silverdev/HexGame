@@ -189,9 +189,11 @@ public class HexGameWindow extends JFrame {
         JMenuItem p1NameAction = new JMenuItem("Name");
         JMenuItem p1ColorAction = new JMenuItem("Color");
         JMenuItem p1ModeAction = new JMenuItem("Mode");
+        JMenuItem p1AIAction = new JMenuItem("AiType");
         JMenuItem p2NameAction = new JMenuItem("Name");
         JMenuItem p2ColorAction = new JMenuItem("Color");
         JMenuItem p2ModeAction = new JMenuItem("Mode");
+        JMenuItem p2AIAction = new JMenuItem("AiType");
 
         fileMenu.add(undoAction);
         fileMenu.add(newgameAction);
@@ -206,9 +208,12 @@ public class HexGameWindow extends JFrame {
         player1Menu.add(p1NameAction);
         player1Menu.add(p1ColorAction);
         player1Menu.add(p1ModeAction);
+        player1Menu.add(p1AIAction);
+
         player2Menu.add(p2NameAction);
         player2Menu.add(p2ColorAction);
         player2Menu.add(p2ModeAction);
+        player2Menu.add(p2AIAction);
 
         undoAction.addActionListener(new ActionListener() {
             @Override
@@ -289,6 +294,14 @@ public class HexGameWindow extends JFrame {
 
             }
         });
+        p1AIAction.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent act) {
+
+                DialogBoxes.chooseAiType(1);
+
+            }
+        });
 
         p2NameAction.addActionListener(new ActionListener() {
             @Override
@@ -310,6 +323,15 @@ public class HexGameWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent act) {
                 DialogBoxes.chooseGameTypePlayer(2);
+            }
+        });
+
+        p2AIAction.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent act) {
+
+                DialogBoxes.chooseAiType(2);
+
             }
         });
     }

@@ -12,6 +12,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import com.hex.ai.AiTypes;
+import com.hex.core.Player;
+
 public class DialogBoxes {
 
     public static void resetGameOption() {
@@ -40,28 +43,47 @@ public class DialogBoxes {
 
     }
 
-    public static String chooseGameTypePlayer(int player_num) {
-        Object[] possibilities = { "Human", "Computer", "Net" };
-        String s;
+    public static Boolean chooseGameTypePlayer(int player_num) {
+        Object[] possibilities = Player.values();
+        Player s;
 
-        s = (String) JOptionPane.showInputDialog(Hexgame.window, "Choose a type of game:\n", "Game Type", JOptionPane.PLAIN_MESSAGE, null, possibilities,
+        s = (Player) JOptionPane.showInputDialog(Hexgame.window, "Choose a type of game:\n", "Game Type", JOptionPane.PLAIN_MESSAGE, null, possibilities,
                 possibilities[Hexgame.gameInfo.players[player_num].getType().ordinal()]);
 
-        // If a string was returned, say so.
-        if((s != null) && (s.length() > 0)) {
-            int type = 0;
-            if(s == "Human") type = 0;
-            else if(s == "Computer") type = 1;
-            else if(s == "Net") type = 2;
-            if(type != Hexgame.gameInfo.players[player_num].getType().ordinal()) {
+        if((s != null)) {
+            int type = s.ordinal();
+
+            if(s != Hexgame.gameInfo.players[player_num].getType()) {
                 Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
                 prefs.putInt("player" + player_num + "Type", type);
                 Hexgame.restart();
             }
-            return s;
+            return true;
         }
+        return false;
 
-        return null;
+    }
+
+    public static Boolean chooseAiType(int player_num) {
+        Object[] possibilities = AiTypes.values();
+        AiTypes s;
+        Preferences prefs = Preferences.userNodeForPackage(Hexgame.class);
+        int aiType = prefs.getInt("ai" + player_num + "Type", GlobalDefaults.ai1Type);
+
+        s = (AiTypes) JOptionPane.showInputDialog(Hexgame.window, "Choose a type of Ai Player:\n", "Game Type", JOptionPane.PLAIN_MESSAGE, null, possibilities,
+                possibilities[aiType]);
+
+        if((s != null)) {
+            int type = s.ordinal();
+
+            if(type != aiType) {
+                prefs.putInt("ai" + player_num + "Type", type);
+                Hexgame.restart();
+            }
+            return true;
+        }
+        return false;
+
     }
 
     public static String chooseName(int player_num) {
