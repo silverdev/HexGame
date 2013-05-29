@@ -40,7 +40,6 @@ public class HexGameWindow extends JFrame {
         getContentPane().add(cPolygons,
                 new GridBagConstraints(1, 1, 1, 1, 1, 1, GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 5, 5));
         setSize(width, hight);
-        // initRegular();
 
         setLocationRelativeTo(null);
 
@@ -109,8 +108,8 @@ public class HexGameWindow extends JFrame {
             g.setColor(Color.black);
             for(int i = 0; i < hexes.length; i++) {
                 for(int q = 0; q < hexes[i].length; q++) {
-                    g.setColor(Hexgame.runningGame.gamePiece[i][q].isWinningPath() ? Color.GREEN : new Color(
-                            Hexgame.gameInfo.players[Hexgame.runningGame.gamePiece[i][q].getTeam()].getColor()));
+                    g.setColor(Hexgame.runningGame.gamePieces[i][q].isWinningPath() ? Color.GREEN : new Color(
+                            Hexgame.gameInfo.players[Hexgame.runningGame.gamePieces[i][q].getTeam()].getColor()));
                     ((Graphics2D) g).fill(hexes[i][q]);
                     g.setColor(Color.black);
                     ((Graphics2D) g).draw(hexes[i][q]);
@@ -244,7 +243,10 @@ public class HexGameWindow extends JFrame {
         loadReplayAction.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent act) {
-                Hexgame.loadGame(DialogBoxes.loadReplayFile());
+                if(Hexgame.loadGame(fileIO.loadTextOrNull(DialogBoxes.loadReplayFile()))) {
+
+                }
+                ;
                 Hexgame.runningGame.replay(200);
                 return;
             }

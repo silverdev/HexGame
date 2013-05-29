@@ -3,7 +3,6 @@ package com.sam.hex;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -145,13 +144,13 @@ public class DialogBoxes {
 
     }
 
-    public static File loadReplayFile() {
+    public static String loadReplayFile() {
         JFileChooser theFileToLoad = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Replay Hexboards", "rhex");
         theFileToLoad.setFileFilter(filter);
         int returnVal = theFileToLoad.showOpenDialog(Hexgame.window);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
-            return theFileToLoad.getSelectedFile();
+            return theFileToLoad.getSelectedFile().toString();
         }
         else {
             return null;
@@ -159,16 +158,17 @@ public class DialogBoxes {
 
     }
 
-    public static File saveReplayfile() {
+    public static boolean saveReplayfile() {
         JFileChooser theFileToSave = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Replay Hexboards", "rhex");
         theFileToSave.setFileFilter(filter);
         int returnVal = theFileToSave.showSaveDialog(Hexgame.window);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
-            return theFileToSave.getSelectedFile();
+            fileIO.textToFile(theFileToSave.getSelectedFile(), Hexgame.runningGame.save());
+            return true;
         }
         else {
-            return null;
+            return false;
         }
     }
 
