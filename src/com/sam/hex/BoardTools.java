@@ -32,10 +32,11 @@ public class BoardTools {
                                                                                              // buffered
                                                                                              // image.
         GamePiece[][] gamePeace = Hexgame.runningGame.gamePieces;
-        double radius = BoardTools.radiusCalculator(HexGameWindow.cPolygons.getWidth(), HexGameWindow.cPolygons.getHeight(), Hexgame.gameInfo.options.gridSize);
+        double radius = BoardTools.radiusCalculator(Hexgame.window.cPolygons.getWidth(), Hexgame.window.cPolygons.getHeight(),
+                Hexgame.gameInfo.options.gridSize);
         double hrad = radius * Math.sqrt(3) / 2; // Horizontal radius
-        int yOffset = (int) ((HexGameWindow.cPolygons.getHeight() - ((3 * radius / 2) * (gamePeace[0].length - 1) + 2 * radius)) / 2);
-        int xOffset = (int) ((HexGameWindow.cPolygons.getWidth() - (hrad * gamePeace.length * 2 + hrad * (gamePeace[0].length - 1))) / 2);
+        int yOffset = (int) ((Hexgame.window.cPolygons.getHeight() - ((3 * radius / 2) * (gamePeace[0].length - 1) + 2 * radius)) / 2);
+        int xOffset = (int) ((Hexgame.window.cPolygons.getWidth() - (hrad * gamePeace.length * 2 + hrad * (gamePeace[0].length - 1))) / 2);
         int aX = xOffset;
         int aY = yOffset + (int) radius / 2;
         int bX = xOffset + (int) ((gamePeace.length - 1) * hrad + gamePeace.length * hrad * 2);

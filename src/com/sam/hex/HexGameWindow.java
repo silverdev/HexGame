@@ -27,7 +27,7 @@ import com.hex.core.Point;
 @SuppressWarnings("serial")
 public class HexGameWindow extends JFrame {
 
-    public static Canvas cPolygons = new Canvas();
+    public Canvas cPolygons = new Canvas();
 
     public static BufferedImage hexBackground;
 

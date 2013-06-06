@@ -34,7 +34,7 @@ public class Hexgame {
         runningGame.setGameListener(new Callbacks(runningGame, window));
         runningGame.gameOptions.timer = new Timer(0, 0, 0);
         window.cPolygons.setShapes(runningGame, gameInfo);
-        HexGameWindow.cPolygons.repaint();
+        window.cPolygons.repaint();
         runningGame.start();
     }
 
@@ -67,8 +67,8 @@ public class Hexgame {
         case AI:
             return AiTypes.newAI(AiTypes.values()[aiType], playerNumber, gridSize);
         case Net:
-            DialogBoxes.resetGameOption();
-            throw new RuntimeException("not yet implented");
+            return new PlayerObject(playerNumber);
+
         }
         DialogBoxes.resetGameOption();
         throw new RuntimeException("invalid player type");
@@ -80,7 +80,7 @@ public class Hexgame {
         runningGame = gameInfo.makeGame();
         runningGame.setGameListener(new Callbacks(runningGame, window));
         window.cPolygons.setShapes(runningGame, gameInfo);
-        HexGameWindow.cPolygons.repaint();
+        window.cPolygons.repaint();
         runningGame.gameOptions.timer = new Timer(0, 0, 0);
         runningGame.start();
     }
@@ -89,9 +89,10 @@ public class Hexgame {
         Game newGame = Game.load(jsonString);
         runningGame.stop();
         runningGame = newGame;
+        gameInfo.options.gridSize = runningGame.gameOptions.gridSize;
         runningGame.setGameListener(new Callbacks(runningGame, window));
         window.cPolygons.setShapes(runningGame, gameInfo);
-        HexGameWindow.cPolygons.repaint();
+        window.cPolygons.repaint();
         runningGame.start();
         return true;
     }

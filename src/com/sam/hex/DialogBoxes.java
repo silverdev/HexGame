@@ -179,4 +179,21 @@ public class DialogBoxes {
                 JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
         if(b == 1) saveReplayfile();
     }
+
+    public static boolean amIHost() {
+
+        Object[] options = { "HostGame", "Connect to server" };
+        byte b = (byte) JOptionPane.showOptionDialog(Hexgame.window,
+                "are you sure you want to reset all your options\n all your personal settings will be lost", "Are you sure", JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+        if(b == 0) {
+            return true;
+        }
+        else return false;
+    }
+
+    public static String getIP() {
+        // TODO make box
+        return "172.0.0.1";
+    }
 }
