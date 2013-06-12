@@ -3,24 +3,24 @@ package com.hex.pc.network;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import com.google.gson.Gson;
-import com.hex.core.Game;
 import com.hex.core.Move;
 import com.hex.network.Action;
 import com.hex.network.Client;
 import com.hex.network.ServerResponse;
 
 public class PcClient extends Thread implements Client {
-    public PcClient() {
-
+    public PcClient(String name) {
+        this.name = name;
+        logger = new GameLogger(name);
     }
 
     private String name;
-    private Talker talk;
-    private int id = 2;
+    protected NetComunicaiton talk;
+    protected int id = 1;
     private GameLogger logger;
-    private Gson gson = new Gson();
+    public Gson gson = new Gson();
     private String otherNane = "Not connected!";
-    private Game game = null;
+    private String game = null;
     private final LinkedBlockingQueue<Move> moves = new LinkedBlockingQueue<Move>();
 
     public PcClient(String n, String IP) {
@@ -37,32 +37,22 @@ public class PcClient extends Thread implements Client {
         case MOVE:
             moves.add(sr.move);
             break;
+        case APROVE:
+            break;
+        case NEW_GAME:
+            setGame(sr.data);
+            break;
+        case OUT_OF_SYNC_ERROR:
+            break;
+        case UNDO:
+            break;
+
         }
 
-    }
-
-    public void initialResponse(String message) {
-        ServerResponse sr = gson.fromJson(message, ServerResponse.class);
-        if(sr.action == Action.NEW_GAME) {
-            this.otherNane = sr.playerName;
-            this.game = sr.game;
-        }
-
-    }
-
-    public String setup() {
-        String message = new String();
-
-        System.out.println(message);
-
-        System.out.println(message);
-        logger.log(message);
-        return message;
     }
 
     public void run() {
         talk.run();
-
     }
 
     /*
@@ -107,6 +97,30 @@ public class PcClient extends Thread implements Client {
         logger.log(json);
         this.talk.sendMessage(json);
 
+    }
+
+    /**
+     * @return the game
+     */
+    public String getGame() {
+
+        return game;
+
+    }
+
+    public int getTeam() {
+        return this.id;
+    }
+
+    /**
+     * @param game
+     *            the game to set
+     */
+    public void setGame(String gameData) {
+        synchronized(this) {
+            this.game = gameData;
+            this.notifyAll();
+        }
     }
 
 }

@@ -1,0 +1,12 @@
+{"responseCode":0,"playerID":0,"resources":0,"move":{"x":2,"y":1,"time":4234,"team":1,"moveNumber":1},"action":"MOVE"}
+{"responseCode":0,"playerID":0,"resources":0,"move":{"x":2,"y":2,"time":953,"team":2,"moveNumber":2},"action":"MOVE"}
+{"responseCode":0,"playerID":0,"resources":0,"move":{"x":3,"y":1,"time":2618,"team":1,"moveNumber":3},"action":"MOVE"}
+{"responseCode":0,"playerID":0,"resources":0,"move":{"x":1,"y":2,"time":1969,"team":2,"moveNumber":4},"action":"MOVE"}
+{"responseCode":0,"playerID":0,"resources":0,"move":{"x":0,"y":2,"time":1465,"team":1,"moveNumber":5},"action":"MOVE"}
+{"responseCode":0,"playerID":0,"resources":0,"move":{"x":1,"y":1,"time":1037,"team":2,"moveNumber":6},"action":"MOVE"}
+{"responseCode":0,"playerID":0,"resources":0,"move":{"x":2,"y":3,"time":1616,"team":1,"moveNumber":7},"action":"MOVE"}
+{"responseCode":0,"playerID":0,"resources":0,"move":{"x":1,"y":3,"time":1382,"team":2,"moveNumber":8},"action":"MOVE"}
+{"responseCode":0,"playerID":0,"resources":0,"move":{"x":1,"y":4,"time":1595,"team":1,"moveNumber":9},"action":"MOVE"}
+{"responseCode":0,"playerID":0,"resources":0,"move":{"x":0,"y":4,"time":1089,"team":2,"moveNumber":10},"action":"MOVE"}
+{"responseCode":0,"playerID":0,"resources":0,"move":{"x":2,"y":0,"time":4754,"team":1,"moveNumber":11},"action":"MOVE"}
+{"responseCode":0,"playerID":0,"resources":0,"move":{"x":1,"y":0,"time":1494,"team":2,"moveNumber":12},"action":"MOVE"}

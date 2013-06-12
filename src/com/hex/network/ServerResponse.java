@@ -2,7 +2,6 @@ package com.hex.network;
 
 import java.util.List;
 
-import com.hex.core.Game;
 import com.hex.core.Move;
 
 public class ServerResponse {
@@ -15,16 +14,16 @@ public class ServerResponse {
     public int resources;
     public Move move;
     public Action action;
-    public Game game;
+    public String data;
 
-    public ServerResponse(String PlayerName, int PlayerID, Move move, Action action, Game game) {
+    public ServerResponse(String PlayerName, int PlayerID, Move move, Action action, String data) {
 
         this.playerID = playerID;
         this.playerName = playerName;
         this.resources = resources;
         this.move = move;
         this.action = action;
-        this.game = game;
+        this.data = data;
     }
 
 }

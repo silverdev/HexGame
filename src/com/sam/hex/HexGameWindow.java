@@ -109,13 +109,28 @@ public class HexGameWindow extends JFrame {
             for(int i = 0; i < hexes.length; i++) {
                 for(int q = 0; q < hexes[i].length; q++) {
                     g.setColor(Hexgame.runningGame.gamePieces[i][q].isWinningPath() ? Color.GREEN : new Color(
-                            Hexgame.gameInfo.players[Hexgame.runningGame.gamePieces[i][q].getTeam()].getColor()));
+                            getPlayerColor(Hexgame.runningGame.gamePieces[i][q].getTeam())));
                     ((Graphics2D) g).fill(hexes[i][q]);
                     g.setColor(Color.black);
                     ((Graphics2D) g).draw(hexes[i][q]);
 
                 }
 
+            }
+
+        }
+
+        private int getPlayerColor(byte team) {
+
+            switch(team) {
+            case 0:
+                return 0xFFFFFF;
+            case 1:
+                return Hexgame.runningGame.getPlayer1().getColor();
+            case 2:
+                return Hexgame.runningGame.getPlayer2().getColor();
+            default:
+                throw new RuntimeException("team must be less then 3");
             }
 
         }

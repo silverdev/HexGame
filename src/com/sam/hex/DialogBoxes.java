@@ -194,6 +194,6 @@ public class DialogBoxes {
 
     public static String getIP() {
         // TODO make box
-        return "172.0.0.1";
+        return "127.0.0.1";
     }
 }

@@ -6,7 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Talker {
+public class Talker implements NetComunicaiton {
     Socket requestSocket;
     ObjectOutputStream out;
     ObjectInputStream in;
@@ -22,9 +22,11 @@ public class Talker {
 
     }
 
-    void run() {
+    public void run() {
         this.alive = true;
+        System.out.println("running");
         try {
+            System.out.println("Connecting to " + IP);
             // 1. creating a socket to connect to the server
             requestSocket = new Socket(IP, 6969);
             System.out.println("Connected to localhost in port 6969");
@@ -33,16 +35,6 @@ public class Talker {
             out.flush();
             in = new ObjectInputStream(requestSocket.getInputStream());
             // 3: Communicating with the server
-            sendMessage(master.setup());
-            try {
-                message = (String) in.readObject();
-                master.initialResponse(message);
-            }
-            catch(ClassNotFoundException e) {
-                e.printStackTrace();
-                System.out.println("could not read game");
-                System.exit(5);
-            }
 
             do {
                 try {
@@ -76,7 +68,7 @@ public class Talker {
         }
     }
 
-    void sendMessage(String msg) {
+    public void sendMessage(String msg) {
         synchronized(out) {
             try {
                 out.writeObject(msg);
@@ -89,6 +81,12 @@ public class Talker {
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.hex.pc.network.NetComunicaiton#kill()
+     */
+    @Override
     public void kill() {
         alive = false;
 

@@ -8,6 +8,7 @@ import com.hex.core.Player;
 import com.hex.core.PlayerObject;
 import com.hex.core.PlayingEntity;
 import com.hex.core.Timer;
+import com.hex.pc.network.NetworkConnection;
 
 public class Hexgame {
 
@@ -16,6 +17,7 @@ public class Hexgame {
     static GameInfo gameInfo;
 
     public static void main(String[] args) {
+        boolean netgame = false; // temporary will be removed
         int hight, width;
         if(args.length > 2) {
             hight = Integer.parseInt(args[0]);
@@ -28,14 +30,20 @@ public class Hexgame {
 
         gameInfo = buildGame();
         runningGame = gameInfo.makeGame();
-        window = new HexGameWindow(hight, width);
 
+        window = new HexGameWindow(hight, width);
         window.setVisible(true);
         runningGame.setGameListener(new Callbacks(runningGame, window));
         runningGame.gameOptions.timer = new Timer(0, 0, 0);
         window.cPolygons.setShapes(runningGame, gameInfo);
         window.cPolygons.repaint();
         runningGame.start();
+        if(netgame) {
+            Game netGame = NetworkConnection.netGame();
+            netGame.gameOptions.timer = new Timer(0, 0, 0);
+            swapGame(netGame);
+        }
+
     }
 
     public static GameInfo buildGame() {
@@ -46,6 +54,7 @@ public class Hexgame {
         int player2Type = prefs.getInt("player2Type", GlobalDefaults.player2Type);
         int ai1Type = prefs.getInt("ai1Type", GlobalDefaults.ai1Type);
         int ai2Type = prefs.getInt("ai2Type", GlobalDefaults.ai2Type);
+
         options.gridSize = prefs.getInt("gridSize", GlobalDefaults.gridSize);
 
         PlayingEntity player1 = loadPlayer(player1Type, ai1Type, 1, options.gridSize);
@@ -96,4 +105,17 @@ public class Hexgame {
         runningGame.start();
         return true;
     }
+
+    public static void swapGame(Game netGame) {
+
+        runningGame.stop();
+        runningGame = netGame;
+        gameInfo.options.gridSize = runningGame.gameOptions.gridSize;
+        runningGame.setGameListener(new Callbacks(runningGame, window));
+        window.cPolygons.setShapes(runningGame, gameInfo);
+        window.cPolygons.repaint();
+        runningGame.start();
+
+    }
+
 }

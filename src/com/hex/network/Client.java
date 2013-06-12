@@ -16,4 +16,8 @@ public interface Client {
 
     public abstract void sendMove(Move move);
 
+    public abstract String getGame();
+
+    public abstract int getTeam();
+
 }
