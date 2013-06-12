@@ -17,7 +17,7 @@ public class Hexgame {
     static GameInfo gameInfo;
 
     public static void main(String[] args) {
-        boolean netgame = false; // temporary will be removed
+        boolean netgame = true; // temporary will be removed
         int hight, width;
         if(args.length > 2) {
             hight = Integer.parseInt(args[0]);
@@ -39,7 +39,7 @@ public class Hexgame {
         window.cPolygons.repaint();
         runningGame.start();
         if(netgame) {
-            Game netGame = NetworkConnection.netGame();
+            Game netGame = NetworkConnection.netGame(runningGame);
             netGame.gameOptions.timer = new Timer(0, 0, 0);
             swapGame(netGame);
         }
