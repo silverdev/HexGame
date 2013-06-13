@@ -39,6 +39,8 @@ public class Hexgame {
         window.cPolygons.repaint();
         runningGame.start();
         if(netgame) {
+            boolean host = DialogBoxes.amIHost();
+            String IP = DialogBoxes.getIP();
             Game netGame = NetworkConnection.netGame(runningGame);
             netGame.gameOptions.timer = new Timer(0, 0, 0);
             swapGame(netGame);
