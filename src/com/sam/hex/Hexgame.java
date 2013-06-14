@@ -41,7 +41,7 @@ public class Hexgame {
         if(netgame) {
             boolean host = DialogBoxes.amIHost();
             String IP = DialogBoxes.getIP();
-            Game netGame = NetworkConnection.netGame(runningGame);
+            Game netGame = NetworkConnection.netGame(runningGame, DialogBoxes.amIHost(), DialogBoxes.getIP());
             netGame.gameOptions.timer = new Timer(0, 0, 0);
             swapGame(netGame);
         }
