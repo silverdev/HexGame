@@ -17,7 +17,7 @@ public class Hexgame {
     static GameInfo gameInfo;
 
     public static void main(String[] args) {
-        boolean netgame = false; // temporary will be removed
+        boolean netgame = true; // temporary will be removed
         int hight, width;
         if(args.length > 2) {
             hight = Integer.parseInt(args[0]);
@@ -41,9 +41,9 @@ public class Hexgame {
         if(netgame) {
             boolean host = DialogBoxes.amIHost();
             String IP = DialogBoxes.getIP();
-            Game netGame = NetworkConnection.netGame(runningGame, host, IP);
-            netGame.gameOptions.timer = new Timer(0, 0, 0);
-            swapGame(netGame);
+            NetworkConnection.netGame(host, IP);
+            // netGame.gameOptions.timer = new Timer(0, 0, 0);
+            // swapGame(netGame);
         }
 
     }
