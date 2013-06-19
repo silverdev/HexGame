@@ -243,7 +243,10 @@ public class HexGameWindow extends JFrame {
         newgameAction.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent act) {
-                Hexgame.restart();
+                if(Hexgame.runningGame.canNewGame()) {
+
+                    Hexgame.restart();
+                }
             }
         });
 

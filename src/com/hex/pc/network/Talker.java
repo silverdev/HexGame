@@ -41,7 +41,7 @@ public class Talker extends Thread implements NetCommunication {
             out.flush();
             in = new ObjectInputStream(requestSocket.getInputStream());
             // 3: Communicating with the server
-            System.out.println("up");
+
             do {
                 try {
 
@@ -56,6 +56,10 @@ public class Talker extends Thread implements NetCommunication {
                 }
             }
             while(alive && !message.equals("bye"));
+            sendMessage("bye");
+            in.close();
+            out.close();
+            requestSocket.close();
         }
         catch(UnknownHostException unknownHost) {
             System.err.println("You are trying to connect to an unknown host!");
