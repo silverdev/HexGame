@@ -1,8 +1,11 @@
 package com.sam.hex;
 
+import javax.swing.JOptionPane;
+
 import com.hex.core.Game;
 import com.hex.core.PlayingEntity;
 import com.hex.core.Timer;
+import com.hex.network.Errors;
 import com.hex.network.NetworkCallbacks;
 
 public class PcNetworkCallbacks implements NetworkCallbacks {
@@ -46,14 +49,14 @@ public class PcNetworkCallbacks implements NetworkCallbacks {
     }
 
     @Override
-    public void error() {
+    public void chat(String data) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void chat(String data) {
-        // TODO Auto-generated method stub
+    public void error(Errors error) {
+        new JOptionPane(error.toString());
 
     }
 
