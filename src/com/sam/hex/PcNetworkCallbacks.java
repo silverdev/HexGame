@@ -34,13 +34,14 @@ public class PcNetworkCallbacks implements NetworkCallbacks {
 
     @Override
     public boolean undoRequest(int turnNumer) {
-        // TODO Auto-generated method stub
-        return false;
+
+        return true;
     }
 
     @Override
     public void undo(int turnNumer) {
-        // TODO Auto-generated method stub
+        Hexgame.runningGame.undo(turnNumer);
+        System.out.println("undoing to turn " + turnNumer);
 
     }
 
