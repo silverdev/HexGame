@@ -17,7 +17,7 @@ public class Hexgame {
     static GameInfo gameInfo;
 
     public static void main(String[] args) {
-        boolean netgame = true; // temporary will be removed
+        boolean netgame = false; // temporary will be removed
         int hight, width;
         if(args.length > 2) {
             hight = Integer.parseInt(args[0]);
